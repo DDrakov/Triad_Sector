@@ -13,14 +13,8 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="AutoCablingDunGen"/>
     /// </summary>
-    private async Task PostGen(AutoCablingDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(AutoCablingDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Entities.TryGetValue(DungeonDataKey.Cabling, out var ent))
-        {
-            LogDataError(typeof(AutoCablingDunGen));
-            return;
-        }
-
         // There's a lot of ways you could do this.
         // For now we'll just connect every LV cable in the dungeon.
         var cableTiles = new HashSet<Vector2i>();
@@ -54,9 +48,6 @@ public sealed partial class DungeonJob
         if (!ValidateResume())
             return;
 
-        if (cableTiles.Count <= 0) // Frontier: empty check
-            return; // Frontier: empty check
-
         var startNodes = new List<Vector2i>(cableTiles);
         random.Shuffle(startNodes);
         var start = startNodes[0];
@@ -71,13 +62,6 @@ public sealed partial class DungeonJob
 
         while (remaining.Count > 0)
         {
-            // Triad: the cable A* search ran in one un-yielded span (~59ms); yield every iteration so even the
-            // empty-tile continue path below can't burst un-sliced.
-            await SuspendDungeon();
-
-            if (!ValidateResume())
-                return;
-
             if (frontier.Count == 0)
             {
                 var newStart = remaining.First();
@@ -167,13 +151,7 @@ public sealed partial class DungeonJob
             if (found)
                 continue;
 
-            _entManager.SpawnEntity(ent, _maps.GridTileToLocal(_gridUid, _grid, tile));
-
-            // Triad: slice the cable spawn pass so a fully-cabled dungeon doesn't spawn every cable in one block.
-            await SuspendDungeon();
-
-            if (!ValidateResume())
-                return;
+            _entManager.SpawnEntity(gen.Entity, _maps.GridTileToLocal(_gridUid, _grid, tile));
         }
     }
 }
