@@ -28,6 +28,14 @@ using Content.Server.Administration.Commands; // For ShipBlacklistService
 
 namespace Content.Server._NF.Shipyard.Systems;
 
+/// <summary>
+/// Temporary component to mark entities that should be anchored after grid loading is complete
+/// </summary>
+[RegisterComponent]
+public sealed partial class PendingAnchorComponent : Component
+{
+}
+
 public sealed partial class ShipyardSystem : SharedShipyardSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -549,6 +557,324 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         shuttleGrid = grid.Value.Owner;
         return true;
+    }
+
+    /// <summary>
+    /// Loads a ship directly from YAML data, following the same pattern as ship purchases
+    /// </summary>
+    /// <param name="consoleUid">The entity of the shipyard console to dock to its grid</param>
+    /// <param name="yamlData">The YAML data of the ship to load</param>
+    /// <param name="shuttleEntityUid">The EntityUid of the shuttle that was loaded</param>
+    public bool TryLoadShipFromYaml(EntityUid consoleUid, string yamlData, [NotNullWhen(true)] out EntityUid? shuttleEntityUid)
+    {
+        shuttleEntityUid = null;
+
+        // Get the grid the console is on
+        if (!TryComp<TransformComponent>(consoleUid, out var consoleXform) || consoleXform.GridUid == null)
+        {
+            return false;
+        }
+
+        var targetGrid = consoleXform.GridUid.Value;
+
+        try
+        {
+            // Setup shipyard
+            SetupShipyardIfNeeded();
+            if (ShipyardMap == null)
+                return false;
+
+            // Load ship directly from YAML data (bypassing file system)
+            if (!TryLoadGridFromYamlData(yamlData, ShipyardMap.Value, new Vector2(500f + _shuttleIndex, 1f), out var grid))
+            {
+                _sawmill.Error($"Unable to load ship from YAML data");
+                return false;
+            }
+
+            var shuttleGrid = grid.Value.Owner;
+
+            if (!TryComp<ShuttleComponent>(shuttleGrid, out var shuttleComponent))
+            {
+                _sawmill.Error("Loaded entity is not a shuttle");
+                return false;
+            }
+
+            // Update shuttle index for spacing
+            _shuttleIndex += grid.Value.Comp.LocalAABB.Width + ShuttleSpawnBuffer;
+
+            _sawmill.Info($"Ship loaded from YAML data at {ToPrettyString(consoleUid)}");
+            _shuttle.TryFTLDock(shuttleGrid, shuttleComponent, targetGrid);
+            shuttleEntityUid = shuttleGrid;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Exception while loading ship from YAML: {ex}");
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Loads a grid directly from YAML string data, similar to MapLoaderSystem.TryLoadGrid but without file system dependency
+    /// </summary>
+    private bool TryLoadGridFromYamlData(string yamlData, MapId map, Vector2 offset, [NotNullWhen(true)] out Entity<MapGridComponent>? grid)
+    {
+        grid = null;
+
+        try
+        {
+            // Parse YAML data directly (same approach as MapLoaderSystem.TryReadFile)
+            using var textReader = new StringReader(yamlData);
+            var documents = DataNodeParser.ParseYamlStream(textReader).ToArray();
+
+            switch (documents.Length)
+            {
+                case < 1:
+                    _sawmill.Error("YAML data has no documents.");
+                    return false;
+                case > 1:
+                    _sawmill.Error("YAML data has too many documents. Ship files should contain exactly one.");
+                    return false;
+            }
+
+            var data = (MappingDataNode)documents[0].Root;
+
+            // Create load options (same as MapLoaderSystem.TryLoadGrid)
+            var opts = new MapLoadOptions
+            {
+                MergeMap = map,
+                Offset = offset,
+                Rotation = Angle.Zero,
+                DeserializationOptions = DeserializationOptions.Default,
+                ExpectedCategory = FileCategory.Grid
+            };
+
+            // Process data with EntityDeserializer (same as MapLoaderSystem.TryLoadGeneric)
+            var ev = new BeforeEntityReadEvent();
+            RaiseLocalEvent(ev);
+
+            opts.DeserializationOptions.AssignMapids = opts.ForceMapId == null;
+
+            if (opts.MergeMap is { } targetId && !_map.MapExists(targetId))
+                throw new Exception($"Target map {targetId} does not exist");
+
+            var deserializer = new EntityDeserializer(
+                _dependency,
+                data,
+                opts.DeserializationOptions,
+                ev.RenamedPrototypes,
+                ev.DeletedPrototypes);
+
+            if (!deserializer.TryProcessData())
+            {
+                _sawmill.Error("Failed to process YAML entity data");
+                return false;
+            }
+
+            deserializer.CreateEntities();
+
+            if (opts.ExpectedCategory is { } exp && exp != deserializer.Result.Category)
+            {
+                _sawmill.Error($"YAML data does not contain the expected data. Expected {exp} but got {deserializer.Result.Category}");
+                _mapLoader.Delete(deserializer.Result);
+                return false;
+            }
+
+            // Apply transformations and start entities (same as MapLoaderSystem)
+            var merged = new HashSet<EntityUid>();
+            MergeMaps(deserializer, opts, merged);
+
+            if (!SetMapId(deserializer, opts))
+            {
+                _mapLoader.Delete(deserializer.Result);
+                return false;
+            }
+
+            ApplyTransform(deserializer, opts);
+            deserializer.StartEntities();
+
+            if (opts.MergeMap is { } mergeMap)
+                MapInitalizeMerged(merged, mergeMap);
+
+            // Process deferred anchoring after all entities are started and physics is stable
+            ProcessPendingAnchors(merged);
+
+            // Check for exactly one grid (same as MapLoaderSystem.TryLoadGrid)
+            if (deserializer.Result.Grids.Count == 1)
+            {
+                grid = deserializer.Result.Grids.Single();
+                return true;
+            }
+
+            _mapLoader.Delete(deserializer.Result);
+            return false;
+        }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Exception while loading grid from YAML data: {ex}");
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Helper methods for our custom YAML loading - based on MapLoaderSystem implementation
+    /// </summary>
+    private void MergeMaps(EntityDeserializer deserializer, MapLoadOptions opts, HashSet<EntityUid> merged)
+    {
+        if (opts.MergeMap is not {} targetId)
+            return;
+
+        if (!_map.TryGetMap(targetId, out var targetUid))
+            throw new Exception($"Target map {targetId} does not exist");
+
+        deserializer.Result.Category = FileCategory.Unknown;
+        var rotation = opts.Rotation;
+        var matrix = Matrix3Helpers.CreateTransform(opts.Offset, rotation);
+        var target = new Entity<TransformComponent>(targetUid.Value, Transform(targetUid.Value));
+
+        // Apply transforms to all loaded entities that should be merged
+        foreach (var uid in deserializer.Result.Entities)
+        {
+            if (TryComp<TransformComponent>(uid, out var xform))
+            {
+                if (xform.MapUid == null || HasComp<MapComponent>(uid))
+                {
+                    Merge(merged, uid, target, matrix, rotation);
+                }
+            }
+        }
+    }
+
+    private void Merge(
+        HashSet<EntityUid> merged,
+        EntityUid uid,
+        Entity<TransformComponent> target,
+        in Matrix3x2 matrix,
+        Angle rotation)
+    {
+        merged.Add(uid);
+        var xform = Transform(uid);
+
+        // Store whether the entity was anchored before transformation
+        // We'll use this information later to re-anchor entities after startup
+        var wasAnchored = xform.Anchored;
+
+        // Apply transform matrix (same as RobustToolbox MapLoaderSystem)
+        var angle = xform.LocalRotation + rotation;
+        var pos = System.Numerics.Vector2.Transform(xform.LocalPosition, matrix);
+        var coords = new EntityCoordinates(target.Owner, pos);
+        _transform.SetCoordinates((uid, xform, MetaData(uid)), coords, rotation: angle, newParent: target.Comp);
+
+        // Store anchoring information for later processing
+        if (wasAnchored)
+        {
+            EnsureComp<PendingAnchorComponent>(uid);
+        }
+
+        // Delete any map entities since we're merging
+        if (HasComp<MapComponent>(uid))
+        {
+            QueueDel(uid);
+        }
+    }
+
+    private bool SetMapId(EntityDeserializer deserializer, MapLoadOptions opts)
+    {
+        // Check for any entities with MapComponents that might need MapId assignment
+        foreach (var uid in deserializer.Result.Entities)
+        {
+            if (TryComp<MapComponent>(uid, out var mapComp))
+            {
+                if (opts.ForceMapId != null)
+                {
+                    // Should not happen in our shipyard use case
+                    _sawmill.Error("Unexpected ForceMapId when merging maps");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void ApplyTransform(EntityDeserializer deserializer, MapLoadOptions opts)
+    {
+        if (opts.Rotation == Angle.Zero && opts.Offset == Vector2.Zero)
+            return;
+
+        // If merging onto a single map, the transformation was already applied by MergeMaps
+        if (opts.MergeMap != null)
+            return;
+
+        var matrix = Matrix3Helpers.CreateTransform(opts.Offset, opts.Rotation);
+
+        // Apply transforms to all children of loaded maps
+        foreach (var uid in deserializer.Result.Entities)
+        {
+            if (TryComp<TransformComponent>(uid, out var xform))
+            {
+                // Check if this entity is attached to a map
+                if (xform.MapUid != null && HasComp<MapComponent>(xform.MapUid.Value))
+                {
+                    var pos = System.Numerics.Vector2.Transform(xform.LocalPosition, matrix);
+                    _transform.SetLocalPosition(uid, pos);
+                    _transform.SetLocalRotation(uid, xform.LocalRotation + opts.Rotation);
+                }
+            }
+        }
+    }
+
+    private void MapInitalizeMerged(HashSet<EntityUid> merged, MapId targetId)
+    {
+        // Initialize merged entities according to the target map's state
+        if (!_map.TryGetMap(targetId, out var targetUid))
+            throw new Exception($"Target map {targetId} does not exist");
+
+        if (_map.IsInitialized(targetUid.Value))
+        {
+            foreach (var uid in merged)
+            {
+                if (TryComp<MetaDataComponent>(uid, out var metadata))
+                {
+                    EntityManager.RunMapInit(uid, metadata);
+                }
+            }
+        }
+
+        var paused = _map.IsPaused(targetUid.Value);
+        foreach (var uid in merged)
+        {
+            if (TryComp<MetaDataComponent>(uid, out var metadata))
+            {
+                _metaData.SetEntityPaused(uid, paused, metadata);
+            }
+        }
+    }
+
+    private void ProcessPendingAnchors(HashSet<EntityUid> merged)
+    {
+        // Process entities that need to be anchored after grid loading
+        foreach (var uid in merged)
+        {
+            if (!TryComp<PendingAnchorComponent>(uid, out _))
+                continue;
+
+            // Remove the temporary component
+            RemComp<PendingAnchorComponent>(uid);
+
+            // Try to anchor the entity if it's on a valid grid
+            if (TryComp<TransformComponent>(uid, out var xform) && xform.GridUid != null)
+            {
+                try
+                {
+                    _transform.AnchorEntity(uid, xform);
+                }
+                catch (Exception ex)
+                {
+                    // Log but don't fail - some entities might not be anchorable
+                    _sawmill.Warning($"Failed to anchor entity {uid}: {ex.Message}");
+                }
+            }
+        }
     }
 
     /// <summary>

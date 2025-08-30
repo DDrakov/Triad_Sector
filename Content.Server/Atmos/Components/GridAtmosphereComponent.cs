@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.Components
     ///     Internal Atmos class. Use <see cref="AtmosphereSystem"/> to interact with atmos instead.
     /// </summary>
     [RegisterComponent, Serializable,
-     Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem), typeof(Content.Server.Shuttles.Save.ShipSerializationSystem))]
+     Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
     public sealed partial class GridAtmosphereComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

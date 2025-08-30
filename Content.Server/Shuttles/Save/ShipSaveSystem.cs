@@ -67,19 +67,12 @@ namespace Content.Server.Shuttles.Save
                 return;
             }
 
-            var shipSerializationSystem = _entitySystemManager.GetEntitySystem<ShipSerializationSystem>();
+            // ShipSerializationSystem was removed - ship saving now handled by ShipyardGridSaveSystem
             var shipName = deedComponent.ShuttleName ?? "SavedShip_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
-            var shipGridData = shipSerializationSystem.SerializeShip(shuttleUid.Value, playerSession.UserId, shipName);
-            var yamlString = shipSerializationSystem.SerializeShipGridDataToYaml(shipGridData);
-
-            // Send ship data to client for local saving
-            RaiseNetworkEvent(new SendShipSaveDataClientMessage(shipName, yamlString), playerSession);
-            Logger.Info($"Sent serialized ship {shipName} to client {playerSession.Name} for local saving.");
-
-            // Delete the ship after successful save
-            _entityManager.DeleteEntity(shuttleUid.Value);
-            Logger.Info($"Deleted grid {shuttleUid.Value} from server after saving.");
+            // TODO: Integrate with ShipyardGridSaveSystem for ship saving functionality
+            Logger.Warning($"Ship saving temporarily disabled - ShipSerializationSystem was removed");
+            return;
         }
     public void RequestSaveShip(EntityUid deedUid, ICommonSession? playerSession)
         {
@@ -101,19 +94,12 @@ namespace Content.Server.Shuttles.Save
                 return;
             }
 
-            var shipSerializationSystem = _entitySystemManager.GetEntitySystem<ShipSerializationSystem>();
+            // ShipSerializationSystem was removed - ship saving now handled by ShipyardGridSaveSystem
             var shipName = deedComponent.ShuttleName ?? "SavedShip_" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
-            var shipGridData = shipSerializationSystem.SerializeShip(shuttleUid.Value, playerSession.UserId, shipName);
-            var yamlString = shipSerializationSystem.SerializeShipGridDataToYaml(shipGridData);
-
-            // Send ship data to client for local saving
-            RaiseNetworkEvent(new SendShipSaveDataClientMessage(shipName, yamlString), playerSession);
-            Logger.Info($"Sent serialized ship {shipName} to client {playerSession.Name} for local saving.");
-
-            // Delete the ship after successful save
-            _entityManager.DeleteEntity(shuttleUid.Value);
-            Logger.Info($"Deleted grid {shuttleUid.Value} from server after saving.");
+            // TODO: Integrate with ShipyardGridSaveSystem for ship saving functionality
+            Logger.Warning($"Ship saving temporarily disabled - ShipSerializationSystem was removed");
+            return;
         }
 
         private void OnRequestLoadShip(RequestLoadShipMessage msg, EntitySessionEventArgs args)
