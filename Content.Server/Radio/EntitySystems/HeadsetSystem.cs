@@ -27,8 +27,6 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
         SubscribeLocalEvent<HeadsetComponent, EncryptionChannelsChangedEvent>(OnKeysChanged);
 
         SubscribeLocalEvent<WearingHeadsetComponent, EntitySpokeEvent>(OnSpeak);
-
-        SubscribeLocalEvent<HeadsetComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
     private void OnKeysChanged(EntityUid uid, HeadsetComponent component, EncryptionChannelsChangedEvent args)
@@ -75,7 +73,6 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
     protected override void OnGotUnequipped(EntityUid uid, HeadsetComponent component, GotUnequippedEvent args)
     {
         base.OnGotUnequipped(uid, component, args);
-        component.IsEquipped = false;
         RemComp<ActiveRadioComponent>(uid);
         RemComp<WearingHeadsetComponent>(args.Equipee);
     }
@@ -87,6 +84,9 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 
         if (component.Enabled == value)
             return;
+
+        component.Enabled = value;
+        Dirty(uid, component);
 
         if (!value)
         {
@@ -104,35 +104,21 @@ public sealed partial class HeadsetSystem : SharedHeadsetSystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
-        if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        // TODO: change this when a code refactor is done
+        // this is currently done this way because receiving radio messages on an entity otherwise requires that entity
+        // to have an ActiveRadioComponent
+
+        var parent = Transform(uid).ParentUid;
+
+        if (parent.IsValid())
         {
-            // Einstein Engines - Language begin
-            var canUnderstand = _language.CanUnderstand(Transform(uid).ParentUid, args.Language.ID);
-            var msg = new MsgChatMessage
-            {
-                Message = canUnderstand ? args.OriginalChatMsg : args.LanguageObfuscatedChatMsg
-            };
-            _netMan.ServerSendMessage(msg, actor.PlayerSession.Channel);
-
-            // Einstein Engines - Language end
-
-            // Mono - Borers begin
-            var ev = new RadioMessageHeardEvent(uid, msg, args.Channel);
-            RaiseLocalEvent(Transform(uid).ParentUid, ref ev);
-            // Mono - Borers end
+            var relayEvent = new HeadsetRadioReceiveRelayEvent(args);
+            RaiseLocalEvent(parent, ref relayEvent);
+        }
 
             // Send radio noise event to client
             var radioNoiseEvent = new RadioNoiseEvent(GetNetEntity(uid), args.Channel.ID);
             RaiseNetworkEvent(radioNoiseEvent, actor.PlayerSession);
-        }
-    }
-
-    private void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)
-    {
-        if (component.Enabled)
-        {
-            args.Affected = true;
-            args.Disabled = true;
         }
     }
 }
