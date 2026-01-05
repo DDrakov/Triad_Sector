@@ -6,6 +6,7 @@ using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
+using Content.Server.Consent;
 using Content.Server.Database;
 using Content.Server.Discord;
 using Content.Server.Discord.DiscordLink;
@@ -83,6 +84,7 @@ namespace Content.Server.IoC
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();
             IoCManager.Register<ServerIdentityService>();
+            IoCManager.Register<IServerConsentManager, ServerConsentManager>();
         }
     }
 }

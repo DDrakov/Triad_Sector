@@ -22,6 +22,7 @@ namespace Content.Server.Database
         public DbSet<Preference> Preference { get; set; } = null!;
         public DbSet<Profile> Profile { get; set; } = null!;
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
+        public DbSet<ConsentSettings> ConsentSettings { get; set; } = null!;
         public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
         public DbSet<AdminRank> AdminRank { get; set; } = null!;
@@ -56,6 +57,28 @@ namespace Content.Server.Database
             modelBuilder.Entity<Profile>()
                 .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
                 .IsUnique();
+
+            modelBuilder.Entity<ConsentSettings>()
+                .HasIndex(c => c.UserId)
+                .IsUnique();
+
+            modelBuilder.Entity<ConsentToggle>()
+                .HasIndex(c => new { c.ConsentSettingsId, c.ToggleProtoId })
+                .IsUnique();
+
+            // Begin CD - CD Character Data
+            modelBuilder.Entity<CDModel.CDProfile>()
+                .HasOne(p => p.Profile)
+                .WithOne(p => p.CDProfile)
+                .HasForeignKey<CDModel.CDProfile>(p => p.ProfileId)
+                .IsRequired();
+
+            modelBuilder.Entity<CDModel.CharacterRecordEntry>()
+                .HasOne(e => e.CDProfile)
+                .WithMany(e => e.CharacterRecordEntries)
+                .HasForeignKey(e => e.CDProfileId)
+                .IsRequired();
+            // End CD - CD Character Data
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
@@ -429,7 +452,30 @@ namespace Content.Server.Database
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
+
+        public CDModel.CDProfile? CDProfile { get; set; } // CD - Character Records
     }
+
+    public class ConsentSettings
+    {
+        public int Id { get; set; }
+        public Guid UserId { get; set; }
+
+        public string ConsentFreetext { get; set; } = null!;
+        public List<ConsentToggle> ConsentToggles { get; set; } = null!;
+    }
+
+    public class ConsentToggle
+    {
+        public int Id { get; set; }
+
+        public int ConsentSettingsId { get; set; }
+        public ConsentSettings ConsentSettings { get; set; } = null!;
+
+        public string ToggleProtoId { get; set; } = null!;
+        public string ToggleProtoState { get; set; } = null!;
+    }
+
 
     public class Job
     {
