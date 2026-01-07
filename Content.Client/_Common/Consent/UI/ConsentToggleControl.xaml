@@ -1,4 +1,9 @@
-﻿<Control
+﻿<!--
+SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+SPDX-License-Identifier: MIT
+-->
+
+<Control
     xmlns="https://spacestation14.io" HorizontalExpand="True"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
     <PanelContainer HorizontalExpand="True" MinWidth="200" Margin="5">
@@ -7,7 +12,7 @@
         </PanelContainer.PanelOverride>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5">
             <BoxContainer Orientation="Horizontal" Margin="5">
-                <Label Name="ConsentToggleNameLabel" />
+                <RichTextLabel Name="ConsentToggleNameLabel" />
                 <Control HorizontalExpand="True" />
                 <Button
                     Name="ConsentToggleOffButton"
@@ -22,7 +27,7 @@
                     Text="On"
                     StyleClasses="OpenLeft" />
             </BoxContainer>
-            <Label Name="ConsentToggleDescriptionLabel" />
+            <RichTextLabel Name="ConsentToggleDescriptionLabel" />
         </BoxContainer>
     </PanelContainer>
 </Control>

@@ -1,15 +1,21 @@
-﻿using System.Linq;
+﻿// SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+// SPDX-License-Identifier: MIT
+
+using System.Linq;
 using Content.Shared._Common.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Consent;
+namespace Content.Shared._Common.Consent;
 
 [Serializable, NetSerializable]
 public sealed class PlayerConsentSettings
 {
+    [ViewVariables]
     public string Freetext;
+
+    [ViewVariables]
     public Dictionary<ProtoId<ConsentTogglePrototype>, string> Toggles;
 
     public PlayerConsentSettings()

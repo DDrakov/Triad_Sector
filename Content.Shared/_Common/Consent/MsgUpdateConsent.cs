@@ -1,13 +1,17 @@
-﻿using System.IO;
+﻿// SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+// SPDX-License-Identifier: MIT
+
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.IO;
 
-namespace Content.Shared.Consent;
+namespace Content.Shared._Common.Consent;
 
 /// <summary>
-/// Sent client -> server to update consent settings, or server -> client to receive consent settings.
+/// Sent from client to server to update the player's consent settings, or from server to client after it's been
+/// updated, or after connecting.
 /// </summary>
 public sealed class MsgUpdateConsent : NetMessage
 {

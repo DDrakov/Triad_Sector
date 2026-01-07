@@ -1,4 +1,7 @@
-﻿namespace Content.Shared.Consent;
+﻿// SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared._Common.Consent;
 
 using Robust.Shared.Prototypes;
 
@@ -27,4 +30,18 @@ public sealed partial class ConsentTogglePrototype : IPrototype
     /// </summary>
     [DataField]
     public string Description = default!;
+
+
+    /// <summary>
+    /// A key used to sort the toggles by in the consent menu.
+    /// If it's not set, they are sorted by the prototype ID.
+    /// </summary>
+    [DataField]
+    public string SortKey
+    {
+        get => _sortKey ?? ID;
+        set => _sortKey = value;
+    }
+
+    private string? _sortKey;
 }

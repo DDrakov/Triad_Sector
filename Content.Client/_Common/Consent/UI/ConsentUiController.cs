@@ -1,4 +1,7 @@
-﻿using Content.Client.Consent.UI.Windows;
+﻿// SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+// SPDX-License-Identifier: MIT
+
+using Content.Client._Common.Consent.UI.Windows;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
@@ -14,7 +17,7 @@ using Robust.Shared.Utility;
 using JetBrains.Annotations;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Consent.UI;
+namespace Content.Client._Common.Consent.UI;
 
 [UsedImplicitly]
 public sealed class ConsentUiController : UIController, IOnStateChanged<GameplayState>
@@ -69,7 +72,7 @@ public sealed class ConsentUiController : UIController, IOnStateChanged<Gameplay
 
     private void EnsureWindow()
     {
-        if(_window is { Disposed: false })
+        if (_window is { Disposed: false })
             return;
 
         _window = UIManager.CreateWindow<ConsentWindow>();
