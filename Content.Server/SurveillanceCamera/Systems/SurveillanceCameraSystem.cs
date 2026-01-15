@@ -19,12 +19,12 @@ namespace Content.Server.SurveillanceCamera;
 public sealed partial class SurveillanceCameraSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private SharedStationAiSystem _stationAi = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
 
     // Pings a surveillance camera subnet. All cameras will always respond
     // with a data message if they are on the same subnet.
@@ -303,6 +303,8 @@ public sealed partial class SurveillanceCameraSystem : EntitySystem
         }
 
         UpdateVisuals(camera, component);
+
+        _cameraMapSystem.UpdateCameraMarker((camera, component));
     }
 
     public void AddActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)
