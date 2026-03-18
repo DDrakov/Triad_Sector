@@ -451,7 +451,7 @@
   - type: SpawnItemsOnUse
     items:
       - id: WeaponSubMachineGunWt550Expedition
-      - id: Magazine45_ACPSubMachineFMJ
+      - id: Magazine45_ACPSubMachineGunFMJ
       - id: SpaceCash1000
       - id: SpaceCash500
       # Bonus Loot T3

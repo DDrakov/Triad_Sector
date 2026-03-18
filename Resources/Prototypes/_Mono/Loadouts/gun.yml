@@ -713,7 +713,7 @@
   price: 0
   storage:
     back:
-    - BoxMagazine45_ACPPistolFMJ
+    - BoxMagazine45_ACPFMJ
 
 - type: loadout #MK58 Ammo
   id: FactionHawk4Pistol
