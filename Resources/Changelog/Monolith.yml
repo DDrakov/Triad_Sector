@@ -18848,3 +18848,16 @@ Entries:
   id: 2080
   time: '2026-03-25T05:49:54.0000000+00:00'
   url: https://github.com/Monolith-Station/Monolith/pull/3558
+- author: Redrover1760
+  changes:
+    - type: Tweak
+      message: >-
+        Clipping Claws now resets growth time, ensuring you do not have to worry
+        about your claws reaching the next stage for a while.
+    - type: Add
+      message: >-
+        Phenoxzine and Meroxzine. Phenoxzine massively boosts claw growth speed,
+        Meroxzine halts it completely for a long period of time.
+  id: 2081
+  time: '2026-03-25T06:13:30.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/3554
