@@ -19246,3 +19246,12 @@ Entries:
   id: 2122
   time: '2026-04-03T17:45:12.0000000+00:00'
   url: https://github.com/Monolith-Station/Monolith/pull/3673
+- author: Kiithnaras
+  changes:
+    - type: Tweak
+      message: >-
+        Improvements to capacity and firing mechanics of many common Laser and
+        Energy weapons.
+  id: 2123
+  time: '2026-04-03T17:46:11.0000000+00:00'
+  url: https://github.com/Monolith-Station/Monolith/pull/3636
