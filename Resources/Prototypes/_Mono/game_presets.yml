@@ -80,17 +80,17 @@
   - BluespaceSalvageEventScheduler
   - SmugglingEventScheduler
   - FrontierRoundstartVariation
-  - MonoAISTCShuttleSpawnerScheduler
-  - MonoAISTCShuttleSpawnerSchedulerTier2
-  - MonoAsakimSTCShuttleSpawnerScheduler
+#  - MonoAISTCShuttleSpawnerScheduler
+#  - MonoAISTCShuttleSpawnerSchedulerTier2
+#  - MonoAsakimSTCShuttleSpawnerScheduler
   - MonoMonolithicEventsScheduler
-  - PortstrikeAnnounceRuleHour4
+#  - PortstrikeAnnounceRuleHour4
 
 - type: gamePreset
   id: MonoChimera
   name: mono-chimera-title
   description: mono-chimera-description
-  showInVote: true
+  showInVote: false #Triad removal from vote
   rules:
   - NFAdventure
   - BasicStationEventScheduler
@@ -107,7 +107,7 @@
   id: MonoMixed
   name: mono-mixed-title
   description: mono-mixed-description
-  showInVote: true
+  showInVote: false #Triad removal from vote
   rules:
   - NFAdventure
   - BasicStationEventScheduler
@@ -127,7 +127,7 @@
   id: MonoAllAtOnce
   name: mono-allatonce-title
   description: mono-allatonce-description
-  showInVote: true # we ball
+  showInVote: false # we ball #Triad removal from vote
   weight: 0.25 # requires 80% votes
   rules:
   - NFAdventure
@@ -143,3 +143,4 @@
   - MonoMonolithicEventsScheduler
   - RoundEndRuleHour3
   - PortstrikeAnnounceRuleHour1
+
