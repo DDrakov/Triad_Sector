@@ -112,7 +112,6 @@ public static class ShipSaveYamlSanitizer
         "PortalBlue",
         "PortalRed",
         "ReactorGasPipe",
-        "ShipShield",
     };
 
     // Entity-level exclusion by component signature.

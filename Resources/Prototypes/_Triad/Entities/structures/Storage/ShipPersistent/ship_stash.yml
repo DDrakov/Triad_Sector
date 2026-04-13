@@ -1,0 +1,43 @@
+- type: entity
+  id: military_storage_stash
+  parent: BaseStructureDynamic
+  name: military storage stash
+  description: Tbd
+  components:
+  - type: Sprite
+    sprite: _Triad/Structure/Storage/ShipStashes/military_storage_stash.rsi
+    state: military_storage_rsi
+    noRot: true
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 15
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Storage
+    grid:
+    - 0,0,4,7
+    - 5,0,11,7
+    maxItemSize: Ginormous
+    blacklist:
+      tags:
+      - Admin
+      components:
+      - StorageFill
+      - PresetIdCard
+      - IdCard
+      - Access
+      - Store
+      - Cash
+      - Headset
+      - DnaSequenceInjector
+  - type: HLPersistOnShipSave
