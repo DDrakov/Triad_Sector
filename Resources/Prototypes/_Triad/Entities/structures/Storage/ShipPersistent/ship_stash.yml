@@ -5,6 +5,12 @@
   description: A hardened storage unit designed for long-term deployment. Contents are securely preserved across ship operations.
   components:
   - type: ContainerContainer
+    containers:
+    storagebase:
+      !type:Container
+      showEnts: false
+      occludes: true
+      ents: []
   - type: Sprite
     sprite: _Triad/Structure/Storage/ShipStashes/military_storage_stash.rsi
     state: military_storage_rsi
@@ -47,6 +53,12 @@
   description: An advanced medical workstation utilizing bluespace compression. Safely retains its contents across ship saves.
   components:
   - type: ContainerContainer
+    containers:
+    storagebase:
+      !type:Container
+      showEnts: false
+      occludes: true
+      ents: []
   - type: Sprite
     sprite: _Triad/Structure/Storage/ShipStashes/medical_bluespace_desk.rsi
     state: medical_bluespace_desk
@@ -98,6 +110,12 @@
   description: A specialized workstation for plant research and cultivation. Stored materials remain intact between expeditions.
   components:
   - type: ContainerContainer
+    containers:
+    storagebase:
+      !type:Container
+      showEnts: false
+      occludes: true
+      ents: []
   - type: Sprite
     sprite: _Triad/Structure/Storage/ShipStashes/botany_table.rsi
     state: botany_table
@@ -149,6 +167,12 @@
   description: A compact personal storage solution for everyday use. Items stored within persist between ship deployments.
   components:
   - type: ContainerContainer
+    containers:
+    storagebase:
+      !type:Container
+      showEnts: false
+      occludes: true
+      ents: []
   - type: Sprite
     sprite: _Triad/Structure/Storage/ShipStashes/civilian_storage_stash.rsi
     state: civilian_storage_stash
