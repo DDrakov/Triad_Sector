@@ -59,9 +59,8 @@
         amount: 12
       - tool: Welding
         doAfter: 4
-        
-- node: stash
-    entity: CivilianStorageStash
+  - node: stash
+      entity: CivilianStorageStash
 
 - type: entity
   id: MedicalBluespaceDesk
