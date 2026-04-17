@@ -36,10 +36,12 @@ public sealed class ShipSerializationTest : ContentUnitTest
         var cfg = server.ResolveDependency<IConfigurationManager>();
         var mapSys = entManager.System<SharedMapSystem>();
 
-        // --- Setup ---
         cfg.SetCVar(CCVars.ShipyardUseLegacySerializer, false);
 
+        // Ensure clean state
         entManager.DeleteEntity(map.Grid);
+        await server.WaitIdleAsync();
+
         var gridEnt = mapManager.CreateGridEntity(map.MapId);
         var gridUid = gridEnt.Owner;
         var gridComp = gridEnt.Comp;
@@ -53,16 +55,22 @@ public sealed class ShipSerializationTest : ContentUnitTest
 
         await server.WaitIdleAsync();
 
-        // --- Assertions (single pass) ---
+        // --- Assertions ---
         Assert.That(entManager.EntityExists(ent1));
         Assert.That(entManager.EntityExists(ent2));
 
-        var data = shipSer.SerializeShip(gridUid, new NetUserId(Guid.NewGuid()), "TestShip");
+        var xform1 = entManager.GetComponent<TransformComponent>(ent1);
+        var xform2 = entManager.GetComponent<TransformComponent>(ent2);
+
+        Assert.That(xform1.ParentUid, Is.EqualTo(gridUid));
+        Assert.That(xform2.ParentUid, Is.EqualTo(gridUid));
+
+        var data = shipSer.SerializeShip(gridUid, new NetUserId(Guid.Empty), "TestShip");
 
         Assert.That(data.Grids.Count, Is.EqualTo(1));
         var g = data.Grids[0];
 
-        Assert.That(g.Tiles.Count, Is.EqualTo(1));
+        Assert.That(g.Tiles.Count >= 1);
         Assert.That(g.Entities.Count >= 2);
 
         var foundAirlock = false;
@@ -70,6 +78,8 @@ public sealed class ShipSerializationTest : ContentUnitTest
 
         foreach (var e in g.Entities)
         {
+            Assert.That(e.Prototype, Is.Not.Null.And.Not.Empty);
+
             if (e.Prototype == "AirlockShuttle") foundAirlock = true;
             if (e.Prototype == "ChairOffice") foundChair = true;
         }

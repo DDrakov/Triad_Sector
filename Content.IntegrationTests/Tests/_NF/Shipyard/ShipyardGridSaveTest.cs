@@ -30,7 +30,8 @@ namespace Content.IntegrationTests.Tests._NF.Shipyard
 
             // --- Setup ---
             var mapId = default(MapId);
-            EntityUid? gridUid = null;
+            Entity<MapGridComponent>? grid = null;
+            EntityUid gridUid = default;
 
             await server.WaitPost(() =>
             {
@@ -39,10 +40,12 @@ namespace Content.IntegrationTests.Tests._NF.Shipyard
                 var loaded = mapLoader.TryLoadGrid(
                     mapId,
                     new ResPath("/Maps/_Mono/Shuttles/phaeron.yml"),
-                    out gridUid);
+                    out grid);
 
                 Assert.That(loaded, Is.True, "Grid should load");
-                Assert.That(gridUid, Is.Not.Null, "Grid UID should not be null");
+                Assert.That(grid, Is.Not.Null, "Grid should not be null");
+
+                gridUid = grid!.Value.Owner;
             });
 
             await server.WaitIdleAsync(); // ensure full spawn/initialization
