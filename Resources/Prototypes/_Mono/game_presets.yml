@@ -1,3 +1,5 @@
+# Triad - Disabled Mono Related events, except the MonoMonolithicEventsScheduler & PortstrikeAnnounceRuleHour
+
 - type: gamePreset
   id: MonoStandard
   alias:
@@ -119,7 +121,7 @@
   # - MonoChimeraSTCShuttleSpawnerSchedulerSlow
   # - MonoAISTCShuttleSpawnerSchedulerSlow
   # - MonoAISTCShuttleSpawnerSchedulerTier2Slow
-  # - MonoAsakimSTCShuttleSpawnerSchedulerSlow
+  # - MonoAsakimSTCShuttleSpawnerSchedulerSlow 
   - MonoMonolithicEventsScheduler
   - PortstrikeAnnounceRuleHour4
 

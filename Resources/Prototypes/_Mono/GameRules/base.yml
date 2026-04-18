@@ -1,3 +1,5 @@
+# Triad - Disabled except MonolithicEventsScheduler
+
 # - type: entity
 #   id: MonoAISTCShuttleSpawnerScheduler
 #   parent: BaseGameRule
