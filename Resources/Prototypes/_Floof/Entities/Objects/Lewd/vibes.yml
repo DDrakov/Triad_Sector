@@ -12,7 +12,7 @@
   - type: ItemToggle
     predictable: false
     soundActivate:
-      path: /Audio/Floof/Lewd/vibrate.ogg
+      path: /Audio/_Floof/Lewd/vibrate.ogg
   - type: UseDelay
     delay: 1.0
   - type: Appearance

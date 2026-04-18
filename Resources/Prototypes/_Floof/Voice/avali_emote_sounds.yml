@@ -1,12 +1,12 @@
 - type: soundCollection
   id: AvaliScreams
   files:
-    - /Audio/_Floofstation/Voice/Avali/avali_scream.ogg
+    - /Audio/_Floof/Voice/Avali/avali_scream.ogg
 
 - type: soundCollection
   id: AvaliLaugh
   files:
-    - /Audio/_Floofstation/Voice/Avali/avali_laugh.ogg
+    - /Audio/_Floof/Voice/Avali/avali_laugh.ogg
 
 - type: emoteSounds
   id: MaleAvaliEmote

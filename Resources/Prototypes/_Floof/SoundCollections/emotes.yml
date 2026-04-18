@@ -1,10 +1,10 @@
 - type: soundCollection
   id: Yip
   files:
-  - /Audio/_Floofstation/Voice/Reptilian/yip.ogg
+  - /Audio/_Floof/Voice/Reptilian/yip.ogg
 
 - type: soundCollection
   id: ReptilianHiss
   files:
-  - /Audio/_Floofstation/Voice/Reptilian/hiss.ogg
+  - /Audio/_Floof/Voice/Reptilian/hiss.ogg
   - /Audio/_Impstation/Voice/Reptillian/reptillian_hiss1.ogg # Imp
