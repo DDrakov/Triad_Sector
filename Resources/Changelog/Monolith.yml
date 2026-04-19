@@ -19369,3 +19369,10 @@ Entries:
   id: 2137
   time: '2026-04-19T08:07:32.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad-Sector/pull/29
+- author: Wuffindy
+  changes:
+    - type: Remove
+      message: ADS, Asakim, Chimera related events & Ghost Roles
+  id: 2138
+  time: '2026-04-19T12:30:11.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad-Sector/pull/25
