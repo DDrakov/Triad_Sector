@@ -30,7 +30,7 @@
   description: department-NFAntag-description
   color: "#DE3A3A"
   weight: 115 # Mono
-  roles:
+  # roles:
   # - PirateCaptain
   # - PirateFirstMate
   # - PDVDenasvar # Mono

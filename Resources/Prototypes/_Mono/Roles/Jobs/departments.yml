@@ -15,7 +15,7 @@
   description: department-UnionOfSovietSocialistPlanets-description
   color: "#b2224b"
   weight: 117 # Master Chief!
-  roles:
+  # roles:
   # - USSPCommissar
   # - USSPSergeant
   # - USSPCorporal

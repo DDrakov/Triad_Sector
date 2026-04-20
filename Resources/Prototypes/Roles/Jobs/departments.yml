@@ -108,7 +108,7 @@
   description: department-NFSecurity-description # Frontier
   color: "#326DA8" # Mono
   weight: 120 # Mono
-  roles:
+# roles:
 #  - Detective # Frontier
 #  - HeadOfSecurity # Frontier
 #  - SecurityCadet # Frontier
