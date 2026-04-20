@@ -1,7 +1,0 @@
-- type: latheRecipePack
-  id: ShipStashFlatpack
-  recipes:
-  - MilitaryStorageStashFlatpack
-  - MedicalBluespaceDeskFlatpack
-  - BotanyTableFlatpack
-  - CivilianStorageStashFlatpack
