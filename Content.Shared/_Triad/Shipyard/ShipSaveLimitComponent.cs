@@ -12,7 +12,4 @@ public sealed partial class ShipSaveLimitComponent : Component
 {
     [DataField, AutoNetworkedField]
     public string LimitId = "ShipSaveDefault";
-
-    [DataField, AutoNetworkedField]
-    public LocId ErrorId = "shipyard-save-limit-error";
 }
