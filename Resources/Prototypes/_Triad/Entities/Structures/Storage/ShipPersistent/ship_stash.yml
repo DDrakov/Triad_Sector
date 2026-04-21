@@ -14,6 +14,7 @@
       - Access
       - Store
       - Cash
+      - Currency
       - Headset
 
 - type: entity
