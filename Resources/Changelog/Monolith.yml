@@ -19419,3 +19419,10 @@ Entries:
   id: 2142
   time: '2026-04-21T03:58:37.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad-Sector/pull/35
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed stashes having no collision
+  id: 2143
+  time: '2026-04-21T23:27:05.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/2
