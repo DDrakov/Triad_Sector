@@ -6,7 +6,7 @@
   - type: Transform
     anchored: true
   - type: Physics
-    canCollide: true
+    bodyType: Static
   - type: Fixtures
     fixtures:
         fix1:
