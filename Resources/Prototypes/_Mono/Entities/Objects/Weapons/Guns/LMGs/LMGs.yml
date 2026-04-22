@@ -210,10 +210,17 @@
     id: ExperimentalFactionWeapon
 
 - type: entity
-  name: TCA MMG-68 "Grizzly" (7.62x39mm)
+<<<<<<< HEAD
+  name: TCA MMG-68 "Grizzly" (6.8x52mm caseless)
   parent: [BaseWeaponLightMachineGun, BaseGunWieldable]
   id: WeaponLMGGrizzly
-  description: A medium machine gun chambered in 5.56x45mm, accepts both box and standard magazines. A label on the side reads "FOR MILITARY USE ONLY". The weight of the machine gun make it hard to wield easily. To assist with standardization, it also accepts 5.56x45mm.
+  description: A medium machine gun chambered in 6.8x52mm caseless, accepts both box and standard magazines. A label on the side reads "FOR MILITARY USE ONLY". The weight of the machine gun make it hard to wield easily. To assist with standardization, it also accepts 5.56x45mm and 7.62x39mm.
+=======
+  name: TCA MMG-68 "Grizzly" (6.8x52mm Caseless)
+  parent: [BaseWeaponLightMachineGun, BaseGunWieldable]
+  id: WeaponLMGGrizzly
+  description: A medium machine gun chambered in 6.8x52mm Caseless, accepts both box and standard magazines. A label on the side reads "FOR MILITARY USE ONLY". The weight of the machine gun make it hard to wield easily. To assist with standardization, it also accepts 5.56x45mm and 7.62x39mm.
+>>>>>>> parent of 7ad095cce6 (Merge pull request #14 from Wuffindy/cherrypick-ammo-debloat)
   components:
   - type: Sprite
     sprite: _Mono/Objects/Weapons/Guns/LMGs/grizzly/Grizzly-icon.rsi
