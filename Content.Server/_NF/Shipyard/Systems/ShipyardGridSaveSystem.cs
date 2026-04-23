@@ -361,44 +361,6 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds <see cref="SecretStashComponent"/> to any entity currently hidden inside a SecretStash on the target grid.
-    /// This satisfies the explicit requirement to "add secretstashcomponent to anything within the bluespace stash".
-    /// NOTE: This will grant those items stash-like behavior (verbs, extra container). If this becomes undesirable,
-    /// consider introducing a lightweight marker component instead and adjusting purge logic to check it.
-    /// </summary>
-    private void TagStashContents(EntityUid gridUid)
-    {
-        try
-        {
-            var tagged = 0;
-            var stashQuery = _entityManager.EntityQueryEnumerator<SecretStashComponent, TransformComponent>();
-            while (stashQuery.MoveNext(out var stashEnt, out var stashComp, out var xform))
-            {
-                if (xform.GridUid != gridUid)
-                    continue;
-                var hidden = stashComp.ItemContainer?.ContainedEntity;
-                if (hidden == null)
-                    continue;
-                // If already a stash, skip.
-                if (_secretStashQuery.HasComp(hidden.Value))
-                    continue;
-                // Dynamically add the component. OnInit won't run automatically here for networked comps
-                // when added at runtime; EnsureComp will construct and initialize it.
-                EnsureComp<SecretStashComponent>(hidden.Value);
-                tagged++;
-            }
-            /* if (tagged > 0)
-                _sawmill.Info($"TagStashContents: Added SecretStashComponent to {tagged} hidden item(s) on grid {gridUid}"); */
-        }
-        catch (Exception e)
-        {
-            _sawmill.Warning($"TagStashContents: Exception while tagging stash contents on grid {gridUid}: {e.Message}");
-        }
-    }
-
-
-
-    /// <summary>
     /// Cleans up broken device links where one or both linked entities no longer exist.
     /// Preserves valid links where both source and sink entities are still present.
     /// </summary>
