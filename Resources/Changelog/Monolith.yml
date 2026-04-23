@@ -19444,3 +19444,10 @@ Entries:
   id: 2145
   time: '2026-04-23T04:18:47.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/6
+- author: Triad-Sector
+  changes:
+    - type: Tweak
+      message: HTNs to make the auto pilot better
+  id: 2146
+  time: '2026-04-23T04:18:47.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/6
