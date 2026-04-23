@@ -165,30 +165,6 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
         }
     }
 
-    public void DeleteWhitelistedEntitiesOnGrid(EntityUid gridUid)
-    {
-        if (!_gridQuery.HasComp(gridUid))
-            return;
-
-        var proto = _prototypeManager.Index<ShipSaveEntityPrototype>("ShipSaveEntity");
-
-        var gridTransform = _transformQuery.GetComponent(gridUid);
-        var worldAABB = _lookup.GetWorldAABB(gridUid, gridTransform);
-
-        var ents = _lookup.GetEntitiesIntersecting(gridTransform.MapID, worldAABB);
-
-        foreach (var uid in ents)
-        {
-            if (uid == gridUid)
-                continue;
-
-            if (proto.Blacklist.IsValid())
-            {
-                QueueDel(uid);
-            }
-        }
-    }
-
     /// <summary>
     /// Checks if this grid obeys the limits for certain entities
     /// </summary>
@@ -277,7 +253,7 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             RemoveSerializationBlockingComponentsOnGrid(gridUid);
 
             // Triad: Removing all EdgeSpreaderComponent
-            RemoveEdgeSpreaderComponentsOnGrid(gridUid);
+            RemoveEdgeSpreaderComponentComponentsOnGrid(gridUid);
 
             //_sawmill.Info($"Serializing ship grid {gridUid} as '{shipName}' after transient purge using direct serialization");
 
@@ -364,7 +340,7 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
         }
     }
 
-    private void RemoveEdgeSpreaderComponentsOnGrid(EntityUid gridUid)
+    private void RemoveEdgeSpreaderComponentComponentsOnGrid(EntityUid gridUid)
     {
         var toRemove = new HashSet<EntityUid>();
 
