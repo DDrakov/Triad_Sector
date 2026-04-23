@@ -98,22 +98,22 @@ def get_last_changelog() -> str:
     session.headers["X-GitHub-Api-Version"] = "2022-11-28"
 
     most_recent = get_most_recent_workflow(session, github_repository, github_run)
-    print(most_recent)
-    head_commit = most_recent.get("head_commit")
-    if head_commit and head_commit.get("id"):
-        last_sha = head_commit["id"]
-    else:
-        last_sha = most_recent.get("head_sha")
+    if most_recent:
+        head_commit = most_recent.get("head_commit")
+        if head_commit and head_commit.get("id"):
+            last_sha = head_commit["id"]
+        else:
+            last_sha = most_recent.get("head_sha")
 
-    if not last_sha:
-        raise RuntimeError(f"Could not determine SHA from workflow run: {most_recent['id']}")
-    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog_stream = get_last_changelog_by_sha(
-        session, last_sha, github_repository
-    )
+        if not last_sha:
+            raise RuntimeError(f"Could not determine SHA from workflow run: {most_recent['id']}")
+        print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
+        last_changelog_stream = get_last_changelog_by_sha(
+            session, last_sha, github_repository
+        )
 
-    return last_changelog_stream
-
+        return last_changelog_stream
+    return False
 
 def get_last_changelog_by_sha(
     sess: requests.Session, sha: str, github_repository: str
