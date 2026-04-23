@@ -22,7 +22,7 @@ GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 DISCORD_SPLIT_LIMIT = 2000
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-CHANGELOG_FILE = "Resources/Changelog/Triad.yml" # Monolith
+CHANGELOG_FILE = "Resources/Changelog/Monolith.yml" # Monolith
 
 TYPES_TO_EMOJI = {"Fix": "🐛", "Add": "🆕", "Remove": "❌", "Tweak": "⚒️"}
 
@@ -96,15 +96,7 @@ def get_last_changelog() -> str:
     session.headers["X-GitHub-Api-Version"] = "2022-11-28"
 
     most_recent = get_most_recent_workflow(session, github_repository, github_run)
-    # Triad: trying to fix
-    head_commit = most_recent.get("head_commit")
-    if head_commit and head_commit.get("id"):
-        last_sha = head_commit["id"]
-    else:
-        last_sha = most_recent.get("head_sha")
-
-    if not last_sha:
-        raise RuntimeError(f"Could not determine SHA from workflow run: {most_recent['id']}")
+    last_sha = most_recent["head_commit"]["id"]
     print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
     last_changelog_stream = get_last_changelog_by_sha(
         session, last_sha, github_repository
