@@ -103,7 +103,7 @@ def get_last_changelog() -> str:
         last_sha = most_recent.get("head_sha")
 
     if not last_sha:
-    raise RuntimeError(f"Could not determine SHA from workflow run: {most_recent['id']}")
+        raise RuntimeError(f"Could not determine SHA from workflow run: {most_recent['id']}")
     print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
     last_changelog_stream = get_last_changelog_by_sha(
         session, last_sha, github_repository
