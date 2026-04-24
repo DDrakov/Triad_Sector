@@ -122,8 +122,8 @@
           prototype: SheetSteel10
           amount: 1
         - !type:SpawnPrototype
-          prototype: Silver
-          amount: 1
+          prototype: IngotSilver1
+          amount: 4
         - !type:EmptyAllContainers
         - !type:DeleteEntity
 
