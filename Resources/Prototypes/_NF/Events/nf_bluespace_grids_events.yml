@@ -20,8 +20,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-SyndicateWeaponsCache
-        minimumDistance: 3000 # Triad
-        maximumDistance: 6000 # Triad
+        minimumDistance: 5000 # Triad
+        maximumDistance: 10000 # Triad
         addComponents:
         - type: Gravity
           enabled: true
@@ -62,8 +62,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-SecureNTVault
-        minimumDistance: 3000 # Triad
-        maximumDistance: 6000 # Triad
+        minimumDistance: 5000 # Triad
+        maximumDistance: 10000 # Triad
         addComponents:
         - type: Gravity
           enabled: true
@@ -103,8 +103,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-SecureNTVault
-        minimumDistance: 3000 # Triad
-        maximumDistance: 6000 # Triad
+        minimumDistance: 5000 # Triad
+        maximumDistance: 10000 # Triad
         addComponents:
         - type: Gravity
           enabled: true
@@ -131,7 +131,7 @@
       path: /Audio/Misc/notice1.ogg
     warningAnnouncement: station-event-bluespace-generic-ftl-warning-announcement
     endAnnouncement: station-event-bluespace-generic-ftl-end-announcement
-    earliestStart: 80
+    earliestStart: 120 #Triad chance to show up after 2 hour
     minimumPlayers: 1
     weight: 1
     duration: 1800
@@ -142,8 +142,8 @@
       grid: !type:GridSpawnGroup
         nameLoc:
         - station-event-bluespace-name-UnidentifiedVessel
-        minimumDistance: 3000 # Triad
-        maximumDistance: 6000 # Triad
+        minimumDistance: 5000 # Triad
+        maximumDistance: 10000 # Triad
         addComponents:
         - type: IFF
           color: "#E10F9B"

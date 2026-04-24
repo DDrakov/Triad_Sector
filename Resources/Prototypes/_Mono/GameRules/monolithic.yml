@@ -21,8 +21,8 @@
         - mono-monolithic-event-name-MonolithicFragment
         minCount: 1
         maxCount: 1
-        minimumDistance: 3000
-        maximumDistance: 6000
+        minimumDistance: 3000 #Triad
+        maximumDistance: 7000 #Triad
         addComponents:
         - type: Gravity
           enabled: true

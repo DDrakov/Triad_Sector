@@ -323,7 +323,7 @@
     endAnnouncement: station-event-gas-leak-nf-end-announcement # Frontier: add nf-
     weight: 5
     earliestStart: 15 # Frontier
-    # reoccurrenceDelay: 60 # Triad: 1 hours
+    reoccurrenceDelay: 90 # Triad: 1 hour 30 minute
   - type: GasLeakRule
 
 # - type: entity

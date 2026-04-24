@@ -4,10 +4,9 @@
   id: CalmPestEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    # - id: SnailMigrationLowPop
-    # - id: CockroachMigration
-    # - id: MouseMigration
-      - id: BorerMigration #Triad
+    - id: SnailMigrationLowPop
+    - id: CockroachMigration
+    - id: MouseMigration
 
 - type: entityTable
   id: SpicyPestEventsTable
@@ -28,17 +27,18 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
-    duration: 50
+    duration: 30
+    reoccurrenceDelay: 120 # Triad - 2 hours
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.05 # Mono
-    - id: MobMouse1
-      prob: 0.05 # Mono
-    - id: MobMouse2
-      prob: 0.05 # Mono
-    - id: MobMouseCancer
       prob: 0.005 # Mono
+    - id: MobMouse1
+      prob: 0.005 # Mono
+    - id: MobMouse2
+      prob: 0.005 # Mono
+    - id: MobMouseCancer
+      prob: 0.0005 # Mono
     specialEntries: # Mono
     - id: MobCorticalBorer # Mono
       prob: 0.001 # Mono
@@ -59,11 +59,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.02
+      prob: 0.002
     - id: MobMouse1
-      prob: 0.02
+      prob: 0.002
     - id: MobMouse2
-      prob: 0.02
+      prob: 0.002
     - id: MobMouseCancer
       prob: 0.001
     specialEntries:
@@ -79,15 +79,16 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 6
-    duration: 50
+    duration: 30
+    reoccurrenceDelay: 120 # Triad - 2 hours
   - type: VentCrittersRule
     entries:
     - id: MobCockroach
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobMothroach
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     - id: MobRosyMothroach # Frontier
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     specialEntries: # Mono
     - id: MobCorticalBorer # Mono
       prob: 0.001 # Mono
@@ -102,14 +103,15 @@
       path: /Audio/Announcements/attention.ogg
     weight: 6
     duration: 50
+    reoccurrenceDelay: 120 # Triad - 2 hours  
   - type: VentCrittersRule
     entries:
     - id: MobSnail
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobSnailSpeed
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     - id: MobSnailMoth
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
 
 - type: entity
   id: SnailMigration
@@ -123,35 +125,17 @@
     weight: 6
     duration: 50
     minimumPlayers: 30
+    reoccurrenceDelay: 120 # Triad - 2 hours
   - type: VentCrittersRule
     entries:
     - id: MobSnail
-      prob: 0.05 # Mono
+      prob: 0.005 # Mono
     - id: MobSnailSpeed
-      prob: 0.005 # Mono
+      prob: 0.001 # Mono
     - id: MobSnailMoth
-      prob: 0.005 # Mono
+      prob: 0.001 # Mono
     - id: MobSnailInstantDeath
       prob: 0.00001 #  ~ 1:2000 snails
     specialEntries: # Mono
-    - id: MobCorticalBorer # Mono
-      prob: 0.001 # Mono
-
-#Triad addition
-- type: entity
-  id: BorerMigration
-  parent: BaseStationEventShortDelay
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-vent-creatures-nf-start-announcement # Frontier: add nf-
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    earliestStart: 15
-    weight: 6
-    duration: 50
-    reoccurrenceDelay: 25 # Triad - add a delay so its not spammed, 25 minute averaging about 2-3 events per hour
-  - type: VentCrittersRule
-    entries:
-    specialEntries: #Triad - Guarentees at least one borer spawn on event
     - id: MobCorticalBorer # Mono
       prob: 0.001 # Mono
