@@ -478,9 +478,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         EnsureComp<ShuttleComponent>(grid);
         EnsureComp<IFFComponent>(grid);
 
-        // Reset ship shield
-        RemComp<ShipShieldComponent>(grid);
-
         // Reset use delays on objects with the component so delays from previous rounds don't carry over
         TryResetUseDelays(grid);
 
