@@ -473,6 +473,12 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (!TryComp<ShuttleComponent>(grid, out var shuttleComponent))
             return false;
 
+        if (TryComp<ShipShieldedComponent>(grid, out var shielded))
+        {
+            TryQueueDel(shielded.Shield);
+            RemComp<ShipShieldedComponent>(grid);
+        }
+
         // Ensure required components for docking and identification
         EnsureComp<PhysicsComponent>(grid);
         EnsureComp<ShuttleComponent>(grid);
