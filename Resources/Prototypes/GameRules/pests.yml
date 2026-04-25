@@ -31,13 +31,13 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobMouse1
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobMouse2
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobMouseCancer
-      prob: 0.005 # Mono
+      prob: 0.0005 # Triad
     specialEntries: # Mono
     - id: MobCorticalBorer # Mono
       prob: 0.001 # Mono
@@ -58,11 +58,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobMouse
-      prob: 0.02
+      prob: 0.002 # Triad
     - id: MobMouse1
-      prob: 0.02
+      prob: 0.002 # Triad
     - id: MobMouse2
-      prob: 0.02
+      prob: 0.002 # Triad
     - id: MobMouseCancer
       prob: 0.001
     specialEntries:
@@ -82,11 +82,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobCockroach
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobMothroach
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     - id: MobRosyMothroach # Frontier
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     specialEntries: # Mono
     - id: MobCorticalBorer # Mono
       prob: 0.001 # Mono
@@ -104,11 +104,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobSnail
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobSnailSpeed
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     - id: MobSnailMoth
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
 
 - type: entity
   id: SnailMigration
@@ -125,11 +125,11 @@
   - type: VentCrittersRule
     entries:
     - id: MobSnail
-      prob: 0.05 # Mono
+      prob: 0.005 # Triad
     - id: MobSnailSpeed
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     - id: MobSnailMoth
-      prob: 0.005 # Mono
+      prob: 0.001 # Triad
     - id: MobSnailInstantDeath
       prob: 0.00001 #  ~ 1:2000 snails
     specialEntries: # Mono
