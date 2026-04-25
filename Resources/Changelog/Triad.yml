@@ -94,3 +94,14 @@ Entries:
   id: 2149
   time: '2026-04-25T06:01:33.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/12
+- author: Wuffindy
+  changes:
+    - type: Tweak
+      message: some grid related events may now spawn further away, up 10000 blocks
+    - type: Tweak
+      message: increased delay of most events, especially the ones that is too frequent
+    - type: Tweak
+      message: critter pests should be rarer now
+  id: 2150
+  time: '2026-04-25T12:53:41.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/7
