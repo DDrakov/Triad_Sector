@@ -27,8 +27,7 @@
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
     weight: 6
-    duration: 30
-    reoccurrenceDelay: 120 # Triad - 2 hours
+    duration: 50
   - type: VentCrittersRule
     entries:
     - id: MobMouse
@@ -79,8 +78,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 6
-    duration: 30
-    reoccurrenceDelay: 120 # Triad - 2 hours
+    duration: 50
   - type: VentCrittersRule
     entries:
     - id: MobCockroach
@@ -103,7 +101,6 @@
       path: /Audio/Announcements/attention.ogg
     weight: 6
     duration: 50
-    reoccurrenceDelay: 120 # Triad - 2 hours  
   - type: VentCrittersRule
     entries:
     - id: MobSnail
@@ -125,7 +122,6 @@
     weight: 6
     duration: 50
     minimumPlayers: 30
-    reoccurrenceDelay: 120 # Triad - 2 hours
   - type: VentCrittersRule
     entries:
     - id: MobSnail
