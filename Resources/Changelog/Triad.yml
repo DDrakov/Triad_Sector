@@ -67,3 +67,30 @@ Entries:
   id: 2148
   time: '2026-04-25T00:12:50.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/11
+- author: Triad-Sector
+  changes:
+    - type: Fix
+      message: >-
+        Flatpacks now use the collision of the flatpacked entity, so they can be
+        opened on tables and aren't blocked by ghosts.
+    - type: Tweak
+      message: Changed Sultan's shotgun sell price!
+    - type: Fix
+      message: Fixed a really easy little effort cash flow method!
+    - type: Fix
+      message: >-
+        ASM-220 torpedoes should be less likely to blow themselves or their own
+        launcher up now.
+    - type: Tweak
+      message: Sultan Pulsar no longer uses a static price, instead based off materials
+    - type: Tweak
+      message: >-
+        Autopulser capacity reduced, ADM version maxangle increased to match
+        asakim version
+    - type: Tweak
+      message: Tarantula update again, used the wrong file
+    - type: Tweak
+      message: Rules updated once again
+  id: 2149
+  time: '2026-04-25T06:01:33.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/12
