@@ -105,3 +105,17 @@ Entries:
   id: 2150
   time: '2026-04-25T12:53:41.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/7
+- author: Triad-Sector
+  changes:
+    - type: Fix
+      message: EVA helmet lights
+    - type: Fix
+      message: Fixed loadout UI windows having the wrong title.
+    - type: Add
+      message: >-
+        Small (5x5) and normal (7x7) sized nuclear-fission reactors for TSF,
+        PDV, USSP, CC, and Civilians. Currently not mapped anywhere, with
+        corresponding turbines (3x2 and 3x5).
+  id: 2151
+  time: '2026-04-26T01:46:20.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/14
