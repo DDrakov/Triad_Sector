@@ -156,3 +156,16 @@ Entries:
   id: 2154
   time: '2026-04-27T14:11:29.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/16
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed some security vulnerabilities regarding shipsaving.
+    - type: Add
+      message: Saving a ship now sends a radio message to shortband.
+    - type: Fix
+      message: >-
+        Fixed the shipyard console not updating the ID card in the console upon
+        saving the ship.
+  id: 2155
+  time: '2026-04-27T23:24:50.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/19
