@@ -2,6 +2,7 @@ using Content.Shared._NF.Shuttles.Save;
 using System.Threading.Tasks;
 using System.Linq;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.Save
 {
@@ -56,8 +57,10 @@ namespace Content.Client.Shuttles.Save
 
         public override void Initialize()
         {
-            // Reduced logging - only log if first instance or errors
             base.Initialize();
+
+            _sawmill = _log.GetSawmill("shipsave_file_management");
+
             SubscribeNetworkEvent<SendShipSaveDataClientMessage>(HandleSaveShipDataClient);
             SubscribeNetworkEvent<SendAvailableShipsMessage>(HandleAvailableShipsMessage);
             SubscribeNetworkEvent<ShipConvertedToSecureFormatMessage>(HandleShipConvertedToSecureFormat);
@@ -78,8 +81,6 @@ namespace Content.Client.Shuttles.Save
 
             // Request available ships from server
             RaiseNetworkEvent(new RequestAvailableShipsMessage());
-
-            _sawmill = _log.GetSawmill("shipsave_file_management");
         }
 
         private void EnsureSavedShipsDirectoryExists()
@@ -492,23 +493,23 @@ namespace Content.Client.Shuttles.Save
                 // Triad end
 
                 // Move the loaded ship file into /Exports/backup instead of deleting.
-                var originalPath = new Robust.Shared.Utility.ResPath(message.FilePath);
+                var originalPath = new ResPath(message.FilePath);
                 if (_resourceManager.UserData.Exists(originalPath))
                 {
                     // Ensure backup directory exists
-                    var backupDir = new Robust.Shared.Utility.ResPath("/Exports/backup");
+                    var backupDir = new ResPath("/Exports/backup");
                     _resourceManager.UserData.CreateDir(backupDir);
 
                     // Compute destination file path under backup directory
                     var fileName = ExtractFileNameWithoutExtension(message.FilePath);
                     // Reconstruct original extension (assumed .yml)
-                    var destBase = new Robust.Shared.Utility.ResPath($"/Exports/backup/{fileName}");
-                    var destinationPath = new Robust.Shared.Utility.ResPath(destBase.ToString() + ".yml");
+                    var destBase = new ResPath($"/Exports/backup/{fileName}");
+                    var destinationPath = new ResPath(destBase.ToString() + ".yml");
 
                     // If a file with the same name already exists in backup, append a timestamp
                     if (_resourceManager.UserData.Exists(destinationPath))
                     {
-                        var timestamped = new Robust.Shared.Utility.ResPath($"/Exports/backup/{fileName}_loaded_{DateTime.Now:yyyyMMdd_HHmmss}.yml");
+                        var timestamped = new ResPath($"/Exports/backup/{fileName}_loaded_{DateTime.Now:yyyyMMdd_HHmmss}.yml");
                         destinationPath = timestamped;
                     }
 
