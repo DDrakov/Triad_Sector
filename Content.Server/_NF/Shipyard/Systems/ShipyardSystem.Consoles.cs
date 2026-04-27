@@ -539,8 +539,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (TryComp<BankAccountComponent>(player, out var bankAcc))
             balance = bankAcc.Balance;
 
-        var fullName = GetFullName(deed);
-        RefreshState(uid, balance, true, fullName, 0, targetId, (ShipyardConsoleUiKey)args.UiKey, false);
+        RefreshState(uid, balance, true, null, 0, targetId, (ShipyardConsoleUiKey)args.UiKey, voucherUsed);
     }
 
     public void OnLoadMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsoleLoadMessage args)
