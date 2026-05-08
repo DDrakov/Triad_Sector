@@ -637,6 +637,23 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
 
         var shuttleUid = shuttleUidOut.Value;
+        // Remove all ShipShield entities from the loaded grid
+        var query = EntityQueryEnumerator<MetaDataComponent, TransformComponent>();
+
+        while (query.MoveNext(out var entUid, out var meta, out var xform))
+        {
+            // Only entities on this shuttle grid
+            if (xform.GridUid != shuttleUid)
+                continue;
+
+            // Must have a prototype
+            if (meta.EntityPrototype?.ID != "ShipShield")
+                continue;
+
+            Del(entUid);
+
+            Logger.Info($"Deleted ShipShield entity {ToPrettyString(entUid)} from loaded shuttle {ToPrettyString(shuttleUid)}");
+        }
         if (!TryComp<ShuttleComponent>(shuttleUid, out _))
         {
             ConsolePopup(player, Loc.GetString("shipyard-console-load-failed"));
