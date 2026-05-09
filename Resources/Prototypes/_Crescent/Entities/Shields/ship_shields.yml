@@ -5,3 +5,4 @@
   components:
   - type: ShipShield
   - type: ShipShieldVisuals
+  - type: SavingContraband
