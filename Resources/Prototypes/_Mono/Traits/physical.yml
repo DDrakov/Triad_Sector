@@ -446,13 +446,7 @@
   category: Physical
   cost: 6
   components:
-  - type: PlateletFactories
-    intervalSeconds: 1
-    damagePerInterval:
-      groups:
-        Brute: -1.5
-        Burn: -2
-    critMultiplier: .25
+
   conditions:
   - !type:HasTraitCondition
     trait: Hemophilia
@@ -466,10 +460,13 @@
   effects:
   - !type:AddCompsEffect
     components:
-    - type: PlateletFactories
-      intervalSeconds: 1
-      healPerSecond: .5
-      critMultiplier: .25
+      - type: PlateletFactories
+        intervalSeconds: 1
+        damagePerInterval:
+          groups:
+            Brute: -1.5
+            Burn: -2
+        critMultiplier: .25
 
 - type: trait
   id: NaniteRepairDrones
