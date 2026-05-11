@@ -478,11 +478,13 @@
   - !type:HasCompCondition
     component: BorgChassis
     invert: true
-  components:
-  - type: PlateletFactories
-    intervalSeconds: 1
-    damagePerInterval:
-      groups:
-        Brute: -1.5
-        Burn: -2
+  effects:
+    - !type:AddCompsEffect
+      components:
+        - type: PlateletFactories
+          intervalSeconds: 1
+          damagePerInterval:
+            groups:
+              Brute: -1.5
+              Burn: -2
 
