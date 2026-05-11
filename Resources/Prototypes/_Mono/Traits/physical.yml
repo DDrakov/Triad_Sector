@@ -463,7 +463,6 @@
         Brute: -1.5
         Burn: -2
     critMultiplier: .25
-  cost: 10
   conditions:
   - !type:HasTraitCondition
     trait: Hemophilia
