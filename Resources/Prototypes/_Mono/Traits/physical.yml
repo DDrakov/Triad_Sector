@@ -498,6 +498,4 @@
       groups:
         Brute: -1.5
         Burn: -2
-    - type: PlateletFactories
-      intervalSeconds: 1
-      healPerSecond: .5
+
