@@ -366,11 +366,6 @@
   description: trait-hardened-lymphocytes-desc
   category: Physical
   cost: 4
-  speciesBlacklist:
-  - IPC
-  blacklist:
-    components:
-    - BorgChassis
   components:
   - type: DamageProtectionBuff
     modifiers:
@@ -378,6 +373,13 @@
         id: HardenedLymphocytesTrait
         flatReductions:
           Radiation: 1
+  conditions:
+    - !type:HasCompCondition
+        component: BorgChassis
+        invert: true
+    - !type:IsSpeciesCondition
+        species: IPC
+        invert: true
   effects:
   - !type:AddCompsEffect
     components:
@@ -448,13 +450,6 @@
   description: trait-platelet-factories-desc
   category: Physical
   cost: 6
-  mutuallyExclusiveTraits:
-  - Hemophilia
-  speciesBlacklist:
-  - IPC
-  blacklist:
-    components:
-    - BorgChassis
   components:
   - type: PlateletFactories
     intervalSeconds: 1
@@ -469,6 +464,9 @@
     invert: true
   - !type:IsSpeciesCondition
     species: IPC
+    invert: true
+  - !type:HasCompCondition
+    component: BorgChassis
     invert: true
   effects:
   - !type:AddCompsEffect
