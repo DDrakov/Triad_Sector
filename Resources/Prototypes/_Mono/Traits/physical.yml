@@ -368,13 +368,6 @@
   description: trait-hardened-lymphocytes-desc
   category: Physical
   cost: 4
-  components:
-  - type: DamageProtectionBuff
-    modifiers:
-      dermal:
-        id: HardenedLymphocytesTrait
-        flatReductions:
-          Radiation: 1
   conditions:
     - !type:HasCompCondition
         component: BorgChassis
