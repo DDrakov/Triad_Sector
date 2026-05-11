@@ -348,17 +348,19 @@
   description: trait-dermal-armor-desc
   category: Physical
   cost: 6
-  components:
-  - type: DamageProtectionBuff
-    modifiers:
-      dermal:
-        id: DermalArmorTrait
-        coefficients:
-          Shock: 1.25
-        flatReductions:
-          Blunt: 3.5
-          Slash: 3.5
-          Piercing: 3.5
+  effects:
+  - !type:AddCompsEffect
+    components:
+    - type: DamageProtectionBuff
+      modifiers:
+        dermal:
+          id: DermalArmorTrait
+          coefficients:
+            Shock: 1.25
+          flatReductions:
+            Blunt: 3.5
+            Slash: 3.5
+            Piercing: 3.5
 
 - type: trait
   id: HardenedLymphocytes
