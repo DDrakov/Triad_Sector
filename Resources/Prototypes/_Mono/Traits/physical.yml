@@ -445,8 +445,6 @@
   description: trait-platelet-factories-desc
   category: Physical
   cost: 6
-  components:
-
   conditions:
   - !type:HasTraitCondition
     trait: Hemophilia
