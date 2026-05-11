@@ -485,10 +485,9 @@
   conditions:
   - !type:IsSpeciesCondition
     species: IPC
-  effects:
-  - !type:AddCompsEffect
-    components:
-    - BorgChassis
+  - !type:HasCompCondition
+    component: BorgChassis
+    invert: true
   components:
   - type: PlateletFactories
     intervalSeconds: 1
