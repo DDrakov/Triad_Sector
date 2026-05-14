@@ -5,6 +5,7 @@
   description: Data recorder from a drone. Contains valuable components.
   suffix: Drone Loot
   components:
+  - type: NFTreasure # Triad
   - type: RadarBlip
     radarColor: "#FFFF00"
     scale: 1
