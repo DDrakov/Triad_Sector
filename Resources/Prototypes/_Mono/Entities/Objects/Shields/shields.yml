@@ -14,7 +14,7 @@
         path: /Audio/Machines/button.ogg
         params:
           variation: 0.250
-      onActivate: false
+      onActivate: false # Triad
     - type: ItemToggleActiveSound
       activeSound:
         path: /Audio/Weapons/ebladehum.ogg
