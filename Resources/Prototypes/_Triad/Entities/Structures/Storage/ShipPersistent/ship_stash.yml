@@ -17,7 +17,7 @@
       - Store
       - Cash
       - Headset
-  - type: RadarBlip # Mono
+  - type: RadarBlip
     radarColor: "#e3ffea"
     scale: 1.5
     requireNoGrid: true
