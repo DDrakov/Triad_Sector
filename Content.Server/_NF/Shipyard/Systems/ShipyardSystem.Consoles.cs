@@ -551,7 +551,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
     public void OnLoadMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsoleLoadMessage args)
     {
-        var loadShipPrice = _configManager.GetCVar(Content.Shared._Triad.CCVar.TriadCCVars.LoadShipPrice);
+        var loadShipPrice = _configManager.GetCVar(TriadCCVars.LoadShipPrice);
 
         if (args.Actor is not { Valid: true } player)
             return;
