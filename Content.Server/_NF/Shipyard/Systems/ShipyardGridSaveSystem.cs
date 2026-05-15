@@ -30,7 +30,9 @@ using Robust.Shared.Utility;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 using Content.Server.Light.Components;
-using Content.Shared._Triad.Shipyard;
+using Content.Shared._Triad.Shipyard.Save; // Triad
+using Content.Shared._Triad.Shipyard.Load; // Triad
+using Content.Shared._Triad.Shipyard.Save.Contraband; // Triad
 using System.Linq;
 using Content.Shared.Containers;
 using Content.Shared.Doors.Components;
@@ -520,10 +522,11 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
                 if (!TryComp<ContainerFillComponent>(owner, out var containerFill) || containerFill.Containers.Count == 0)
                     return true; // To ensure airlocks that aren't prefilled don't have their door electronics deleted
             }
-            if (HasComp<NodeContainerComponent>(owner))
-                return true; // Preserve node contents, like atmos pipes' air
-            if (TryComp<PoweredLightComponent>(owner, out var light) && light.HasLampOnSpawn == null)
-                return true; // Preserve lights inside tubes if they don't refill on spawn
+            if (TryComp<PoweredLightComponent>(owner, out var light))
+            {
+                light.HasLampOnSpawn = null;
+                return true; // Preserve lights inside tubes and null their on spawn lamp
+            }
             current = owner;
         }
         return false;
