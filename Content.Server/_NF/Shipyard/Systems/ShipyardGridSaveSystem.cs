@@ -285,6 +285,9 @@ public sealed class ShipyardGridSaveSystem : EntitySystem
             // Remove repair data, it is re-added on load
             RemComp<ShipRepairDataComponent>(gridUid);
 
+            // Remove SpreaderGrid component from grid;
+            RemComp<SpreaderGridComponent>(gridUid);
+
             //_sawmill.Info($"Serializing ship grid {gridUid} as '{shipName}' after transient purge using direct serialization");
 
             // 1) Serialize the grid and its children to a MappingDataNode (engine-standard format)

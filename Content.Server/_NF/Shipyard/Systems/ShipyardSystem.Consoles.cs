@@ -551,6 +551,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
     public void OnLoadMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsoleLoadMessage args)
     {
+        var loadShipPrice = _configManager.GetCVar(Content.Shared._Triad.CCVar.TriadCCVars.LoadShipPrice);
+
         if (args.Actor is not { Valid: true } player)
             return;
 
@@ -644,9 +646,9 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        // Calculate appraisal cost for the loaded ship (charge 60% of appraisal)
+        // Calculate appraisal cost for the loaded ship from cvar loadShipPrice
         var fullAppraisal = _pricing.AppraiseGrid(shuttleUid, null);
-        var appraisalCost = (int)MathF.Round((float)fullAppraisal * 0.3f);
+        var appraisalCost = (int)MathF.Round((float)fullAppraisal * loadShipPrice);
 
         // Check if player has a bank account and session to charge them
         if (!_player.TryGetSessionByEntity(player, out var playerSession))
