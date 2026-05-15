@@ -4,7 +4,7 @@ using Robust.Shared.Configuration;
 namespace Content.Shared._Triad.CCVar;
 
 /// <summary>
-/// Configuration variables for HardLight-specific features
+/// Configuration variables for Triad features
 /// </summary>
 [CVarDefs]
 public sealed class TriadCCVars
