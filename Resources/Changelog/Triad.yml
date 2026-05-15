@@ -562,3 +562,10 @@ Entries:
   id: 2193
   time: '2026-05-14T20:53:49.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/73
+- author: DDrakov
+  changes:
+    - type: Tweak
+      message: Change 60% to 30% ship appraisal value for load price.
+  id: 2194
+  time: '2026-05-15T10:58:51.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/81
