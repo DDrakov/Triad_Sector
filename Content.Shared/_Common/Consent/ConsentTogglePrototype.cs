@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 /// automatically.
 /// </summary>
 [Prototype("consentToggle")]
-public sealed partial class ConsentTogglePrototype : IPrototype, IComparable
+public sealed partial class ConsentTogglePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
