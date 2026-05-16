@@ -77,16 +77,16 @@ public sealed class ServerConsentManager : IServerConsentManager
 
     public async Task LoadData(ICommonSession session, CancellationToken cancel)
     {
-        var consent2 = new ConsentSettings();
+        var consent = new ConsentSettings();
         if (ShouldStoreInDb(session.AuthType))
         {
-            consent2 = await _db.GetPlayerConsentSettingsAsync(session.UserId);
+            consent = await _db.GetPlayerConsentSettingsAsync(session.UserId);
         }
 
-        consent2.ToPlayerConsentSettings().EnsureValid(_configManager, _prototypeManager);
-        _consent[session.UserId] = consent2;
+        consent.ToPlayerConsentSettings().EnsureValid(_configManager, _prototypeManager);
+        _consent[session.UserId] = consent;
 
-        var message = new MsgUpdateConsent() { Consent = consent2.ToPlayerConsentSettings() };
+        var message = new MsgUpdateConsent() { Consent = consent.ToPlayerConsentSettings() };
         _netManager.ServerSendMessage(message, session.Channel);
     }
 

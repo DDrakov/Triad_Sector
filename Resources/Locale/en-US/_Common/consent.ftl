@@ -13,6 +13,9 @@ consent-window-toggles-label = Mechanics toggles
 consent-window-unsaved-changes = You have unsaved changes
 consent-window-char-limit-warning = Character limit exceeded ({$length} / {$maxLength})
 
+# Guidebook
+reagent-effect-condition-guidebook-consent-condition = the target has consented to "{ $consent }"
+
 # Verb
 consent-examine-verb = Consent Info
 consent-examine-not-set = This player has no consent preferences set. Ask for consent first before engaging in any erotic roleplay.

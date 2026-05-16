@@ -31,7 +31,9 @@ public sealed class ConsentSystem : SharedConsentSystem
             string? newState = consentSettings.Toggles.GetValueOrDefault(protoId);
 
             if (oldState == newState)
+            {
                 continue;
+            }
 
             var ev = new EntityConsentToggleUpdatedEvent
             {

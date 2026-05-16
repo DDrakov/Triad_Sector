@@ -88,5 +88,4 @@ public abstract partial class SharedConsentSystem : EntitySystem
 
         return message;
     }
-
 }

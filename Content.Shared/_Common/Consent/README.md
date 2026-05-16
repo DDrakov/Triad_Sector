@@ -37,3 +37,5 @@ Server.ConsentSystem:
 - Add read recipes, displaying a red dot if the text has changed since you last read it.
 - Allow a limited set of markup tags in the consent text.
 - Add an event that's raised when an entity changes one of its consent toggles.
+- Allow markup in consent toggle name/description.
+- Add ConsentCondition for entity/reagent effects.
