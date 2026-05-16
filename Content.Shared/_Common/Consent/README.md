@@ -36,3 +36,4 @@ Server.ConsentSystem:
 - Add a new ConsentComponent, to allow for client prediction and for non-player entities to have consent settings.
 - Add read recipes, displaying a red dot if the text has changed since you last read it.
 - Allow a limited set of markup tags in the consent text.
+- Add an event that's raised when an entity changes one of its consent toggles.

@@ -6,6 +6,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server._Common.Consent;
 
@@ -20,6 +21,31 @@ public sealed class ConsentSystem : SharedConsentSystem
         SubscribeLocalEvent<MindComponent, MindGotAddedEvent>(OnMindGotAdded);
         SubscribeLocalEvent<ConsentComponent, MindRemovedMessage>(OnMindRemoved);
         _consentManager.OnConsentUpdated += OnConsentUpdated;
+    }
+
+    private void UpdateConsent(Entity<ConsentComponent> ent, PlayerConsentSettings consentSettings)
+    {
+        foreach (var protoId in ent.Comp.ConsentSettings.Toggles.Keys.Union(consentSettings.Toggles.Keys))
+        {
+            string? oldState = ent.Comp.ConsentSettings.Toggles.GetValueOrDefault(protoId);
+            string? newState = consentSettings.Toggles.GetValueOrDefault(protoId);
+
+            if (oldState == newState)
+                continue;
+
+            var ev = new EntityConsentToggleUpdatedEvent
+            {
+                Ent = ent,
+                ConsentToggleProtoId = protoId,
+                OldState = oldState,
+                NewState = newState,
+            };
+
+            RaiseLocalEvent(ent, ref ev);
+        }
+
+        ent.Comp.ConsentSettings = consentSettings;
+        Dirty(ent);
     }
 
     private void OnMindGotAdded(Entity<MindComponent> ent, ref MindGotAddedEvent args)
@@ -39,8 +65,7 @@ public sealed class ConsentSystem : SharedConsentSystem
     private void OnMindRemoved(Entity<ConsentComponent> ent, ref MindRemovedMessage args)
     {
         // Clear consent data when the mind leaves the body.
-        ent.Comp.ConsentSettings = new();
-        Dirty(ent);
+        UpdateConsent(ent, new());
     }
 
     private void OnConsentUpdated(ICommonSession session, PlayerConsentSettings consentSettings)
@@ -53,13 +78,7 @@ public sealed class ConsentSystem : SharedConsentSystem
 
         Log.Debug("Consent settings updated by entity with uid: " + uid);
 
-        if (TryComp<ConsentComponent>(uid, out var consentComponent))
-        {
-            Log.Debug("Consent comp updated!");
-            consentComponent.ConsentSettings = consentSettings;
-            Dirty(uid, consentComponent);
-        }
-        else
+        if (!TryComp<ConsentComponent>(uid, out var consentComponent))
         {
             // Consent comp got removed, or never got added in OnMindGotAdded ???
             // This should never happen. Could be sign of a critical bug, or an admin deleting ConsentComponent.
@@ -67,9 +86,9 @@ public sealed class ConsentSystem : SharedConsentSystem
 
             Log.Warning($"Missing ConsentComponent on player-controlled entity {uid}. Adding it.");
             consentComponent = EnsureComp<ConsentComponent>(uid);
-            consentComponent.ConsentSettings = consentSettings;
-            Dirty(uid, consentComponent);
         }
+
+        UpdateConsent((uid, consentComponent), consentSettings);
     }
 
     protected override bool ConsentTextUpdatedSinceLastRead(Entity<ConsentComponent> targetEnt, EntityUid readerUid)
