@@ -27,14 +27,15 @@ using Content.Shared.Chat;
 using Content.Shared.IoC;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Client.Shuttles.Save;
 
 namespace Content.Client.IoC
 {
     internal static class ClientContentIoC
     {
-        public static void Register(IDependencyCollection collection)
+        public static void Register()
         {
-            SharedContentIoC.Register(collection);
+            var collection = IoCManager.Instance!;
             collection.Register<IParallaxManager, ParallaxManager>();
             collection.Register<GeneratedParallaxCache>();
             collection.Register<IChatManager, ChatManager>();
@@ -63,7 +64,7 @@ namespace Content.Client.IoC
             collection.Register<PlayerRateLimitManager>();
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
-            collection.Register<ClientsidePlaytimeTrackingManager>();
+            collection.Register<ShipFileManagementSystem>();
         }
     }
 }

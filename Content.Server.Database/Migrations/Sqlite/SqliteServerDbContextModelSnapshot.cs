@@ -328,6 +328,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("short_name");
+
                     b.HasKey("Id")
                         .HasName("PK_admin_rank");
 
@@ -852,6 +857,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("construction_favorites");
 
+                    b.Property<int>("MonoCoins")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("mono_coins");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("INTEGER")
                         .HasColumnName("selected_character_slot");
@@ -880,10 +889,19 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("age");
 
+                    b.Property<int>("BankBalance")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("bank_balance");
+
                     b.Property<string>("CharacterName")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("char_name");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("company");
 
                     b.Property<string>("EyeColor")
                         .IsRequired()
@@ -920,6 +938,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("hair_name");
 
+                    b.Property<float>("Height")
+                        .HasColumnType("REAL")
+                        .HasColumnName("height");
+
                     b.Property<byte[]>("Markings")
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
@@ -954,6 +976,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("species");
+
+                    b.Property<float>("Width")
+                        .HasColumnType("REAL")
+                        .HasColumnName("width");
 
                     b.HasKey("Id")
                         .HasName("PK_profile");

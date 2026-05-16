@@ -15,6 +15,10 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.FocusChat);
             common.AddFunction(ContentKeyFunctions.FocusLocalChat);
             common.AddFunction(ContentKeyFunctions.FocusEmote);
+            // Floofstation section
+            common.AddFunction(ContentKeyFunctions.FocusSubtle);
+            common.AddFunction(ContentKeyFunctions.FocusSubtleOOC);
+            // Floofstation section end
             common.AddFunction(ContentKeyFunctions.FocusWhisperChat);
             common.AddFunction(ContentKeyFunctions.FocusRadio);
             common.AddFunction(ContentKeyFunctions.FocusLOOC);
@@ -34,6 +38,8 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.RotateStoredItem);
             common.AddFunction(ContentKeyFunctions.SaveItemLocation);
             common.AddFunction(ContentKeyFunctions.Point);
+            common.AddFunction(ContentKeyFunctions.ToggleStanding); // WD EDIT
+            common.AddFunction(ContentKeyFunctions.ToggleFocus); // Mono
             common.AddFunction(ContentKeyFunctions.ZoomOut);
             common.AddFunction(ContentKeyFunctions.ZoomIn);
             common.AddFunction(ContentKeyFunctions.ResetZoom);
@@ -55,14 +61,14 @@ namespace Content.Client.Input
             human.AddFunction(EngineKeyFunctions.MoveLeft);
             human.AddFunction(EngineKeyFunctions.MoveRight);
             human.AddFunction(EngineKeyFunctions.Walk);
-            human.AddFunction(ContentKeyFunctions.ToggleKnockdown);
             human.AddFunction(ContentKeyFunctions.SwapHands);
-            human.AddFunction(ContentKeyFunctions.SwapHandsReverse);
+            human.AddFunction(ContentKeyFunctions.SwapHandsPrevious); // Frontier
             human.AddFunction(ContentKeyFunctions.Drop);
             human.AddFunction(ContentKeyFunctions.UseItemInHand);
             human.AddFunction(ContentKeyFunctions.AltUseItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
             human.AddFunction(ContentKeyFunctions.OpenEmotesMenu);
+            human.AddFunction(ContentKeyFunctions.OpenLanguageMenu); // Einstein Engines - Language
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
             human.AddFunction(ContentKeyFunctions.AltActivateItemInWorld);
@@ -73,8 +79,31 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
             human.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
             human.AddFunction(ContentKeyFunctions.SmartEquipBelt);
+            human.AddFunction(ContentKeyFunctions.SmartEquipPocket1);
+            human.AddFunction(ContentKeyFunctions.SmartEquipPocket2);
+            human.AddFunction(ContentKeyFunctions.SmartEquipSuitStorage);
+            human.AddFunction(ContentKeyFunctions.SmartEquipWallet); // Frontier
+            // Mono Edit
+            human.AddFunction(ContentKeyFunctions.SmartEquipID);
+            human.AddFunction(ContentKeyFunctions.SmartEquipShoes);
+            human.AddFunction(ContentKeyFunctions.SmartEquipOuterClothing);
+            human.AddFunction(ContentKeyFunctions.EquipBackpack);
+            human.AddFunction(ContentKeyFunctions.EquipBelt);
+            human.AddFunction(ContentKeyFunctions.EquipPocket1);
+            human.AddFunction(ContentKeyFunctions.EquipPocket2);
+            human.AddFunction(ContentKeyFunctions.EquipSuitStorage);
+            human.AddFunction(ContentKeyFunctions.EquipWallet);
+            human.AddFunction(ContentKeyFunctions.EquipID);
+            // Mono End
             human.AddFunction(ContentKeyFunctions.OpenBackpack);
             human.AddFunction(ContentKeyFunctions.OpenBelt);
+            // Mono
+            human.AddFunction(ContentKeyFunctions.OpenPocket1);
+            human.AddFunction(ContentKeyFunctions.OpenPocket2);
+            human.AddFunction(ContentKeyFunctions.OpenSuitStorage);
+            human.AddFunction(ContentKeyFunctions.OpenOuterClothing);
+            // Mono End
+            human.AddFunction(ContentKeyFunctions.OpenWallet); // Frontier
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
             human.AddFunction(ContentKeyFunctions.RotateObjectClockwise);
             human.AddFunction(ContentKeyFunctions.RotateObjectCounterclockwise);
@@ -86,6 +115,18 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.Arcade1);
             human.AddFunction(ContentKeyFunctions.Arcade2);
             human.AddFunction(ContentKeyFunctions.Arcade3);
+            // Shitmed Change Start - TODO: Add hands, feet and groin targeting.
+            human.AddFunction(ContentKeyFunctions.TargetHead);
+            human.AddFunction(ContentKeyFunctions.TargetTorso);
+            human.AddFunction(ContentKeyFunctions.TargetLeftArm);
+            human.AddFunction(ContentKeyFunctions.TargetLeftHand);
+            human.AddFunction(ContentKeyFunctions.TargetRightArm);
+            human.AddFunction(ContentKeyFunctions.TargetRightHand);
+            human.AddFunction(ContentKeyFunctions.TargetLeftLeg);
+            human.AddFunction(ContentKeyFunctions.TargetLeftFoot);
+            human.AddFunction(ContentKeyFunctions.TargetRightLeg);
+            human.AddFunction(ContentKeyFunctions.TargetRightFoot);
+            // Shitmed Change End
 
             // actions should be common (for ghosts, mobs, etc)
             common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
@@ -102,7 +143,7 @@ namespace Content.Client.Input
             aghost.AddFunction(EngineKeyFunctions.MoveRight);
             aghost.AddFunction(EngineKeyFunctions.Walk);
             aghost.AddFunction(ContentKeyFunctions.SwapHands);
-            aghost.AddFunction(ContentKeyFunctions.SwapHandsReverse);
+            aghost.AddFunction(ContentKeyFunctions.SwapHandsPrevious); // Frontier
             aghost.AddFunction(ContentKeyFunctions.Drop);
             aghost.AddFunction(ContentKeyFunctions.UseItemInHand);
             aghost.AddFunction(ContentKeyFunctions.AltUseItemInHand);

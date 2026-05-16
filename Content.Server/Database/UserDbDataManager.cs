@@ -53,8 +53,6 @@ public sealed class UserDbDataManager : IPostInjectInit
         data.Cancel.Cancel();
         data.Cancel.Dispose();
 
-        _consent.OnClientDisconnected(session); // Floofstation
-
         foreach (var onDisconnect in _onPlayerDisconnect)
         {
             onDisconnect(session);

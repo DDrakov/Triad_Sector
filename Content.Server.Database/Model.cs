@@ -424,6 +424,7 @@ namespace Content.Server.Database
         public Guid UserId { get; set; }
         public int SelectedCharacterSlot { get; set; }
         public string AdminOOCColor { get; set; } = null!;
+        public int MonoCoins { get; set; } = 0;
         public List<string> ConstructionFavorites { get; set; } = new();
         public List<Profile> Profiles { get; } = new();
     }
@@ -435,6 +436,7 @@ namespace Content.Server.Database
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         public string FlavorText { get; set; } = null!;
         public int Age { get; set; }
+        public int BankBalance { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string Species { get; set; } = null!;
@@ -445,6 +447,8 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
+        public float Height { get; set; } = 1.0f;
+        public float Width { get; set; } = 1.0f;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
@@ -453,6 +457,8 @@ namespace Content.Server.Database
         public List<ProfileRoleLoadout> Loadouts { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
+
+        public string Company { get; set; } = "None";
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
@@ -735,6 +741,7 @@ namespace Content.Server.Database
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
+        public string ShortName { get; set; } = default!; // Mono
 
         public List<Admin> Admins { get; set; } = default!;
         public List<AdminRankFlag> Flags { get; set; } = default!;
@@ -1068,17 +1075,18 @@ namespace Content.Server.Database
         Whitelist = 1,
         Full = 2,
         Panic = 3,
+        Connected = 4, // Frontier
         /*
          * If baby jail is removed, please reserve this value for as long as can reasonably be done to prevent causing ambiguity in connection denial reasons.
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          *
          * Edit: It has
          */
-        BabyJail = 4,
+        BabyJail = 5, // Frontier: 4<5
         /// Results from rejected connections with external API checking tools
-        IPChecks = 5,
+        IPChecks = 6, // Frontier: 5<6
         /// Results from rejected connections who are authenticated but have no modern hwid associated with them.
-        NoHwid = 6
+        NoHwid = 7 // Frontier: 6<7
     }
 
     public class ServerBanHit

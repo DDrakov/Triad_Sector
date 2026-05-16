@@ -38,6 +38,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
+using Content.Client._NF.Emp.Overlays; // Frontier
 
 namespace Content.Client.Entry
 {
@@ -77,21 +78,18 @@ namespace Content.Client.Entry
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
-        public override void PreInit()
+        public override void Init()
         {
-            ClientContentIoC.Register(Dependencies);
+            ClientContentIoC.Register();
 
             foreach (var callback in TestingCallbacks)
             {
                 var cast = (ClientModuleTestingCallbacks) callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
-        }
 
-        public override void Init()
-        {
-            Dependencies.BuildGraph();
-            Dependencies.InjectDependencies(this);
+            IoCManager.BuildGraph();
+            IoCManager.InjectDependencies(this);
 
             _contentLoc.Initialize();
             _componentFactory.DoAutoRegistrations();
@@ -169,6 +167,7 @@ namespace Content.Client.Entry
 
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
+            _overlayManager.AddOverlay(new EmpBlastOverlay()); // Frontier
             _chatManager.Initialize();
             _clientConsentManager.Initialize();
             _clientPreferencesManager.Initialize();

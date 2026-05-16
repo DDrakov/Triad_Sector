@@ -350,6 +350,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("short_name");
+
                     b.HasKey("Id")
                         .HasName("PK_admin_rank");
 
@@ -905,6 +910,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text[]")
                         .HasColumnName("construction_favorites");
 
+                    b.Property<int>("MonoCoins")
+                        .HasColumnType("integer")
+                        .HasColumnName("mono_coins");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("integer")
                         .HasColumnName("selected_character_slot");
@@ -935,10 +944,19 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("age");
 
+                    b.Property<int>("BankBalance")
+                        .HasColumnType("integer")
+                        .HasColumnName("bank_balance");
+
                     b.Property<string>("CharacterName")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("char_name");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("company");
 
                     b.Property<string>("EyeColor")
                         .IsRequired()
@@ -975,6 +993,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("hair_name");
 
+                    b.Property<float>("Height")
+                        .HasColumnType("real")
+                        .HasColumnName("height");
+
                     b.Property<JsonDocument>("Markings")
                         .HasColumnType("jsonb")
                         .HasColumnName("markings");
@@ -1009,6 +1031,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("species");
+
+                    b.Property<float>("Width")
+                        .HasColumnType("real")
+                        .HasColumnName("width");
 
                     b.HasKey("Id")
                         .HasName("PK_profile");
