@@ -4,7 +4,9 @@ using System;
 using Robust.Shared.Prototypes;
 
 /// <summary>
-/// TODO
+/// A mechanic that can be toggled on/off by the player via the consent menu,
+/// defaulting to "off." Consent toggles defined in yaml are added to the menu
+/// automatically.
 /// </summary>
 [Prototype("consentToggle")]
 public sealed partial class ConsentTogglePrototype : IPrototype, IComparable
@@ -12,22 +14,18 @@ public sealed partial class ConsentTogglePrototype : IPrototype, IComparable
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("category")]
-    public string Category { get; private set; } = "";
+    /// <summary>
+    /// The name of the consent toggle as specified in yaml. This can be
+    /// overridden in Fluent with "consent-ID = Consent toggle name" where ID
+    /// is the prototype ID.
+    /// </summary>
+    [DataField]
+    public string Name = default!;
 
-    [DataField("priority")]
-    public int priority { get; private set; } = 0;
-
-    public int CompareTo(object? obj) { // Allow for granular sorting to make the menu display consistently and intuitively
-        if (obj is not ConsentTogglePrototype other)
-            return -1;
-
-        var cat = this.Category.CompareTo(other.Category);
-        if (cat != 0)
-            return cat; // Categories are different, sort by category
-        if (this.priority != other.priority)
-            return this.priority - other.priority; // Priorities are different, sort by priority
-
-        return this.ID.CompareTo(other.ID); // Category and priority are the same, sort by ID
-    }
+    /// <summary>
+    /// The description of the toggle as specified in yaml. Can be overridden
+    /// similarly to Name with "consent-ID.desc".
+    /// </summary>
+    [DataField]
+    public string Description = default!;
 }

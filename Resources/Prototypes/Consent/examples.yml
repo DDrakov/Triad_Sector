@@ -1,7 +1,9 @@
 - type: consentToggle
   id: Example1
-  name: consent-example1
+  name: Example consent toggle
+  description: This is just here as an example for how to add consent toggles.
 
 - type: consentToggle
   id: Example2
-  name: consent-example2
+  name: Another example toggle
+  description: A

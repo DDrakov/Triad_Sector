@@ -17,6 +17,9 @@ consent-window-char-limit-warning = Character limit exceeded ({$length} / {$maxL
 consent-examine-verb = Consent Info
 consent-examine-not-set = This player has no consent preferences set. Ask for consent first before engaging in any erotic roleplay.
 
-# Consent toggles
-consent-Example-name = Example Consent Toggle
-consent-Example-desc = This is just here as an example for how to add consent toggles.
+# To localize consent toggle names and descriptions into other languages,
+# make a new .ftl file like this:
+#consent-Example1 = Example consent toggle
+#    .desc = This is just here as an example for how to add consent toggles.
+#consent-Example2 = Another example toggle
+#    .desc = A

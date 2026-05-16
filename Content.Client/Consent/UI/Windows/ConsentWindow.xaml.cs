@@ -1,3 +1,4 @@
+using Content.Client.Consent.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Floofstation.FSCVars; // Flooftier
 using Content.Shared.Consent;
@@ -16,8 +17,9 @@ public sealed partial class ConsentWindow : FancyWindow
 {
     [Dependency] private readonly IClientConsentManager _consentManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    private readonly List<EntryState> _entries = new();
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private List<ConsentToggleControl> ConsentToggles = new();
 
     public ConsentWindow()
     {
@@ -30,12 +32,20 @@ public sealed partial class ConsentWindow : FancyWindow
             _consentManager.UpdateConsent(GetSettings());
         };
 
+        ConsentFreetext.Placeholder = new Rope.Leaf(Loc.GetString("consent-window-freetext-placeholder"));
+        ConsentFreetext.OnTextChanged += _ => UnsavedChanges();
+
+        foreach (var toggle in _prototypeManager.EnumeratePrototypes<ConsentTogglePrototype>())
+        {
+            var toggleControl = new ConsentToggleControl(toggle);
+            ConsentSettings.Children.Add(toggleControl);
+            toggleControl.OnStateChange += _ => UnsavedChanges();
+            ConsentToggles.Add(toggleControl);
+        }
+
         _consentManager.OnServerDataLoaded += UpdateUi;
         if (_consentManager.HasLoaded)
             UpdateUi();
-
-        ConsentFreetext.Placeholder = new Rope.Leaf(Loc.GetString("consent-window-freetext-placeholder"));
-        ConsentFreetext.OnTextChanged += _ => UnsavedChanges();
     }
 
     private PlayerConsentSettings GetSettings()
@@ -43,10 +53,9 @@ public sealed partial class ConsentWindow : FancyWindow
         var text = Rope.Collapse(ConsentFreetext.TextRope);
         var toggles = new Dictionary<ProtoId<ConsentTogglePrototype>, string>();
 
-        foreach (var entry in _entries)
+        foreach (var toggleControl in ConsentToggles)
         {
-            if (entry.Button != null && entry.Button.Pressed)
-                toggles[entry.Consent.ID] = "on";
+            toggles[toggleControl.ConsentToggleProtoId] = toggleControl.State;
         }
 
         return new(text, toggles);
@@ -101,60 +110,19 @@ public sealed partial class ConsentWindow : FancyWindow
         buttonOn.OnPressed += _ => ButtonOnPress(buttonOn, buttonOff);
 
         var consent = _consentManager.GetConsent();
-        foreach (var toggle in consent.Toggles)
-        {
-            if (toggle.Key == prototype.ID && toggle.Value == "on")
-            {
-                buttonOn.Pressed = true;
-                buttonOff.Pressed = false;
-                continue;
-            }
-        }
-
-        header.AddChild(name);
-        header.AddChild(buttonOff);
-        header.AddChild(buttonOn);
-
-        container.AddChild(header);
-
-        var desc = new Label
-        {
-            Text = Loc.GetString($"consent-{prototype.ID}-desc"),
-        };
-
-        container.AddChild(desc);
-
-        var wrapper = new PanelContainer();
-        wrapper.StyleClasses.Add("PdaBorderRect");
-
-        wrapper.AddChild(container);
-        ConsentList.AddChild(wrapper);
-
-        _entries.Add(state);
-    }
-
-    private void ButtonOnPress(Button currentButton, Button otherbutton)
-    {
-        currentButton.Pressed = true;
-        otherbutton.Pressed = false;
-        UnsavedChanges();
-    }
-
-    public void UpdateUi()
-    {
-        var consent = _consentManager.GetConsent();
-
         ConsentFreetext.TextRope = new Rope.Leaf(consent.Freetext);
 
-        if (ConsentList.ChildCount > 0)
-            ConsentList.RemoveAllChildren();
-        _entries.Clear();
-
-        var consentprototypelist = _protoManager.EnumeratePrototypes<ConsentTogglePrototype>().ToList();
-        consentprototypelist.Sort();
-
-        foreach (var prototype in consentprototypelist)
-            AddConsentEntry(prototype);
+        foreach (var toggleControl in ConsentToggles)
+        {
+            if (consent.Toggles.TryGetValue(toggleControl.ConsentToggleProtoId, out var toggle))
+            {
+                toggleControl.SetState(toggle);
+            }
+            else
+            {
+                toggleControl.SetState("off");
+            }
+        }
 
         SaveConsentSettings.Disabled = true;
         SaveLabel.Text = "";
