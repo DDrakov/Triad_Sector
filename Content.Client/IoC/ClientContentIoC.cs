@@ -1,4 +1,3 @@
-using Content.Client._Common.Consent; // Consent system
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -38,7 +37,6 @@ namespace Content.Client.IoC
             collection.Register<IParallaxManager, ParallaxManager>();
             collection.Register<GeneratedParallaxCache>();
             collection.Register<IChatManager, ChatManager>();
-            collection.Register<IClientConsentManager, ClientConsentManager>(); // Consent system
             collection.Register<ISharedChatManager, ChatManager>();
             collection.Register<IClientPreferencesManager, ClientPreferencesManager>();
             collection.Register<IStylesheetManager, StylesheetManager>();

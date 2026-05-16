@@ -60,7 +60,6 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenPocket2 = "OpenPocket2";
         public static readonly BoundKeyFunction OpenSuitStorage = "OpenSuitStorage";
         public static readonly BoundKeyFunction OpenOuterClothing = "OpenOuterClothing";
-        public static readonly BoundKeyFunction OpenConsentWindow = "OpenConsentWindow"; // Floofstation
         // Mono End
         public static readonly BoundKeyFunction OpenWallet = "OpenWallet"; // Frontier
         public static readonly BoundKeyFunction OpenAHelp = "OpenAHelp";
