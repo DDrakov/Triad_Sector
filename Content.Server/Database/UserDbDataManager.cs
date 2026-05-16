@@ -52,13 +52,14 @@ public sealed class UserDbDataManager : IPostInjectInit
 
         data.Cancel.Cancel();
         data.Cancel.Dispose();
-        
+
         _consent.OnClientDisconnected(session); // Floofstation
 
         foreach (var onDisconnect in _onPlayerDisconnect)
         {
             onDisconnect(session);
         }
+        _consent.OnClientDisconnected(session); //TODO: use new AddOnPlayerDisconnect in consent manager instead?
     }
 
     private async Task Load(ICommonSession session, CancellationToken cancel)
@@ -73,7 +74,7 @@ public sealed class UserDbDataManager : IPostInjectInit
             {
                 tasks.Add(action(session, cancel));
             }
-            
+
             tasks.Add(_consent.LoadData(session, cancel)); // Floofstation
 
             await Task.WhenAll(tasks);
@@ -106,6 +107,9 @@ public sealed class UserDbDataManager : IPostInjectInit
             // We throw a OperationCanceledException so users of WaitLoadComplete() always see cancellation here.
             throw new OperationCanceledException("Load of user data cancelled due to unknown error");
         }
+        await Task.WhenAll(
+            _consent.LoadData(session, cancel) // TODO: use the new AddOnLoadPlayer instead, that was added in #28085
+        );
     }
 
     /// <summary>

@@ -1077,7 +1077,7 @@ namespace Content.Server.Database
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
-        
+
         // Frontier: ghost role DB ops
         public Task AddGhostRoleWhitelist(Guid player, ProtoId<GhostRolePrototype> ghostRole)
         {
@@ -1142,6 +1142,18 @@ namespace Content.Server.Database
                     handler(notification);
                 }
             }
+        }
+
+        public Task SavePlayerConsentSettingsAsync(NetUserId userId, PlayerConsentSettings consentSettings)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SavePlayerConsentSettingsAsync(userId, consentSettings));
+        }
+
+        public Task<PlayerConsentSettings> GetPlayerConsentSettingsAsync(NetUserId userId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetPlayerConsentSettingsAsync(userId));
         }
 
         // Wrapper functions to run DB commands from the thread pool.

@@ -2,7 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.DebugMon;
-using Content.Client.Consent; // Floofstation
+using Content.Client.Consent;
 using Content.Client.Eui;
 using Content.Client.Fullscreen;
 using Content.Client.GameTicking.Managers;
@@ -15,6 +15,7 @@ using Content.Client.Lobby;
 using Content.Client.MainMenu;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Playtime;
 using Content.Client.Radiation.Overlays;
 using Content.Client.Replay;
 using Content.Client.Screenshot;
@@ -38,7 +39,6 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 using Robust.Shared.Timing;
-using Content.Client._NF.Emp.Overlays; // Frontier
 
 namespace Content.Client.Entry
 {
@@ -58,10 +58,10 @@ namespace Content.Client.Entry
         [Dependency] private readonly ChangelogManager _changelogManager = default!;
         [Dependency] private readonly ViewportManager _viewportManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IClientConsentManager _clientConsentManager = default!; // Floofstation
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IClientConsentManager _clientConsentManager = default!;
         [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
@@ -77,19 +77,23 @@ namespace Content.Client.Entry
         [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly ClientsidePlaytimeTrackingManager _clientsidePlaytimeManager = default!;
 
-        public override void Init()
+        public override void PreInit()
         {
-            ClientContentIoC.Register();
+            ClientContentIoC.Register(Dependencies);
 
             foreach (var callback in TestingCallbacks)
             {
                 var cast = (ClientModuleTestingCallbacks) callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
+        }
 
-            IoCManager.BuildGraph();
-            IoCManager.InjectDependencies(this);
+        public override void Init()
+        {
+            Dependencies.BuildGraph();
+            Dependencies.InjectDependencies(this);
 
             _contentLoc.Initialize();
             _componentFactory.DoAutoRegistrations();
@@ -117,7 +121,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("playerConnectionWhitelist");
             _prototypeManager.RegisterIgnore("spaceBiome");
             _prototypeManager.RegisterIgnore("worldgenConfig");
-            _prototypeManager.RegisterIgnore("gcQueue");
             _prototypeManager.RegisterIgnore("gameRule");
             _prototypeManager.RegisterIgnore("worldSpell");
             _prototypeManager.RegisterIgnore("entitySpell");
@@ -127,7 +130,8 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
-            _prototypeManager.RegisterIgnore("pointOfInterest"); // Frontier: worldgen-related, server-only
+            _prototypeManager.RegisterIgnore("codewordGenerator");
+            _prototypeManager.RegisterIgnore("codewordFaction");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
@@ -139,6 +143,7 @@ namespace Content.Client.Entry
             _extendedDisconnectInformation.Initialize();
             _jobRequirements.Initialize();
             _playbackMan.Initialize();
+            _clientsidePlaytimeManager.Initialize();
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
@@ -167,9 +172,8 @@ namespace Content.Client.Entry
 
             _overlayManager.AddOverlay(new SingularityOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
-            _overlayManager.AddOverlay(new EmpBlastOverlay()); // Frontier
             _chatManager.Initialize();
-            _clientConsentManager.Initialize(); // Floofstation
+            _clientConsentManager.Initialize();
             _clientPreferencesManager.Initialize();
             _euiManager.Initialize();
             _voteManager.Initialize();
