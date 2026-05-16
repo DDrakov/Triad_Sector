@@ -72,7 +72,7 @@ public sealed class ConsentUiController : UIController, IOnStateChanged<Gameplay
 
     private void EnsureWindow()
     {
-        if(_window is { Disposed: false })
+        if (_window is { Disposed: false })
             return;
 
         _window = UIManager.CreateWindow<ConsentWindow>();

@@ -21,7 +21,8 @@ namespace Content.Server.Database
 
         public DbSet<Preference> Preference { get; set; } = null!;
         public DbSet<Profile> Profile { get; set; } = null!;
-        public DbSet<ConsentSettings> ConsentSettings { get; set; } = null!; // Floofstation
+        public DbSet<ConsentSettings> ConsentSettings { get; set; } = null!;
+        public DbSet<ConsentFreetextReadReceipt> ConsentFreetextReadReceipt { get; set; } = null!;
         public DbSet<AssignedUserId> AssignedUserId { get; set; } = null!;
         public DbSet<Player> Player { get; set; } = default!;
         public DbSet<Admin> Admin { get; set; } = null!;
@@ -58,15 +59,35 @@ namespace Content.Server.Database
                 .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
                 .IsUnique();
 
-            // Floofstation start
             modelBuilder.Entity<ConsentSettings>()
-                .HasIndex(c => c.UserId)
+                .HasIndex(c => new { c.UserId, c.ProfileId })
                 .IsUnique();
+
+            modelBuilder.Entity<ConsentSettings>()
+                .HasOne(c => c.Profile)
+                .WithOne(p => p.ConsentSettings)
+                .HasForeignKey<ConsentSettings>(c => c.ProfileId)
+                .IsRequired(false);
 
             modelBuilder.Entity<ConsentToggle>()
                 .HasIndex(c => new { c.ConsentSettingsId, c.ToggleProtoId })
                 .IsUnique();
-            // Floofstation end
+
+            modelBuilder.Entity<ConsentToggle>()
+                .HasOne(c => c.ConsentSettings)
+                .WithMany(c => c.ConsentToggles)
+                .HasForeignKey(c => c.ConsentSettingsId)
+                .IsRequired();
+
+            modelBuilder.Entity<ConsentFreetextReadReceipt>()
+                .HasIndex(c => new { c.ReaderUserId, c.ReadConsentSettingsId })
+                .IsUnique();
+
+            modelBuilder.Entity<ConsentFreetextReadReceipt>()
+                .HasOne(c => c.ReadConsentSettings)
+                .WithMany(c => c.ReadReceipts)
+                .HasForeignKey(c => c.ReadConsentSettingsId)
+                .IsRequired();
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
@@ -403,7 +424,7 @@ namespace Content.Server.Database
         public Guid UserId { get; set; }
         public int SelectedCharacterSlot { get; set; }
         public string AdminOOCColor { get; set; } = null!;
-        public int MonoCoins { get; set; } = 0;
+        public List<string> ConstructionFavorites { get; set; } = new();
         public List<Profile> Profiles { get; } = new();
     }
 
@@ -414,7 +435,6 @@ namespace Content.Server.Database
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         public string FlavorText { get; set; } = null!;
         public int Age { get; set; }
-        public int BankBalance { get; set; }
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string Species { get; set; } = null!;
@@ -425,8 +445,6 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
-        public float Height { get; set; } = 1.0f;
-        public float Width { get; set; } = 1.0f;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
@@ -436,29 +454,65 @@ namespace Content.Server.Database
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
-        public string Company { get; set; } = "None";
-
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
+
+        public ConsentSettings? ConsentSettings { get; set; }
     }
-    public class ConsentSettings // Floofstation
+
+    public class ConsentSettings
     {
+        [Key]
         public int Id { get; set; }
+
+        [ForeignKey("Player")]
         public Guid UserId { get; set; }
 
+        // If this is non-null it means these settings are specific to that character rather than global.
+        [ForeignKey("Profile")]
+        public int? ProfileId { get; set; }
+
+        [Required]
         public string ConsentFreetext { get; set; } = null!;
+
+        [Required]
+        public DateTime ConsentFreetextUpdatedAt { get; set; }
+
+        // Relations
         public List<ConsentToggle> ConsentToggles { get; set; } = null!;
+        public List<ConsentFreetextReadReceipt> ReadReceipts { get; set; } = null!;
+        public Profile? Profile { get; set; }
     }
 
-    public class ConsentToggle // Floofstation
+    public class ConsentToggle
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("ConsentSettings")]
+        public int ConsentSettingsId { get; set; }
+
+        [Required]
+        public string ToggleProtoId { get; set; } = null!;
+
+        [Required]
+        public string ToggleProtoState { get; set; } = null!;
+
+        // Relations
+        public ConsentSettings ConsentSettings { get; set; } = null!;
+    }
+
+    public class ConsentFreetextReadReceipt
     {
         public int Id { get; set; }
 
-        public int ConsentSettingsId { get; set; }
-        public ConsentSettings ConsentSettings { get; set; } = null!;
+        public int ReadConsentSettingsId { get; set; }
+        public Guid ReaderUserId { get; set; }
 
-        public string ToggleProtoId { get; set; } = null!;
-        public string ToggleProtoState { get; set; } = null!;
+        public DateTime ReadAt { get; set; }
+
+        // Relations
+        public ConsentSettings ReadConsentSettings { get; set; } = null!;
     }
 
     public class Job
@@ -681,7 +735,6 @@ namespace Content.Server.Database
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
-        public string ShortName { get; set; } = default!; // Mono
 
         public List<Admin> Admins { get; set; } = default!;
         public List<AdminRankFlag> Flags { get; set; } = default!;
@@ -1015,18 +1068,17 @@ namespace Content.Server.Database
         Whitelist = 1,
         Full = 2,
         Panic = 3,
-        Connected = 4, // Frontier
         /*
          * If baby jail is removed, please reserve this value for as long as can reasonably be done to prevent causing ambiguity in connection denial reasons.
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          *
          * Edit: It has
          */
-        BabyJail = 5, // Frontier: 4<5
+        BabyJail = 4,
         /// Results from rejected connections with external API checking tools
-        IPChecks = 6, // Frontier: 5<6
+        IPChecks = 5,
         /// Results from rejected connections who are authenticated but have no modern hwid associated with them.
-        NoHwid = 7 // Frontier: 6<7
+        NoHwid = 6
     }
 
     public class ServerBanHit

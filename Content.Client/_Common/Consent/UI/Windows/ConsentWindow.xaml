@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT
     MinSize="620 670"
     Title="{Loc consent-window-title}"
     Resizable="False">
-    <BoxContainer Name="ConsentSettings" Orientation="Vertical" HorizontalExpand="True" Margin="5">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="5">
         <Label Text="{Loc consent-window-text}" />
         <BoxContainer Orientation="Horizontal" Margin="5">
             <Label Name="SaveLabel" FontColorOverride="Red" Access="Public" />
@@ -36,7 +36,11 @@ SPDX-License-Identifier: MIT
         <Control MinSize="0 10" />
         <Label Text="{Loc consent-window-toggles-label}" />
 
-        <!-- Consent toggle controls are generated in code -->
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False" VScrollEnabled="True" MinHeight="50">
+            <BoxContainer Name="ConsentSettings" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2">
+                <!-- Consent toggle controls are generated in code -->
+            </BoxContainer>
+        </ScrollContainer>
 
     </BoxContainer>
 </controls:FancyWindow>

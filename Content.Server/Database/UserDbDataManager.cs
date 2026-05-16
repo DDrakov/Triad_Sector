@@ -59,7 +59,6 @@ public sealed class UserDbDataManager : IPostInjectInit
         {
             onDisconnect(session);
         }
-        _consent.OnClientDisconnected(session); //TODO: use new AddOnPlayerDisconnect in consent manager instead?
     }
 
     private async Task Load(ICommonSession session, CancellationToken cancel)

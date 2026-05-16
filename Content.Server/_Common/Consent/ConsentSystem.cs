@@ -40,6 +40,7 @@ public sealed class ConsentSystem : SharedConsentSystem
     {
         // Clear consent data when the mind leaves the body.
         ent.Comp.ConsentSettings = new();
+        Dirty(ent);
     }
 
     private void OnConsentUpdated(ICommonSession session, PlayerConsentSettings consentSettings)
@@ -69,5 +70,31 @@ public sealed class ConsentSystem : SharedConsentSystem
             consentComponent.ConsentSettings = consentSettings;
             Dirty(uid, consentComponent);
         }
+    }
+
+    protected override bool ConsentTextUpdatedSinceLastRead(Entity<ConsentComponent> targetEnt, EntityUid readerUid)
+    {
+        if (!_mindSystem.TryGetMind(readerUid, out _, out var readerMind)
+            || readerMind.UserId is not NetUserId readerUserId
+            || !_mindSystem.TryGetMind(targetEnt, out _, out var entMind)
+            || entMind.UserId is not NetUserId targetUserId)
+        {
+            return false;
+        }
+
+        return _consentManager.ConsentTextUpdatedSinceLastRead(readerUserId, targetUserId);
+    }
+
+    protected override void UpdateReadReceipt(Entity<ConsentComponent> targetEnt, EntityUid readerUid)
+    {
+        if (!_mindSystem.TryGetMind(readerUid, out _, out var readerMind)
+            || readerMind.UserId is not NetUserId readerUserId
+            || !_mindSystem.TryGetMind(targetEnt, out _, out var entMind)
+            || entMind.UserId is not NetUserId targetUserId)
+        {
+            return;
+        }
+
+        _consentManager.UpdateReadReceipt(readerUserId, targetUserId);
     }
 }

@@ -11,8 +11,22 @@ namespace Content.Shared._Common.Consent;
 
 public abstract partial class SharedConsentSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] protected readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+
+    protected virtual bool ConsentTextUpdatedSinceLastRead(Entity<ConsentComponent> targetEnt, EntityUid readerUid)
+    {
+        // Overridden in server ConsentSystem.
+        // Predicting this would be a pain.
+        // You could probably do it by putting a bool on ConsentComponent and write custom logic for networking the bool so it's correct for each player.
+        // But I don't think having to wait a few milis for the red dot to appear is a big deal.
+        return false;
+    }
+
+    protected virtual void UpdateReadReceipt(Entity<ConsentComponent> targetEnt, EntityUid readerUid)
+    {
+        // Overridden in server ConsentSystem.
+    }
 
     public override void Initialize()
     {
@@ -33,15 +47,20 @@ public abstract partial class SharedConsentSystem : EntitySystem
     private void OnGetExamineVerbs(Entity<ConsentComponent> ent, ref GetVerbsEvent<ExamineVerb> args)
     {
         var user = args.User;
+        bool updatedSinceLastRead = ConsentTextUpdatedSinceLastRead(ent, user);
+        ResPath iconPath = updatedSinceLastRead
+            ? new ("/Textures/_Common/Interface/VerbIcons/consent_examine_with_red_dot.svg.192dpi.png")
+            : new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png");
 
         args.Verbs.Add(new()
         {
             Text = Loc.GetString("consent-examine-verb"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(iconPath),
             Act = () =>
             {
                 var message = GetConsentText(ent.Comp.ConsentSettings);
                 _examineSystem.SendExamineTooltip(user, ent, message, getVerbs: false, centerAtCursor: false);
+                UpdateReadReceipt(ent, user);
             },
             Category = VerbCategory.Examine,
             CloseMenu = true,

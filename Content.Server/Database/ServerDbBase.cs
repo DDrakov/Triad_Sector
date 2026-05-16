@@ -2073,12 +2073,21 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             if (currentConsentSettings is null)
             {
-                currentConsentSettings = new ConsentSettings() { UserId = userId, ConsentToggles = new() };
+                currentConsentSettings = new ConsentSettings() {
+                    UserId = userId,
+                    ConsentToggles = new(),
+                    ConsentFreetext = consentSettings.Freetext,
+                    ConsentFreetextUpdatedAt = DateTime.Now,
+                };
 
                 db.DbContext.ConsentSettings.Add(currentConsentSettings);
             }
+            else if (currentConsentSettings.ConsentFreetext != consentSettings.Freetext)
+            {
+                currentConsentSettings.ConsentFreetext = consentSettings.Freetext;
+                currentConsentSettings.ConsentFreetextUpdatedAt = DateTime.Now;
+            }
 
-            currentConsentSettings.ConsentFreetext = consentSettings.Freetext;
             Dictionary<ProtoId<ConsentTogglePrototype>, string> currentConsentToggles = currentConsentSettings.ConsentToggles.ToDictionary(
                 keySelector: t => new ProtoId<ConsentTogglePrototype>(t.ToggleProtoId),
                 elementSelector: t => t.ToggleProtoState
@@ -2112,21 +2121,50 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
-        public async Task<PlayerConsentSettings> GetPlayerConsentSettingsAsync(NetUserId userId)
+        public async Task<ConsentSettings> GetPlayerConsentSettingsAsync(NetUserId userId)
         {
             await using var db = await GetDb();
 
             var consentSettings = await db.DbContext.ConsentSettings
                 .Include(c => c.ConsentToggles)
+                .Include(c => c.ReadReceipts)
                 .SingleOrDefaultAsync(c => c.UserId == userId);
 
             if (consentSettings is null)
                 return new();
 
-            return new(consentSettings.ConsentFreetext, consentSettings.ConsentToggles.ToDictionary(
-                keySelector: t => new ProtoId<ConsentTogglePrototype>(t.ToggleProtoId),
-                elementSelector: t => t.ToggleProtoState
-            ));
+            return consentSettings;
+        }
+
+        public async Task<ConsentFreetextReadReceipt?> GetPlayerConsentReadReceipt(NetUserId readerUserId, int consentSettingsId)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.ConsentFreetextReadReceipt
+                .SingleOrDefaultAsync(c => c.ReaderUserId == readerUserId && c.ReadConsentSettingsId == consentSettingsId);
+        }
+
+        public async Task<ConsentFreetextReadReceipt> UpdatePlayerConsentReadReceipt(NetUserId readerUserId, int readConsentSettingsId)
+        {
+            await using var db = await GetDb();
+
+            var readRecipe = await db.DbContext.ConsentFreetextReadReceipt
+                .SingleOrDefaultAsync(c => c.ReaderUserId == readerUserId && c.ReadConsentSettingsId == readConsentSettingsId);
+
+            if (readRecipe is null)
+            {
+                readRecipe = new ConsentFreetextReadReceipt
+                {
+                    ReaderUserId = readerUserId,
+                    ReadConsentSettingsId = readConsentSettingsId,
+                    ReadAt = DateTime.Now,
+                };
+            }
+            else {
+                readRecipe.ReadAt = DateTime.Now;
+            }
+
+            return readRecipe;
         }
 
         #endregion

@@ -30,7 +30,7 @@ public sealed class ServerConsentManager : IServerConsentManager
     /// <summary>
     /// Stores consent settigns for all connected players, including guests.
     /// </summary>
-    private readonly Dictionary<NetUserId, PlayerConsentSettings> _consent = new();
+    private readonly Dictionary<NetUserId, ConsentSettings> _consent = new();
 
     public void Initialize()
     {
@@ -48,13 +48,21 @@ public sealed class ServerConsentManager : IServerConsentManager
 
         message.Consent.EnsureValid(_configManager, _prototypeManager);
 
-        _consent[userId] = message.Consent;
+        // Update consent settings
+        consentSettings.ConsentToggles = message.Consent.ToDbObject().ConsentToggles;
+        if (message.Consent.Freetext != consentSettings.ConsentFreetext)
+        {
+            consentSettings.ConsentFreetext = message.Consent.Freetext;
+            consentSettings.ConsentFreetextUpdatedAt = DateTime.Now;
+        }
 
+        // Log the change
         var session = _playerManager.GetSessionByChannel(message.MsgChannel);
         var togglesPretty = String.Join(", ", message.Consent.Toggles.Select(t => $"[{t.Key}: {t.Value}]"));
         _adminLogger.Add(LogType.Consent, LogImpact.Medium,
             $"{session:Player} updated consent setting to: '{message.Consent.Freetext}' with toggles {togglesPretty}");
 
+        // Persistence
         if (ShouldStoreInDb(message.MsgChannel.AuthType))
         {
             await _db.SavePlayerConsentSettingsAsync(userId, message.Consent);
@@ -69,22 +77,17 @@ public sealed class ServerConsentManager : IServerConsentManager
 
     public async Task LoadData(ICommonSession session, CancellationToken cancel)
     {
-        var consent = new PlayerConsentSettings();
+        var consent2 = new ConsentSettings();
         if (ShouldStoreInDb(session.AuthType))
         {
-            consent = await _db.GetPlayerConsentSettingsAsync(session.UserId);
+            consent2 = await _db.GetPlayerConsentSettingsAsync(session.UserId);
         }
 
-        consent.EnsureValid(_configManager, _prototypeManager);
-        _consent[session.UserId] = consent;
+        consent2.ToPlayerConsentSettings().EnsureValid(_configManager, _prototypeManager);
+        _consent[session.UserId] = consent2;
 
-        var message = new MsgUpdateConsent() { Consent = consent };
+        var message = new MsgUpdateConsent() { Consent = consent2.ToPlayerConsentSettings() };
         _netManager.ServerSendMessage(message, session.Channel);
-    }
-
-    public void OnClientDisconnected(ICommonSession session)
-    {
-        _consent.Remove(session.UserId);
     }
 
     /// <inheritdoc />
@@ -92,11 +95,35 @@ public sealed class ServerConsentManager : IServerConsentManager
     {
         if (_consent.TryGetValue(userId, out var consent))
         {
-            return consent;
+            return consent.ToPlayerConsentSettings();
         }
 
         // A player that has disconnected does not consent to anything.
         return new PlayerConsentSettings();
+    }
+
+    public bool ConsentTextUpdatedSinceLastRead(NetUserId readerUserId, NetUserId targetUserId)
+    {
+        return _consent.TryGetValue(targetUserId, out var consentSettings)
+            && consentSettings.ReadReceipts is not null
+            && consentSettings.ReadReceipts.Any(x => x.ReaderUserId == readerUserId && x.ReadAt < consentSettings.ConsentFreetextUpdatedAt);
+    }
+
+    public async Task UpdateReadReceipt(NetUserId readerUserId, NetUserId targetUserId)
+    {
+        if (!_consent.TryGetValue(targetUserId, out var consentSettings))
+        {
+            // Somehow there exists a NetUserId of a player that never connected/ran LoadData?
+            // I guess this could happen after saving and loading a round since that would wipe _consent.
+
+            consentSettings = await _db.GetPlayerConsentSettingsAsync(targetUserId);
+            _consent[targetUserId] = consentSettings;
+        }
+
+        var readRecipe = await _db.UpdatePlayerConsentReadReceipt(readerUserId, consentSettings.Id);
+        consentSettings.ReadReceipts ??= new();
+        consentSettings.ReadReceipts.RemoveAll(x => x.ReaderUserId == readerUserId);
+        consentSettings.ReadReceipts.Add(readRecipe);
     }
 
     private static bool ShouldStoreInDb(LoginType loginType)

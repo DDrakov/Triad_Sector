@@ -16,10 +16,19 @@ public interface IServerConsentManager
     void Initialize();
 
     Task LoadData(ICommonSession session, CancellationToken cancel);
-    void OnClientDisconnected(ICommonSession session);
 
     /// <summary>
     /// Get a player's consent settings from their user id.
     /// </summary>
     PlayerConsentSettings GetPlayerConsentSettings(NetUserId userId);
+
+    /// <summary>
+    /// Return true if the target has updated their consent freetext since the reader last read it.
+    /// </summary>
+    bool ConsentTextUpdatedSinceLastRead(NetUserId readerUserId, NetUserId targetUserId);
+
+    /// <summary>
+    /// Update read recipe in the DB.
+    /// </summary>
+    Task UpdateReadReceipt(NetUserId readerUserId, NetUserId targetUserId);
 }
