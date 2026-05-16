@@ -89,20 +89,6 @@ namespace Content.Server.Database
                 .HasForeignKey(c => c.ReadConsentSettingsId)
                 .IsRequired();
 
-            // Begin CD - CD Character Data
-            modelBuilder.Entity<CDModel.CDProfile>()
-                .HasOne(p => p.Profile)
-                .WithOne(p => p.CDProfile)
-                .HasForeignKey<CDModel.CDProfile>(p => p.ProfileId)
-                .IsRequired();
-
-            modelBuilder.Entity<CDModel.CharacterRecordEntry>()
-                .HasOne(e => e.CDProfile)
-                .WithMany(e => e.CharacterRecordEntries)
-                .HasForeignKey(e => e.CDProfileId)
-                .IsRequired();
-            // End CD - CD Character Data
-
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
                 .IsUnique();
@@ -477,8 +463,6 @@ namespace Content.Server.Database
         public Preference Preference { get; set; } = null!;
 
         public ConsentSettings? ConsentSettings { get; set; }
-
-        public CDModel.CDProfile? CDProfile { get; set; } // CD - Character Records
     }
 
     public class ConsentSettings
