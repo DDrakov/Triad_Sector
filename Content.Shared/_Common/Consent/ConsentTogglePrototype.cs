@@ -31,4 +31,17 @@ public sealed partial class ConsentTogglePrototype : IPrototype, IComparable
     /// </summary>
     [DataField]
     public string Description = default!;
+
+    /// <summary>
+    /// A key used to sort the toggles by in the consent menu.
+    /// If it's not set, they are sorted by the prototype ID.
+    /// </summary>
+    [DataField]
+    public string SortKey
+    {
+        get => _sortKey ?? ID;
+        set => _sortKey = value;
+    }
+
+    private string? _sortKey;
 }
