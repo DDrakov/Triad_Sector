@@ -75,8 +75,17 @@ public abstract partial class SharedConsentSystem : EntitySystem
             text = Loc.GetString("consent-examine-not-set");
         }
 
+        var messageUnsanitized = new FormattedMessage();
         var message = new FormattedMessage();
-        message.AddText(text);
+        messageUnsanitized.AddMarkupPermissive(text);
+        foreach (var node in messageUnsanitized)
+        {
+            if (node.Name is null || node.Name == "bold" || node.Name == "italic" || node.Name == "bullet")
+            {
+                message.PushTag(node);
+            }
+        }
+
         return message;
     }
 
