@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+SPDX-License-Identifier: MIT
+-->
+
 <Control
     xmlns="https://spacestation14.io" HorizontalExpand="True"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">

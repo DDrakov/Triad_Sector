@@ -1,17 +1,20 @@
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+// SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+// SPDX-License-Identifier: MIT
+
 using Content.Server.Database;
+using Content.Shared._Common.Consent;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Consent;
 using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Content.Server.Consent;
+namespace Content.Server._Common.Consent;
 
 public sealed class ServerConsentManager : IServerConsentManager
 {
@@ -21,6 +24,8 @@ public sealed class ServerConsentManager : IServerConsentManager
     [Dependency] private readonly IServerNetManager _netManager = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
+    public event Action<ICommonSession, PlayerConsentSettings>? OnConsentUpdated;
 
     /// <summary>
     /// Stores consent settigns for all connected players, including guests.
@@ -55,8 +60,11 @@ public sealed class ServerConsentManager : IServerConsentManager
             await _db.SavePlayerConsentSettingsAsync(userId, message.Consent);
         }
 
-        // send it back to confirm to client that consent was updated
+        // Sent it back to the client.
         _netManager.ServerSendMessage(message, message.MsgChannel);
+
+        // Invoke invent to let the game sim know consent was updated.
+        OnConsentUpdated?.Invoke(session, message.Consent);
     }
 
     public async Task LoadData(ICommonSession session, CancellationToken cancel)

@@ -1,4 +1,7 @@
-namespace Content.Shared.Consent;
+// SPDX-FileCopyrightText: Copyright (c) 2024-2025 Space Wizards Federation
+// SPDX-License-Identifier: MIT
+
+namespace Content.Shared._Common.Consent;
 
 using System;
 using Robust.Shared.Prototypes;
