@@ -1,4 +1,3 @@
-using Content.Server._Common.Consent;
 using Content.Server._NF.Auth;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -45,7 +44,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<IServerDbManager, ServerDbManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
-            IoCManager.Register<IServerConsentManager, ServerConsentManager>(); // Floofstation
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<ServerUpdateManager>();
