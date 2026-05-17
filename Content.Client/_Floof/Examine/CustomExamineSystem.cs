@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Client._Floof.Language.RichText;
 using Content.Client.Strip;
 using Content.Client.UserInterface.RichText;
 using Content.Shared._Floof.Examine;
