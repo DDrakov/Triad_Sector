@@ -698,3 +698,63 @@ Entries:
   id: 2206
   time: '2026-05-18T02:50:47.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/97
+- author: Wuffindy
+  changes:
+    - type: Tweak
+      message: >-
+        Suit sensor now defaults to coords on spawn, you can still change it
+        whenever & wherever
+  id: 2207
+  time: '2026-05-18T23:58:09.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/98
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: Gas tank dispensers now stock water vapor tanks.
+  id: 2208
+  time: '2026-05-19T03:20:58.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/100
+- author: ScolarVisari
+  changes:
+    - type: Add
+      message: Colorable thick eyebrow markings to Humans and Dwarves.
+  id: 2209
+  time: '2026-05-19T03:30:36.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/95
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: >-
+        Water vapor canisters are now on sale at the Trade Mall for 3000
+        credits.
+  id: 2210
+  time: '2026-05-19T03:55:41.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/101
+- author: Monolith
+  changes:
+    - type: Tweak
+      message: Asteroids no longer produce infection anomalies
+    - type: Tweak
+      message: 'Rebalanced almost every Energy/mining shipgun:'
+    - type: Tweak
+      message: Significantly nerfed ship ramming.
+    - type: Tweak
+      message: Nerfed ASF-59 "Flail" health.
+    - type: Tweak
+      message: Nerfed ASF-59-B "Mace" health.
+    - type: Tweak
+      message: Buffed projectile speeds of several shipguns
+  id: 2211
+  time: '2026-05-19T06:51:44.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/102
+- author: DaCookieCakes
+  changes:
+    - type: Add
+      message: Added a brand new ChemMaster UI with a toggle for the old one.
+    - type: Add
+      message: Added more transfer amounts for the ChemMaster. (15 and 30)
+    - type: Fix
+      message: Hopefully fixed a ChemMaster grid-reload client-side bug.
+  id: 2212
+  time: '2026-05-20T01:40:09.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/99
