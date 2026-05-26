@@ -454,6 +454,8 @@
   - type: CartridgeAmmo
     proto: CleanerGrenadeLaunched
     deleteOnSpawn: true
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
 
 - type: entity
   parent: SmokeGrenade
