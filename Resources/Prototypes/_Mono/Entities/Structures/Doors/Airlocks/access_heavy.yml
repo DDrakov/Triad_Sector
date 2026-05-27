@@ -118,8 +118,9 @@
   components:
   - type: Sprite
     sprite: _Mono/Structures/Doors/HeavyAirlocks/Standard/security.rsi
-  - type: PaintableAirlock
-    department: Security
+  # Triad changes
+  #- type: PaintableAirlock
+  #  department: Security
 
 - type: entity
   parent: AirlockHeavySecurity
@@ -157,8 +158,9 @@
   components:
   - type: Sprite
     sprite: _Mono/Structures/Doors/HeavyAirlocks/Standard/command.rsi
-  - type: PaintableAirlock
-    department: Command
+  # Triad changes
+  #- type: PaintableAirlock
+  #   department: Command
 
 - type: entity
   parent: AirlockHeavyCommand
