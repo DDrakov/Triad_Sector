@@ -7,6 +7,12 @@
   - AirlockGlass
 
 - type: paintableGroupCategory
+  id: HeavyDutyAirlocks
+  groups:
+  - HeavyDutyAirlock
+  - HeavyDutyAirlockGlass
+
+- type: paintableGroupCategory
   id: Canisters
   groups:
   - Canisters
