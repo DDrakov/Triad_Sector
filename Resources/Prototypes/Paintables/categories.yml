@@ -6,11 +6,13 @@
   - AirlockStandard
   - AirlockGlass
 
+# Triad Change : Heavy-Duty Airlock paintable category
 - type: paintableGroupCategory
   id: HeavyDutyAirlocks
   groups:
   - HeavyDutyAirlock
   - HeavyDutyAirlockGlass
+# Triad end
 
 - type: paintableGroupCategory
   id: Canisters

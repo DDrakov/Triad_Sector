@@ -35,8 +35,10 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
+  # Triad Start
   - type: Paintable
     group: HeavyDutyAirlock
+  # Triad End
   - type: StaticPrice
     price: 500
   - type: Tag
@@ -56,7 +58,7 @@
   components:
   - type: Sprite
     sprite: _Mono/Structures/Doors/HeavyAirlocks/Glass/standard.rsi
-    group: Glass
+    group: Glass # Triad Change
   - type: Door
     closeTimeOne: 0.1
     closeTimeTwo: 0.2
@@ -85,8 +87,10 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
+  # Triad Start
   - type: Paintable
     group: HeavyDutyAirlockGlass
+  # Triad End
   - type: StaticPrice
     price: 500
   - type: Tag

@@ -41,5 +41,3 @@ spray-painter-style-cratesecure-nfsd2 = NFSD (stripe)
 spray-painter-style-canisters-liquid-oxygen = Oxygen (liquid)
 spray-painter-style-canisters-liquid-nitrogen = Nitrogen (liquid)
 spray-painter-style-canisters-liquid-carbon-dioxide = Carbon dioxide (liquid)
-
-# Heavy Duty Airlock

@@ -45,6 +45,7 @@
     mercenary: AirlockMercenaryGlass # Frontier
     nfsd: AirlockNfsdGlass # Frontier: surely nothing bad will happen
 
+# Triad Change : Heavy-Duty Airlock paintable groups
 - type: paintableGroup
   id: HeavyDutyAirlock
   time: 3
@@ -64,3 +65,4 @@
   defaultStyle: basic
   styles:
     basic: AirlockHeavyGlass
+# Triad End

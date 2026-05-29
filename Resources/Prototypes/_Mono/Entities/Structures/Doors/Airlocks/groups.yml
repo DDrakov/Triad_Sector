@@ -1,3 +1,4 @@
+# Triad change : Use new upstream spraypaint paintableGroup
 # - type: AirlockGroup
 #   id: HeavyStandard
 #   iconPriority: 100
@@ -13,3 +14,4 @@
 #   iconPriority: 90
 #   stylePaths:
 #     basic:       _Mono/Structures/Doors/HeavyAirlocks/Glass/standard.rsi
+# Triad End
