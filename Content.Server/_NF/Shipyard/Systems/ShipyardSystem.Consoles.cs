@@ -571,6 +571,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
+        if (_station.GetOwningStation(uid) is not { Valid: true } station)
+        {
+            ConsolePopup(player, Loc.GetString("shipyard-console-invalid-station"));
+            PlayDenySound(player, uid, component);
+            return;
+        }
+
         TryComp<IdCardComponent>(targetId, out var idCard);
         if (idCard is null)
         {
@@ -751,44 +758,28 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        // Cooldown: charge at most once every 5 minutes per player
-        var now = _timing.CurTime;
-        var cooldown = TimeSpan.FromMinutes(5);
-        var chargedRecently = _lastLoadCharge.TryGetValue(player, out var lastCharge) && (now - lastCharge) < cooldown;
-
         int currentBalance = bankAccount.Balance;
         int newBalance = currentBalance - appraisalCost;
 
-        if (!chargedRecently)
+        // Force charge the player - allow going into debt
+        if (!_bank.TryBankWithdrawAllowDebt(player, appraisalCost))
         {
-            // Force charge the player - allow going into debt
-            if (!_bank.TryBankWithdrawAllowDebt(player, appraisalCost))
-            {
-                // This should rarely happen (only if no session/prefs/etc)
-                ConsolePopup(player, Loc.GetString("shipyard-console-load-failed"));
-                PlayDenySound(player, uid, component);
-                return;
-            }
+            // This should rarely happen (only if no session/prefs/etc)
+            ConsolePopup(player, Loc.GetString("shipyard-console-load-failed"));
+            PlayDenySound(player, uid, component);
+            return;
+        }
 
-            _lastLoadCharge[player] = now;
-
-            // Notify player of the charge and their new balance
-            if (newBalance < 0)
-            {
-                ConsolePopup(player, Loc.GetString("shipyard-console-load-success-debt",
-                    ("ship", name), ("cost", appraisalCost), ("debt", -newBalance)));
-            }
-            else
-            {
-                ConsolePopup(player, Loc.GetString("shipyard-console-load-success-charged",
-                    ("ship", name), ("cost", appraisalCost)));
-            }
+        // Notify player of the charge and their new balance
+        if (newBalance < 0)
+        {
+            ConsolePopup(player, Loc.GetString("shipyard-console-load-success-debt",
+                ("ship", name), ("cost", appraisalCost), ("debt", -newBalance)));
         }
         else
         {
-            // Skip charge due to cooldown; inform player
-            ConsolePopup(player, Loc.GetString("shipyard-console-load-success-nocharge",
-                ("ship", name), ("remaining", (cooldown - (now - lastCharge)).ToString("m\':\'ss"))));
+            ConsolePopup(player, Loc.GetString("shipyard-console-load-success-charged",
+                ("ship", name), ("cost", appraisalCost)));
         }
 
         var boughtEv = new ShipBoughtEvent();
@@ -816,6 +807,30 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         var vesselComp = EnsureComp<VesselComponent>(shuttleUid);
         var vessel = vesselComp.VesselId;
 
+        // Add company information to the shuttle from the ID card or voucher
+        string? companyName = null;
+
+        // First try to get company from ID card
+        if (TryComp<IdCardComponent>(targetId, out var idCardCompany) &&
+            !string.IsNullOrEmpty(idCardCompany.CompanyName))
+        {
+            companyName = idCardCompany.CompanyName;
+        }
+        // If no ID card company, try to get from voucher
+        else if (TryComp<ShipyardVoucherComponent>(targetId, out var voucherCompany) &&
+                 !string.IsNullOrEmpty(voucherCompany.CompanyName))
+        {
+            companyName = voucherCompany.CompanyName;
+        }
+
+        // Apply company to ship if we found one
+        if (!string.IsNullOrEmpty(companyName))
+        {
+            var shipCompany = EnsureComp<CompanyComponent>(shuttleUid);
+            shipCompany.CompanyName = companyName;
+            Dirty(shuttleUid, shipCompany);
+        }
+
         EntityUid? shuttleStation = null;
         if (_prototypeManager.TryIndex<GameMapPrototype>(vessel, out var stationProto))
         {
@@ -829,6 +844,15 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             var vesselInfo = EnsureComp<ExtraShuttleInformationComponent>(shuttleStation.Value);
             vesselInfo.Vessel = vessel;
         }
+
+        // Add FTLLockComponent to the shuttle with Enabled set to true
+        // We need to use the ShuttleConsoleSystem to properly set the Enabled property
+        EnsureComp<FTLLockComponent>(shuttleUid);
+
+        // Get the ShuttleConsoleSystem which has proper access to modify FTLLockComponent.Enabled
+        var shuttleConsoleSystem = Get<ShuttleConsoleSystem>();
+        var dockedEntities = new List<NetEntity>();
+        shuttleConsoleSystem.ToggleFTLLock(shuttleUid, dockedEntities, true);
 
         if (TryComp<AccessComponent>(targetId, out var newCap))
         {
@@ -920,9 +944,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
         if (shuttleStation != null)
             _records.Synchronize(shuttleStation.Value);
+            _records.Synchronize(station);
         // If we infer a vessel prototype, add any extra components it specifies.
         if (_prototypeManager.TryIndex(vessel, out var vesselProto))
             EntityManager.AddComponents(shuttleUid, vesselProto.AddComponents);
+
+        // Add ship access control
+        AddShipAccessToEntities(shuttleUid);
 
         // Ensure cleanup on ship sale
         EnsureComp<LinkedLifecycleGridParentComponent>(shuttleUid);
