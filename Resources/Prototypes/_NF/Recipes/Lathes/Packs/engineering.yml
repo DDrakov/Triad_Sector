@@ -1,10 +1,17 @@
 - type: latheRecipePack
+  id: NFEngineeringBoardsStatic
+  recipes:
+  - PortableSMESMachineCircuitboard
+
+- type: latheRecipePack
   id: NFEngineeringBoards
   recipes:
   - SmallThrusterMachineCircuitboard
   - SmallGyroscopeMachineCircuitboard
   - MiniStationAnchorCircuitboard
   - PortableGeneratorDKJrMachineCircuitboard
+#  - GasMiningDrillMachineCircuitboard # Triad
+#  - GaslockFrameMachineCircuitboard # Triad
 
 - type: latheRecipePack
   id: NFEngineering
