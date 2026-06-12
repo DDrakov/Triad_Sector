@@ -1,6 +1,6 @@
 - type: entity
   parent: [ BaseFactionGearPDVT1, BaseItem ] # Mono
-  id: AccessBreakerUnlimited 
+  id: AccessBreakerUnlimited
   suffix: Unlimited
   name: authentication disruptor
   description: A hacked access configurator, specialized to unlock and erase access from digital locks.
@@ -12,6 +12,8 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/access_breaker.rsi
+  - type: SavingContraband # Triad changes
+    examineText: ship-saving-contraband-2-text
 
 - type: entity
   parent: AccessBreakerUnlimited
