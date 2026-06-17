@@ -342,6 +342,14 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
+        if (!_bank.TryBankWithdraw(player, appraisalCost))
+        {
+            Del(shuttleUid);
+            ConsolePopup(player, Loc.GetString("cargo-console-insufficient-funds", ("cost", appraisalCost)));
+            PlayDenySound(player, uid, component);
+            return;
+        }
+
         var currentBalance = bankAccount.Balance;
         var newBalance = currentBalance - appraisalCost;
 
