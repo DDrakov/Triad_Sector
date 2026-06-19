@@ -12,8 +12,6 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/access_breaker.rsi
-  - type: SavingContraband # Triad changes
-    examineText: ship-saving-contraband-2-text
 
 - type: entity
   parent: AccessBreakerUnlimited

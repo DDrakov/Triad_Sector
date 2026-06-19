@@ -12,8 +12,6 @@
   - type: Item
     sprite: Objects/Tools/emag.rsi
     storedRotation: -90
-  - type: SavingContraband # Triad changes
-    examineText: ship-saving-contraband-2-text
 
 - type: entity
   parent: EmagUnlimited
