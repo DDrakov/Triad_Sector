@@ -350,9 +350,6 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        var currentBalance = bankAccount.Balance;
-        var newBalance = currentBalance - appraisalCost;
-
         // Notify player of the charge and their new balance
         ConsolePopup(player, Loc.GetString("shipyard-console-load-success-charged",
                 ("ship", name), ("cost", appraisalCost)));
