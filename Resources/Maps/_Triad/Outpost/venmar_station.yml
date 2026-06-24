@@ -145,7 +145,7 @@ entities:
     - type: GridRaider
       protectedEntities: []
     - type: BecomesStation
-      id: Frontier
+      id: Venmar
     - type: InitRepairSnapshot
     - type: MapGrid
       chunks:

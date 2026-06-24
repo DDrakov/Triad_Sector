@@ -1,5 +1,5 @@
 - type: gameMap
-  id: Frontier
+  id: Venmar
   mapName: 'Venmar Station'
   mapPath: /Maps/_Triad/Outpost/venmar_station.yml # Triad
   minPlayers: 0
@@ -7,13 +7,13 @@
   randomRotation: false
   maxRandomOffset: 0
   stations:
-    Frontier:
+    Venmar:
       stationProto: StandardFrontierStation # Using this temporarily
       gridComponents:
       - type: VesselMusic
         ambientMusicPrototype: ColossusCentralMusic
       - type: VesselInfo
-        description: "The closest thing to civilisation in this sector. You almost feel safe."
+        description: "In the midst of our hardships, this station is our refuge. Our spark of hope."
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Venmar Station'
@@ -21,7 +21,7 @@
 #            !type:NanotrasenNameGenerator
 #            prefixCreator: '14'
         - type: ExtraStationInformation
-          icon: /Textures/_Triad/Logo/tfa_icon/icon-256x256.png # used the biggest one, looks better when downscaling than upscaling
+          icon: /Textures/_Triad/Logo/tfa_icon/icon-64x64.png # used the biggest one, looks better when downscaling than upscaling
           stationSubtext: 'triad-lobby-triad-subtext'
           stationDescription: 'triad-lobby-triad-description'
           lobbySortOrder: 1

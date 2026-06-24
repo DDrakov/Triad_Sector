@@ -449,17 +449,28 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
+            var excludedFolders = new[]
+            {
+                "/Maps/_Triad/Shuttles",
+                "/Maps/_Triad/Deprecated",
+                "/Maps/_Triad/ShuttleEvent",
+                "/Maps/_Triad/POI"
+            };
+
             var gameMaps = protoMan.EnumeratePrototypes<GameMapPrototype>()
                 .Where(x => !pair.IsTestPrototype(x))
                 // Frontier: FIXME - hacky test fix
+                // Triad: Added some loop so it's not a lot of && argument
                 .Where(x =>
-                    x.ID == PoolManager.TestMap || // Frontier: check test map
-                    (x.MapPath.ToString().StartsWith("/Maps/_Mono") && // Mono: check Mono maps only
-                    !x.MapPath.ToString().StartsWith("/Maps/_Mono/Shuttles") && // Mono: skip shuttles (not loaded as maps)
-                    !x.MapPath.ToString().StartsWith("/Maps/_Mono/Deprecated") && // Mono: skip deprecated (not loaded as maps)
-                    !x.MapPath.ToString().StartsWith("/Maps/_Mono/ShuttleEvent") && // Mono: skip shuttleevents (not loaded as maps)
-                    !x.MapPath.ToString().StartsWith("/Maps/_Mono/POI")) // Mono: skip POIs (not loaded as maps)
-                    )
+                {
+                    if (x.ID == PoolManager.TestMap)
+                        return true;
+
+                    var path = x.MapPath.ToString();
+
+                    return path.StartsWith("/Maps/_Triad")
+                        && !excludedFolders.Any(path.StartsWith);
+                })
                 // End Frontier
                 .Select(x => x.ID)
                 .ToHashSet();

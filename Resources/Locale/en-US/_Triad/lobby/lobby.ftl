@@ -1,4 +1,4 @@
-triad-lobby-triad-subtext = Main hub for many space pioneers.
+triad-lobby-triad-subtext = Main hub for many space pioneers and TFA employees.
 triad-lobby-triad-description = Awaken from cryosleep here to:
    - Start your own crew and become captain
    - Find a crew to join
