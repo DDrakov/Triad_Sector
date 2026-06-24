@@ -13,7 +13,7 @@
       - type: VesselMusic
         ambientMusicPrototype: ColossusCentralMusic
       - type: VesselInfo
-        description: "In the midst of our hardships, this station is our refuge. Our spark of hope."
+        description: "In the midst of all the hardships, this station is our refuge, our spark of hope."
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Venmar Station'
