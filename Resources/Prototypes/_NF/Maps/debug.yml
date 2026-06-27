@@ -16,7 +16,7 @@
 - type: gameMap
   id: NFDev
   mapName: NFDev
-  mapPath: /Maps/_Mono/Test/dev_map.yml # Mono
+  mapPath: /Maps/_Triad/Test/dev_map.yml # Triad : Change from Mono to Triad, practically the same
   minPlayers: 0
   stations:
     NFDev:
