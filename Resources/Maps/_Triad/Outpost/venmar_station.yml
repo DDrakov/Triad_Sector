@@ -47921,9 +47921,6 @@ entities:
     - type: Transform
       pos: 35.5,9.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 40
   - uid: 5718
@@ -47931,9 +47928,6 @@ entities:
     - type: Transform
       pos: 36.5,9.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 40
   - uid: 5719
@@ -49400,9 +49394,6 @@ entities:
     - type: Transform
       pos: 38.5,10.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 40
       - 5654
@@ -54223,10 +54214,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 15.5,-7.5
       parent: 2
-    - type: UserInterface
-      actors:
-        enum.GasMixerUiKey.Key:
-        - invalid
     - type: GasMixer
       inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
@@ -69511,9 +69498,6 @@ entities:
     - type: Transform
       pos: 36.5,11.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 40
     - type: AtmosPipeLayers
@@ -70647,9 +70631,6 @@ entities:
     - type: Transform
       pos: 35.5,11.5
       parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 40
     - type: AtmosPipeLayers
@@ -80325,8 +80306,6 @@ entities:
       parent: 2
     - type: ItemToggle
       activated: True
-    - type: ItemToggleActiveSound
-      playingStream: invalid
     - type: Fixtures
       fixtures: {}
 - proto: ShuttersNormal
