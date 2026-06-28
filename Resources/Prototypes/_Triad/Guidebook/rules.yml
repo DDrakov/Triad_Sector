@@ -91,8 +91,9 @@
   text: "/ServerInfo/_Triad/Guidebook/Rules/CoreRules/RuleC12.xml"
   priority: 11
 
-- type: guideEntry
-  id: TriadRuleC13
-  name: guide-entry-section13
-  text: "/ServerInfo/_Triad/Guidebook/Rules/CoreRules/RuleC13.xml"
-  priority: 12
+#  Triad : In progress Faction rules
+# - type: guideEntry
+#   id: TriadRuleC13
+#   name: guide-entry-section13
+#   text: "/ServerInfo/_Triad/Guidebook/Rules/CoreRules/RuleC13.xml"
+#   priority: 12

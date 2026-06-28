@@ -1,11 +1,33 @@
 ﻿<Document>
-[color=#ffff00][head=3]Section 12: Escalation Guidelines[/head][/color]
+[color=#ffff00][head=3]Section 12: Ship saving Rules[/head][/color]
 
-[color=#a4885c]12.1[/color] Lethal force against players should be a last resort. *1
+[color=#a4885c]12.1[/color] Ships must not exceed a maximum size of 80×50 tiles. ★
 
-[color=#a4885c]12.2[/color] Don't disproportionately escalate in response to others' actions. *1
+[color=#a4885c]12.2[/color] Do not abuse the ship save system to avoid in-character consequences. ★★
 
-[color=#a4885c]12.3[/color] Don't ignore critical or dead players unless related to an objective. *1
+[color=#a4885c]12.3[/color] Do not exploit the ship stash system to duplicate items. This prohibition especially applies to contraband. ★★★
 
-[color=#a4885c]12.4[/color] Don't intentionally round remove other players unless related to an objective. *1
+[color=#a4885c]12.4[/color] Ship backups may only be loaded with prior administrator approval and are intended solely for server-related or other out-of-character (OOC) issues. You must submit an Ahelp before loading a backup. ★
+
+[color=#a4885c]12.4A[/color] You may not restore a ship from backup if it was destroyed through normal in-character gameplay, including hostile entities such as automated defenses, drones, Long-Range Projectile Batteries (LPBs), or similar hazards. ★
+
+[color=#a4885c]12.4B[/color] Whenever a ship backup is restored, you must notify the administration through an Ahelp or ticket so the restoration can be documented.
+
+[color=#a4885c]12.4C[/color] If you fail to save your ship within the 10-minute End-of-Round grace period due to your own negligence (for example, delaying the save or being AFK), you are not entitled to administrative compensation or restoration for any resulting loss of progress.
+
+[color=#a4885c]12.5[/color] Under no circumstances may you modify a ship save file without prior administrator approval, including modifications made to accommodate engine updates. ★★
+
+[color=#a4885c]12.6[/color] Do not leave your ship unattended due to being AFK or otherwise absent for an extended period of time. ★
+
+[color=#a4885c]12.6A[/color] An unattended ship may be declared abandoned by Command within the sector or local area and subsequently salvaged. Any loss resulting from leaving your ship unattended is the responsibility of the owner.
+
+[color=#a4885c]12.7[/color] All thrusters, regardless of size, must remain directly exposed to space. No walls may obstruct the exhaust path between a thruster and open space. Protective grills are permitted. ★★
+
+[color=#a4885c]12.8A[/color] Multiple thrusters may not occupy the same location or share the same thruster engine block. ★
+
+[color=#a4885c]12.8B[/color] For additional guidance regarding valid thruster layouts, refer to the Thruster Placement documentation in the Discord #admin-questions channel.
+
+[color=#a4885c]12.9[/color] Construction of complex or poorly optimized machinery that significantly impacts server performance is strongly discouraged. Players will normally receive up to two warnings to remove or modify the contraption. Failure to comply may result in the offending machinery being removed by administrators. ★
+
+[color=#a4885c]12.9A[/color] Intentionally constructing or operating machinery for the purpose of degrading server performance or causing server lag constitutes abuse. Such behavior may result in immediate administrative action, including orders to cease, removal of the affected ship or machinery, administrative notes, or additional disciplinary action. ★★
 </Document>
