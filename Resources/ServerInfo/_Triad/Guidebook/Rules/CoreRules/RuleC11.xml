@@ -1,17 +1,27 @@
 ﻿<Document>
-[color=#ffff00][head=3]Section 11: Escalation Guidelines[/head][/color]
+[color=#ffff00][head=3]Section 11: Ship Saving and Design[/head][/color]
 
-[color=#a4885c]11.1[/color] Escalate conflicts reasonably. Use common sense when deciding how far a situation should go. A spilled drink might lead to an argument or fistfight, but it should not normally escalate into a gunfight. ★
+[color=#a4885c]11.1[/color] Ships are to be no larger than 80×50 tiles. ★
 
-[color=#a4885c]11.2[/color] Use words and intimidation before lethal force. When starting or escalating a conflict, you should talk, posture, threaten violence, brandish a weapon, or fire a warning shot before attempting to kill someone. ★
+[color=#a4885c]11.2[/color] Do not abuse the ship save mechanic to avoid in-character consequences. ★★
 
-[color=#a4885c]11.2A[/color] Use non-lethal options when appropriate. Command, security, and antagonists such as pirates are expected to carry and attempt to use non-lethal options before resorting to lethal force. Other roles with access to non-lethals should also make a reasonable effort to use them first. Punching someone is considered non-lethal. ★
+[color=#a4885c]11.3[/color] Do not exploit the stash to duplicate items. ★★★
 
-[color=#a4885c]11.3[/color] Accept surrender. If someone offers a genuine surrender, you must accept it, regardless of how heated the situation has become. ★
+[color=#a4885c]11.4[/color] Ship backups are only to be used in the event of bugs, server issues, or other OOC problems. Loading backups may only be done with admin permission. Request this through an ahelp in-game or a ticket on the Discord. ★★
 
-[color=#a4885c]11.4[/color] Do not fake surrender. You may not intentionally offer a false surrender. ★
+[color=#a4885c]11.4A[/color] You may not load a ship backup if your ship was destroyed by hostile elements such as automated defenses or offenses (Drones, LPBs, etc.).
 
-[color=#a4885c]11.4A[/color] Exceptions are made for those in factions. You may fake surrender but it will have heavy IC consequences placed on each faction’s SoP. ★
+[color=#a4885c]11.4B[/color] You may not load from a backup if your ship deed was lost. Recover that ship through IC means.
 
-[color=#a4885c]11.5[/color] Do not intentionally round-remove players. If you kill someone, you are expected to revive them when it is safe to do so. You may restrain them first. If they attempt to escape and you are forced to kill them again, you are not required to revive them a second time, but you must preserve their body. ★
+[color=#a4885c]11.4C[/color] Any ship that was not saved due to player negligence is not entitled to compensation from the administration for loss of progress when loading a backup. An ahelp is still required.
+
+[color=#a4885c]11.5[/color] Thrusters, regardless of size, must be exposed to space at all times. No structures (except grilles) may block a thruster's exhaust to space. Do not build any entities on the same tile as thrusters. ★★
+
+[color=#a4885c]11.5A[/color] Thrusters should not be placed at the exhaust of another thruster. ★
+
+[color=#a4885c]11.5B[/color] For more information, refer to **Thruster Placement** in **Discord → Admin Questions → Thruster Placement**.
+
+[color=#a4885c]11.5C[/color] Cameras and lights may be placed on the same tile as thrusters.
+
+[color=#a4885c]11.6[/color] Machine setups that cause server lag are not allowed. Any player who owns such a setup on their ship will be given a single warning to remove it if it causes server lag. Failure to comply will result in the ship being deleted. ★★
 </Document>
