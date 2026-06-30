@@ -17,7 +17,7 @@
   - TriadRuleC10
   - TriadRuleC11
   - TriadRuleC12
-  - TriadRuleC13
+  # - TriadRuleC13
 
 - type: guideEntry
   id: TriadRuleC1
