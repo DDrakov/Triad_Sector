@@ -9,7 +9,10 @@ using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
+using Content.Shared.Implants;
+using Content.Shared.Implants.Components;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
@@ -898,6 +901,23 @@ public sealed partial class ShuttleSystem
             {
                 Enable(uid, component: body, shuttle: entity.Comp2);
             }
+        }
+
+        // COYOTE: when the shuttle arrives, go through all the mobs on the grid
+        // and attempt to set off their deathrattle implants
+        var shuttleGridId = xform.GridUid;
+        var implantedQuery = EntityQueryEnumerator<ImplantedComponent, MobStateComponent, TransformComponent>();
+        while (implantedQuery.MoveNext(
+           out var mobUid,
+           out var implanted,
+           out var mobState,
+           out var mobXform))
+        {
+            if (mobXform.GridUid != shuttleGridId)
+                continue;
+
+            var deathrattleEvent = new ReTriggerRattleImplantEvent(mobUid, mobState.CurrentState);
+            RaiseLocalEvent(mobUid, deathrattleEvent);
         }
     }
 
