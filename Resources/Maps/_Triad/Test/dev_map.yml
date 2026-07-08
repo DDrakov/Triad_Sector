@@ -3837,7 +3837,7 @@ entities:
         - 0
         - 0
         - 0
-- proto: ClothingBackpackDuffelNfsdTrackingBundle
+- proto: ClothingBackpackDuffelTdfTrackingBundle
   entities:
   - uid: 622
     components:
@@ -8617,7 +8617,7 @@ entities:
     - type: Transform
       pos: -14.256703,4.7913895
       parent: 2
-- proto: ThrusterNfsd
+- proto: ThrusterTdf
   entities:
   - uid: 1263
     components:
