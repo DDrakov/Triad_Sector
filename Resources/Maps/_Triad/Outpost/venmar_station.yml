@@ -72729,7 +72729,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -58.680492,-25.326609
       parent: 2
-- proto: HyperlinkBookNfsdSop
+- proto: BookTdfSop
   entities:
   - uid: 1641
     components:
@@ -72785,7 +72785,7 @@ entities:
       parent: 1640
     - type: Physics
       canCollide: False
-- proto: HyperlinkBookSpaceLaw
+- proto: BookTriadLaw
   entities:
   - uid: 1650
     components:
