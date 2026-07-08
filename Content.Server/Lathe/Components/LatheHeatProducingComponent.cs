@@ -33,8 +33,9 @@ public sealed partial class LatheHeatProducingComponent : Component
     public TimeSpan UpdateSpacing = TimeSpan.FromSeconds(1);
 
     // used for examine
+    // Triad start
     [DataField]
-    public bool IsHot = false;
+    public bool IsExtremeTemp = false;
     // </Mono>
 
 }

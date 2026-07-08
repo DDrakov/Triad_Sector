@@ -130,8 +130,12 @@ namespace Content.Server.Lathe
             }
 
             // Mono - now checks all and not only producing lathes in order to check air temperature
-            var heatQuery = EntityQueryEnumerator<LatheHeatProducingComponent, LatheComponent, TransformComponent>();
-            while (heatQuery.MoveNext(out var uid, out var heatComp, out var latheComp, out var xform))
+            var heatQuery = EntityQueryEnumerator<
+                LatheHeatProducingComponent,
+                LatheProducingComponent,
+                LatheComponent,
+                TransformComponent>();
+            while (heatQuery.MoveNext(out var uid, out var heatComp, out var producingComp, out var latheComp, out var xform))
             {
                 heatComp.UpdateAccumulator += TimeSpan.FromSeconds(frameTime);
                 if (heatComp.UpdateAccumulator < heatComp.UpdateSpacing)
@@ -154,19 +158,22 @@ namespace Content.Server.Lathe
                 }
 
                 if (_environments.Count == 0)
+                {
+                    heatComp.IsExtremeTemp = true;
                     continue;
-
+                }
                 var avgTemp = 0f;
                 var totalHeatCap = 0f;
                 foreach (var env in _environments)
                 {
-                    avgTemp += env.Temperature;;
+                    avgTemp += env.Temperature;
                     totalHeatCap += _atmosphere.GetHeatCapacity(env, true);
                 }
+
                 avgTemp /= _environments.Count;
-                var wasHot = heatComp.IsHot;
-                heatComp.IsHot = heatComp.TemperatureCap != null && avgTemp + heatComp.EnergyPerSecond / totalHeatCap > heatComp.TemperatureCap;
-                if (heatComp.IsHot)
+                var wasHot = heatComp.IsExtremeTemp;
+                heatComp.IsExtremeTemp = heatComp.TemperatureCap != null && avgTemp + heatComp.EnergyPerSecond / totalHeatCap > heatComp.TemperatureCap;
+                if (heatComp.IsExtremeTemp)
                     continue;
                 else if (wasHot && !latheComp.Paused)
                     TryStartProducing(uid, latheComp);
@@ -261,7 +268,7 @@ namespace Content.Server.Lathe
                 || component.CurrentRecipe != null
                 || component.Queue.Count <= 0
                 || !this.IsPowered(uid, EntityManager)
-                || TryComp<LatheHeatProducingComponent>(uid, out var heat) && heat.IsHot) // Mono - if you want to add more conditions turn this into an event please
+                || TryComp<LatheHeatProducingComponent>(uid, out var heat) && heat.IsExtremeTemp) // Mono - if you want to add more conditions turn this into an event please
                 return false;
 
             // Frontier: handle batches
@@ -564,8 +571,8 @@ namespace Content.Server.Lathe
         // Mono
         private void OnHeatExamine(Entity<LatheHeatProducingComponent> ent, ref ExaminedEvent args)
         {
-            if (ent.Comp.IsHot)
-                args.PushMarkup(Loc.GetString("lathe-heat-producing-too-hot"));
+            if (ent.Comp.IsExtremeTemp)
+                args.PushMarkup(Loc.GetString("lathe-heat-producing-extreme-temperature"));
         }
 
         // Frontier: modify item value
