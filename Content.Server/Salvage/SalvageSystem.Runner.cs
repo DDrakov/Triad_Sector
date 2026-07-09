@@ -26,6 +26,9 @@ using Content.Shared.Mind.Components;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums; // Frontier
+using Robust.Shared.Utility;
+using Content.Shared._Triad;
+using Content.Server.Warps;
 
 namespace Content.Server.Salvage;
 
@@ -200,7 +203,7 @@ public sealed partial class SalvageSystem
             var remaining = comp.EndTime - _timing.CurTime;
             var audioLength = _audio.GetAudioLength(comp.SelectedSong);
 
-            AbortIfWiped(uid, comp); // Frontier
+            AbortIfWiped(uid, comp); // Coyote
 
             if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(45))
             {
@@ -318,14 +321,7 @@ public sealed partial class SalvageSystem
                                 // No good position yet, pick another random position.
                                 dropLocation = _random.NextVector2(minRange, maxRange);
                             }
-
-                            _shuttle.FTLToCoordinates(
-                                shuttleUid,
-                                shuttle,
-                                new EntityCoordinates(mapUid.Value, dropLocation),
-                                0f,
-                                ftlTime,
-                                TravelTime);
+                            _shuttle.FTLToCoordinates(shuttleUid, shuttle, new EntityCoordinates(mapUid.Value, dropLocation), 0f, 5.5f, 50f);
                             // End Frontier:  try to find a potential destination for ship that doesn't collide with other grids.
                         }
 
@@ -687,7 +683,7 @@ public sealed partial class SalvageSystem
             if (xform.MapUid != mapUid)
                 continue;
             // unidentified humans (loot) dont count
-            if (!mindC.HasHadMind)
+            if (!mindC.HasMind)
                 continue;
             // if anyone is alive and not in crit, we are good
             if (_mobState.IsAlive(uid, mobState))

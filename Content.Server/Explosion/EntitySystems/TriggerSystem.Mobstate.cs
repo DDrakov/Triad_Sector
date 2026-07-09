@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.Explosion.Components;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Implants;
@@ -21,7 +21,6 @@ public sealed partial class TriggerSystem
 
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<SuicideEvent>>(OnSuicideRelay);
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<MobStateChangedEvent>>(OnMobStateRelay);
-        SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<GetVerbsEvent<Verb>>>(OnVerbRelay);
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, ImplantRelayEvent<ReTriggerRattleImplantEvent>>(OnFtlArriveRelay);
     }
 
@@ -31,6 +30,23 @@ public sealed partial class TriggerSystem
         component.RattleCancelToken = new CancellationTokenSource();
         if (!component.MobState.Contains(args.NewMobState))
             return;
+
+        TryRunTrigger(
+            uid,
+            component,
+            args.Target,
+            args.NewMobState,
+            args.Origin);
+    }
+
+    private void TryRunTrigger(
+        EntityUid uid,
+        TriggerOnMobstateChangeComponent component,
+        EntityUid changedStateMobUid,
+        MobState coolState,
+        EntityUid? stateChangerUid = null,
+        bool retry = false)
+    {
 
         //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it
         //Very useful for things that require a mobstate change and a timer
@@ -82,8 +98,6 @@ public sealed partial class TriggerSystem
             || Deleted(changedStateMobUid))
             return;
         if (!HasComp<MobStateComponent>(changedStateMobUid))
-            return;
-        if (!component.Enabled)
             return;
         var stat = Comp<MobStateComponent>(changedStateMobUid).CurrentState;
         if (component.MobState.Contains(stat))
@@ -140,41 +154,5 @@ public sealed partial class TriggerSystem
             args.Event.Implanted,
             args.Event.CurrentState,
             null);
-    }
-
-
-    private void OnVerbRelay(EntityUid uid,
-        TriggerOnMobstateChangeComponent component,
-        ImplantRelayEvent<GetVerbsEvent<Verb>> args)
-    {
-        OnGetVerbs(uid, component, args.Event);
-    }
-
-    private void OnGetVerbs(EntityUid uid,
-        TriggerOnMobstateChangeComponent component,
-        GetVerbsEvent<Verb> args)
-    {
-        if (args.User != args.Target)
-            return; // Self only, but usable in crit
-
-        var verb = new Verb()
-        {
-            Text = Loc.GetString(
-                "trigger-on-mobstate-verb-text",
-                ("state", component.Enabled ? "ON" : "OFF")),
-            Act = () =>
-            {
-                component.Enabled = !component.Enabled;
-                _popupSystem.PopupEntity(
-                    Loc.GetString(
-                        "trigger-on-mobstate-verb-popup",
-                        ("state", component.Enabled ? "ENABLED" : "DISABLED")),
-                    args.User,
-                    args.User);
-            },
-            Disabled = false,
-            Message = "Toggle whether or not this thing tells everyone you are dead both inside and outside."
-        };
-        args.Verbs.Add(verb);
     }
 }

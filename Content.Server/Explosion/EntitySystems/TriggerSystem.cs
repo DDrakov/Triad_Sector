@@ -62,6 +62,11 @@ namespace Content.Server.Explosion.EntitySystems
             Triggered = triggered;
             User = user;
         }
+
+        public void AddExtra(string extra, object value)
+        {
+            Extras[extra] = value;
+        }
     }
 
     /// <summary>
@@ -257,10 +262,6 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (implanted.ImplantedEntity == null)
                 return;
-            if (!TryComp<MobStateComponent>(implanted.ImplantedEntity, out var mobstate)
-                || mobstate.CurrentState == MobState.Alive)
-                return;
-
 
             // Gets location of the implant
             var ownerXform = Transform(uid);
