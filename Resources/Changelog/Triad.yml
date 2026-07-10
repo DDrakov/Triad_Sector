@@ -2336,3 +2336,14 @@ Entries:
   id: 2371
   time: '2026-07-09T16:27:38.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/306
+- author: DDrakov
+  changes:
+    - type: Add
+      message: Added ATM to Auric Outpost
+    - type: Add
+      message: Double airlock on military dock
+    - type: Add
+      message: Filing cabinets and it's form inside the briefing
+  id: 2372
+  time: '2026-07-10T00:35:01.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/318
