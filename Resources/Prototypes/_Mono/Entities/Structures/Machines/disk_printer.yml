@@ -177,9 +177,10 @@
     - TechDiskUniversalShipAmmoAdvanced
     chance: 0.95
     offset: 0.0
-    rarePrototypes:
-    - SpawnLootTechDisksPrinterT4
-    rareChance: 0.15
+    # Triad remove speed boots
+    # rarePrototypes:
+    # - SpawnLootTechDisksPrinterT4
+    # rareChance: 0.15
 
 - type: entity
   name: tech disk printer disks

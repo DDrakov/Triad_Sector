@@ -199,7 +199,7 @@
   id: SpawnLootTechDisksT3FractureTrunk
   table: !type:GroupSelector
     children:
-    - id: TechDiskSpeedBoots
+    # - id: TechDiskSpeedBoots // Triad, remove speed boots tech disk
     # - id: TechDiskBluespaceBags // Triad, remove bluespace bag
     - id: TechDiskShields
     - id: TechDiskFtl
