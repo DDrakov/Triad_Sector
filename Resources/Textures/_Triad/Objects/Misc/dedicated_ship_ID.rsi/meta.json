@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "med_ID_handle"
+      "name": "med_id_handle"
     },
     {
-      "name": "TFA_ID_handle"
+      "name": "tfa_id_handle"
     },
     {
-      "name": "TDF_ID_handle"
+      "name": "tdf_id_handle"
     },
     {
       "name": "motherboard"
@@ -23,22 +23,25 @@
       "name": "med_logo"
     },
     {
-      "name": "TFA_logo"
+      "name": "tfa_logo"
     },
     {
-      "name": "TDF_logo"
+      "name": "tdf_logo"
     },
     {
-      "name": "civ_clearance"
+      "name": "tier_0"
     },
     {
-      "name": "merc_clearance"
+      "name": "tier_1"
     },
     {
-      "name": "mil_clearance"
+      "name": "tier_2"
     },
     {
-      "name": "command_clearance"
+      "name": "tier_3"
+    },
+    {
+      "name": "tier_4"
     }
   ]
 }

@@ -17,9 +17,9 @@
   components:
   - type: Sprite
     layers:
-    - state: med_ID_handle
+    - state: med_id_handle
     - state: motherboard
-    - state: command_clearance
+    - state: tier_4
     - state: med_logo
   - type: ShipyardVoucher
     destroyOnEmpty: true
@@ -38,10 +38,10 @@
   components:
   - type: Sprite
     layers:
-    - state: TDF_ID_handle
+    - state: tdf_id_handle
     - state: motherboard
-    - state: command_clearance
-    - state: TDF_logo
+    - state: tier_4
+    - state: tdf_logo
   - type: ShipyardVoucher
     destroyOnEmpty: true
     consoleType: Security
