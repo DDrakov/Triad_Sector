@@ -3,7 +3,7 @@
   abstract: true
   parent: BaseShipVoucher
   id: BaseShipDSID
-  name: ship DSID
+  name: ship dedicated ship id
   description: Contains the necessary data for a shipyard console to produce a certain design.
   components:
   - type: Sprite
@@ -11,36 +11,15 @@
 
 - type: entity
   parent: BaseShipDSID
-  id: ShipVoucherEphemere
-  name: ephemere dedicated ship id
-  description: A small card that contains the data for the procurement of a Ephemere-class DoC ship. Do not lost the DSID
-  components:
-  - type: Sprite
-    layers:
-    - state: med_id_handle
-    - state: motherboard
-    - state: tier_4
-    - state: med_logo
-  - type: ShipyardVoucher
-    destroyOnEmpty: true
-    consoleType: Medical
-    companyName: MD
-    vessels:
-    - Ephemere
-  - type: StaticPrice
-    vendPrice: 150000
-
-- type: entity
-  parent: BaseShipDSID
   id: ShipVoucherTest1
-  name: Test Dedicated Ship ID
+  name: template dedicated ship id
   description: Test
   components:
   - type: Sprite
     layers:
     - state: tdf_id_handle
     - state: motherboard
-    - state: tier_4
+    - state: tier_1
     - state: tdf_logo
   - type: ShipyardVoucher
     destroyOnEmpty: true
@@ -48,5 +27,3 @@
     companyName: TDF
     vessels:
     - Ravager
-  - type: StaticPrice
-    vendPrice: 450000
