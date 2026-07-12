@@ -7,7 +7,7 @@
   description: Contains the necessary data for a shipyard console to produce a certain design.
   components:
   - type: Sprite
-    sprite: _Triad/Objects/Misc/dedicated_ship_id.rsi
+    sprite: _Triad/Objects/Misc/dsid_template.rsi
 
 - type: entity
   parent: BaseShipDSID
