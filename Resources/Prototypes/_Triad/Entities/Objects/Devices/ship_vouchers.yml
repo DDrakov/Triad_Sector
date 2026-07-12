@@ -12,7 +12,7 @@
 - type: entity
   parent: BaseShipDSID
   id: ShipVoucherEphemere
-  name: Ephemere Dedicated Ship ID
+  name: ephemere dedicated ship id
   description: A small card that contains the data for the procurement of a Ephemere-class DoC ship. Do not lost the DSID
   components:
   - type: Sprite
@@ -29,7 +29,7 @@
     - ephemere
   - type: StaticPrice
     vendPrice: 150000
-    
+
 - type: entity
   parent: BaseShipDSID
   id: ShipVoucherTest1
