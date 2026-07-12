@@ -29,3 +29,24 @@
     - ephemere
   - type: StaticPrice
     vendPrice: 150000
+    
+- type: entity
+  parent: BaseShipDSID
+  id: ShipVoucherTest1
+  name: Test Dedicated Ship ID
+  description: Test
+  components:
+  - type: Sprite
+    layers:
+    - state: TDF_ID_handle
+    - state: motherboard
+    - state: command_clearance
+    - state: TDF_logo
+  - type: ShipyardVoucher
+    destroyOnEmpty: true
+    consoleType: Security
+    companyName: TDF
+    vessels:
+    - Ravager
+  - type: StaticPrice
+    vendPrice: 450000

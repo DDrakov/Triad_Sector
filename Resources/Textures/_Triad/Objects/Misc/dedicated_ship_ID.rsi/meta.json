@@ -11,10 +11,22 @@
       "name": "med_ID_handle"
     },
     {
+      "name": "TFA_ID_handle"
+    },
+    {
+      "name": "TDF_ID_handle"
+    },
+    {
       "name": "motherboard"
     },
     {
       "name": "med_logo"
+    },
+    {
+      "name": "TFA_logo"
+    },
+    {
+      "name": "TDF_logo"
     },
     {
       "name": "civ_clearance"
