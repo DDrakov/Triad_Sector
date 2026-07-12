@@ -26,7 +26,7 @@
     consoleType: Medical
     companyName: MD
     vessels:
-    - ephemere
+    - Ephemere
   - type: StaticPrice
     vendPrice: 150000
 

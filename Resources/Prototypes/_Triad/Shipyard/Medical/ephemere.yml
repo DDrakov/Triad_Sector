@@ -7,7 +7,7 @@
 # DoC Voucher Ship
 
 - type: vessel
-  id: ephemere
+  id: Ephemere
   parent: BaseVessel
   name: SPS Ephemere
   description: A heavily armored quick entry and getaway DoC ship designed to venture into deep space to retrieve patients in dangerous territory, made to be nimble and able to bite back.  
