@@ -19,14 +19,3 @@
       board: [ DoorElectronicsTdfChiefEnforcer ]
   - type: Wires
     layoutId: AirlockSecurity
-
-- type: entity
-  parent: WindoorSecurePlasma
-  id: PlasmaWindoorSecureChiefEnforcerLocked
-  suffix: ChiefEnforcer, Locked
-  components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsTdfChiefEnforcer ]
-  - type: Wires
-    layoutId: AirlockSecurity
