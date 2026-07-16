@@ -41,8 +41,6 @@
   - type: StaticPrice
     price: 5000
     vendPrice: 7500
-  - type: SavingContraband
-    examineText: ship-saving-contraband-2-text
   - type: PirateBountyItem
     id: ClothingOuterHardsuitTacsuit
 
