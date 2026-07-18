@@ -17,7 +17,7 @@
   entityIcon: ShipVoucherTdfTier1
   discipline: TdfShipyard
   tier: 1
-  cost: 27500
+  cost: 35000
   recipeUnlocks:
   - IntermediateVoucherTDF
   technologyPrerequisites:
