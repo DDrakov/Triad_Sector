@@ -34,7 +34,7 @@
         paths:
         - /Maps/_Triad/Bluespace/tdfvault.yml
     rewardAccounts:
-      Nfsd: 0.7 # TDF, 70% of the appraised grid
+      TDF: 0.7 # TDF, 70% of the appraised grid
       Frontier: 0.1 # 10% of the appraised grid to colonial outpost
       Medical: 0.1
 
@@ -49,7 +49,7 @@
     warningAnnouncement: station-event-bluespace-tdf-vault-warning-announcement
     endAnnouncement: station-event-bluespace-tdf-vault-end-announcement
     earliestStart: 60
-    maximumPlayers: 0
+    maximumPlayers: 30
     weight: 5
     duration: 590
     maxDuration: 780
@@ -75,6 +75,6 @@
         paths:
         - /Maps/_Triad/Bluespace/tdfvaultsmall.yml
     rewardAccounts:
-      Nfsd: 0.9 # TDF
+      TDF: 0.9 # TDF
 
 # TODO: Federated Solarian Republic vaults and Coalition vaults
