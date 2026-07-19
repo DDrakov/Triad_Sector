@@ -280,7 +280,7 @@ public sealed partial class SalvageSystem
                                         continue;
                                     // move them to the shuttle
                                     deadLoserDestinations ??= GetDeadLoserDestinations(shuttleGrid.Value);
-                                    RescueDork(
+                                    RescuePlayer(
                                         mobUid,
                                         deadLoserDestinations,
                                         shuttleGrid.Value);
@@ -417,7 +417,7 @@ public sealed partial class SalvageSystem
     /// <summary>
     /// Takes a mob, and puts them onto this shuttle.
     /// </summary>
-    private void RescueDork(
+    private void RescuePlayer(
         EntityUid mobUid,
         DestinationPriority possibleDestinations,
         EntityUid shuttleGrid)
