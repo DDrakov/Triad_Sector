@@ -29,6 +29,8 @@ using Robust.Shared.Enums; // Frontier
 using Robust.Shared.Utility;
 using Content.Shared._Triad;
 using Content.Server.Warps;
+using Content.Shared.Inventory;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Salvage;
 
@@ -44,6 +46,8 @@ public sealed partial class SalvageSystem
     [Dependency] private readonly IPlayerManager _players = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
 
     private void InitializeRunner()
     {
@@ -418,7 +422,7 @@ public sealed partial class SalvageSystem
         DestinationPriority possibleDestinations,
         EntityUid shuttleGrid)
     {
-        TendToDork(mobUid);
+        PrepareRescue(mobUid);
         Spawn("EffectGravityPulse", Transform(mobUid).Coordinates);
         Spawn("EffectSparks", Transform(mobUid).Coordinates);
         // unbuckle them if they are buckled
@@ -507,35 +511,20 @@ public sealed partial class SalvageSystem
     /// Beats the heck out of the dork if they arent dead
     /// Then extinguishes them and caps their Heat to 300ish if above that.
     /// </summary>
-    private void TendToDork(EntityUid mobUid)
+    private void PrepareRescue(EntityUid mobUid)
     {
         if (_mobState.IsAlive(mobUid))
         {
-            // hey you're alive! stop that!
-            var hurtEmThisMuch = new DamageSpecifier()
-            {
-                DamageDict = { ["Slash"] = 150, ["Heat"] = 150, ["Poison"] = 100 }
-            };
-            _damageable.TryChangeDamage(
-                mobUid,
-                hurtEmThisMuch,
-                true);
+            // Force stamcrit when rescue
+            _stamina.TakeStaminaDamage(mobUid, 200);
         }
-        else if (_mobState.IsCritical(mobUid))
+        if (!_mobState.IsAlive(mobUid))
         {
-            // I saw that, you're still alive! stop that!
-            var hurtEmThisMuch = new DamageSpecifier()
-            {
-                DamageDict = { ["Slash"] = 50, ["Heat"] = 50, ["Poison"] = 25 }
-            };
-            _damageable.TryChangeDamage(
-                mobUid,
-                hurtEmThisMuch,
-                true);
+            // Force strip backpack and outerClothing if they're not alive
+            _inventorySystem.TryUnequip(mobUid, "back", true, true, false);
+            _inventorySystem.TryUnequip(mobUid, "outerClothing", true, true, false);
         }
 
-        // okay, extinguish them, and clamp their burn damages to a max of 300
-        // fire sucks, i hate this game
         var ev = new ExtinguishEvent
         {
             FireStacksAdjustment = 1000,
@@ -573,7 +562,6 @@ public sealed partial class SalvageSystem
                 Atmospherics.T20C,
                 comp);
         }
-        // FIRE SUCKSSSSSSSSSS
     }
 
     /// <summary>
