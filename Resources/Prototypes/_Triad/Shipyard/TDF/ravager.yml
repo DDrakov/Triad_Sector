@@ -27,7 +27,7 @@
   minPlayers: 0
   stations:
     Ravager:
-      stationProto: StandardFrontierVessel
+      stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
         mapNameTemplate: 'Ravager TDF{1}'
