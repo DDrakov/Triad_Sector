@@ -243,14 +243,14 @@
   id: UplinkSecurityTier2Voucher
   name:  uplink-security-tier-2-voucher-name
   description: uplink-security-tier-2-voucher-desc
-  productEntity: ShipVoucherTdfTier1
+  productEntity: ShipVoucherTdfTier2
   icon: {
     sprite: _Triad/Objects/Misc/tdf_dsid_icon.rsi,
     state: tier_2 }
   cost:
     TriadCommerceCredit: 40
   categories:
-  - ShipVoucherTdfTier2
+  - UplinkSecurityVouchers
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
