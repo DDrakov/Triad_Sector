@@ -308,7 +308,7 @@
   name: uplink-security-hardsuit-tdf-name
   description: uplink-security-hardsuit-tdf-desc
   productEntity: ClothingOuterHardsuitTdf
-  icon: { sprite: _Triad/Clothing/OuterClothing/Hardsuits/tdf.rsi, state: icon }
+  icon: { sprite: _Triad/Clothing/OuterClothing/Hardsuits/tdf-ta21.rsi, state: icon }
   cost:
     TriadCommerceCredit: 10
   categories:
@@ -324,7 +324,7 @@
   name: uplink-security-hardsuit-tdf-medic-name
   description: uplink-security-hardsuit-tdf-medic-desc
   productEntity: ClothingOuterHardsuitTdfMedic
-  icon: { sprite: _Triad/Clothing/OuterClothing/Hardsuits/tdf-medic.rsi, state: icon }
+  icon: { sprite: _Triad/Clothing/OuterClothing/Hardsuits/tdf-ta21m.rsi, state: icon }
   cost:
     TriadCommerceCredit: 10
   categories:
