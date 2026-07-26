@@ -125,7 +125,7 @@
 
 - type: entity
   id: NfsdTechFab
-  parent: [ BlueprintReceiverBase, SecurityTechFab ]
+  parent: [ BlueprintReceiverBase, SecurityTechFab, BaseClass2AShipContraband ]
   name: TDF techfab
   description: Prints equipment for use by TDF.
   components:
@@ -172,8 +172,9 @@
     - NFNfsdTechfabDeprecatedEmag
   - type: PirateBountyItem # Mono
     id: Techfab
-  - type: SavingContraband # Triad
-    examineText: ship-saving-contraband-2-text
+  - type: CompanyAccessReader
+    requiredCompany: TDF # Triad
+    popupMessage: company-access-denied-tdf # Triad
 
 - type: entity
   id: MercenaryTechFab

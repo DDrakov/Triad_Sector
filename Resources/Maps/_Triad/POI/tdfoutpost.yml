@@ -141377,7 +141377,7 @@ entities:
       receiveFrequency: 1280
     - type: Physics
       canCollide: False
-- proto: ResearchAndDevelopmentServerTdf
+- proto: ResearchAndDevelopmentServerTDF
   entities:
   - uid: 7195
     components:
