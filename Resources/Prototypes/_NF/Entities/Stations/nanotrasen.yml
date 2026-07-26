@@ -99,10 +99,29 @@
   - type: Transform
   - type: ExtraShuttleInformation
 
+# Triad start
+- type: entity
+  id: StandardNonExpedVessel # An ID for faction ships specifically for factions related vessel.
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationAllEventsEligible
+  - BaseStationRenameFaxes
+  - BaseStationRenameHolopads
+  - BaseStationRenameWarpPoints
+  - BaseStationSiliconLawFrontierShips
+  - BaseStationDeadDropHintExempt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+  - type: ExtraShuttleInformation
+# Triad end
+
 - type: entity
   id: StandardFrontierAntagVessel
   parent:
-  - StandardFrontierVessel
+  - StandardNonExpedVessel
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform
@@ -112,7 +131,7 @@
 - type: entity
   id: StandardFrontierSecurityVessel
   parent:
-  - StandardFrontierVessel
+  - StandardNonExpedVessel
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform
@@ -122,6 +141,7 @@
   id: StandardFrontierSecurityExpeditionVessel
   parent:
   - StandardFrontierSecurityVessel
+  - BaseStationExpeditions
   categories: [ HideSpawnMenu ]
 
 - type: entity
