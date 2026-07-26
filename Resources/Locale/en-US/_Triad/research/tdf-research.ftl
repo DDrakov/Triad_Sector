@@ -15,4 +15,4 @@ research-technology-tdf-guns-advance = Advance Ballistics production
 research-technology-Tdf-advanced-equipment = Advance Protection Equipment
 
 # T3 TDF
-research-discipline-tdf-shipyard-tier3 = Advance Shipyard Production
+research-discipline-tdf-shipyard-tier3 = Advanced Shipyard Production
