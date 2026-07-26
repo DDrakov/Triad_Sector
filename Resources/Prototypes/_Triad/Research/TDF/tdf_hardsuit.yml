@@ -15,12 +15,12 @@
 - type: technology
   id: TdfAdvancedEquipment
   name: research-technology-Tdf-advanced-equipment
-  entityIcon: ClothingOuterHardsuitTdfT2Hardsuit
+  entityIcon: ClothingOuterHardsuitTdfTA29
   discipline: TdfEquipment
   tier: 2
   cost: 35000
   recipeUnlocks:
-  - ClothingOuterHardsuitTdfT2Hardsuit
+  - ClothingOuterHardsuitTdfTA29
   technologyPrerequisites:
   - TdfBasicEquipment
   - UniversalMaterialResearchT2

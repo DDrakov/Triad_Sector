@@ -9,6 +9,6 @@
   result: ClothingOuterHardsuitTdf
 
 - type: latheRecipe
-  id: ClothingOuterHardsuitTdfT2Hardsuit
+  id: ClothingOuterHardsuitTdfTA29
   parent: MonoHardsuitT2Recipe
-  result: ClothingOuterHardsuitTdfT2Hardsuit
+  result: ClothingOuterHardsuitTdfTA29
