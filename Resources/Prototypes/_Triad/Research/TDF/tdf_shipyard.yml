@@ -33,7 +33,7 @@
   tier: 3
   cost: 40000
   recipeUnlocks:
-  - AdvanceVoucherTDF
+  - AdvancedVoucherTDF
   technologyPrerequisites:
   - TdfTier2Ship
   - UniversalMaterialResearchT1

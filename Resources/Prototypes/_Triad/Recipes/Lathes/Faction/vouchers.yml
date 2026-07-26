@@ -30,7 +30,7 @@
 
 - type: latheRecipe
   parent: BaseVoucherRecipe
-  id: AdvanceVoucherTDF
+  id: AdvancedVoucherTDF
   result: ShipVoucherTdfTier3
   completetime: 90
   materials:

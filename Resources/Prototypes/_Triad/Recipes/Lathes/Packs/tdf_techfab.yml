@@ -66,7 +66,7 @@
   recipes:
   - BasicVoucherTDF
   - IntermediateVoucherTDF
-  - AdvanceVoucherTDF
+  - AdvancedVoucherTDF
 
 - type: latheRecipePack
   id: TDFGearDynamic
