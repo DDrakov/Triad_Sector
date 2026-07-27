@@ -101,7 +101,7 @@
 
 # Triad start
 - type: entity
-  id: StandardNonExpedVessel # An ID for faction ships specifically for factions related vessel.
+  id: StandardTriadVessel
   parent:
   - BaseStation
   - BaseStationJobsSpawning
@@ -121,7 +121,7 @@
 - type: entity
   id: StandardFrontierAntagVessel
   parent:
-  - StandardNonExpedVessel
+  - StandardTriadVessel
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform
@@ -131,7 +131,7 @@
 - type: entity
   id: StandardFrontierSecurityVessel
   parent:
-  - StandardNonExpedVessel
+  - StandardTriadVessel
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform
