@@ -1,0 +1,16 @@
+- type: entity
+  id: StandardTriadVessel
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationAllEventsEligible
+  - BaseStationRenameFaxes
+  - BaseStationRenameHolopads
+  - BaseStationRenameWarpPoints
+  - BaseStationSiliconLawFrontierShips
+  - BaseStationDeadDropHintExempt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+  - type: ExtraShuttleInformation

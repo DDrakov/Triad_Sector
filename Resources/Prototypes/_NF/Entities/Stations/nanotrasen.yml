@@ -99,29 +99,10 @@
   - type: Transform
   - type: ExtraShuttleInformation
 
-# Triad start
-- type: entity
-  id: StandardTriadVessel
-  parent:
-  - BaseStation
-  - BaseStationJobsSpawning
-  - BaseStationRecords
-  - BaseStationAllEventsEligible
-  - BaseStationRenameFaxes
-  - BaseStationRenameHolopads
-  - BaseStationRenameWarpPoints
-  - BaseStationSiliconLawFrontierShips
-  - BaseStationDeadDropHintExempt
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Transform
-  - type: ExtraShuttleInformation
-# Triad end
-
 - type: entity
   id: StandardFrontierAntagVessel
   parent:
-  - StandardTriadVessel
+  - StandardTriadVessel # Triad change
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform
@@ -131,7 +112,7 @@
 - type: entity
   id: StandardFrontierSecurityVessel
   parent:
-  - StandardTriadVessel
+  - StandardTriadVessel # Triad change
   categories: [ HideSpawnMenu ]
   components:
   - type: Transform
