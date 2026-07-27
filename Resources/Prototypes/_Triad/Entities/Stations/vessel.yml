@@ -14,3 +14,22 @@
   components:
   - type: Transform
   - type: ExtraShuttleInformation
+  - type: StationFaxDeadDropHintExempt
+
+- type: entity
+  id: StandardTriadExpedVessel
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationAllEventsEligible
+  - BaseStationRenameFaxes
+  - BaseStationRenameHolopads
+  - BaseStationRenameWarpPoints
+  - BaseStationSiliconLawFrontierShips
+  - BaseStationDeadDropHintExempt
+  - BaseStationExpeditions
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
+  - type: ExtraShuttleInformation

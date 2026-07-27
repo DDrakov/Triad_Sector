@@ -21,7 +21,7 @@
   minPlayers: 0
   stations:
     Jester:
-      stationProto: StandardFrontierSecurityVessel
+      stationProto: StandardTriadVessel
       components:
       - type: StationNameSetup
         mapNameTemplate: 'Jester TDF{1}'
