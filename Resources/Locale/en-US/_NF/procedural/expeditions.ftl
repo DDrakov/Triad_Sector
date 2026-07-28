@@ -1,6 +1,6 @@
 salvage-expedition-window-finish = Finish expedition
 salvage-expedition-announcement-early-finish = The expedition was completed ahead of schedule. Shuttle will depart in {$departTime} seconds.
-salvage-expedition-abort-wipe = [color=Red]Oh dear, everyone's dead.[/color] Aborting mission and recovering the bodies! Shuttle will depart in {$departTime} seconds.
+salvage-expedition-abort-wipe = [color=Red]No life signs detected[/color]. Expedition aborted. Commencing personnel recovery. Shuttle departure in {$departTime} seconds.
 
 salvage-expedition-shuttle-not-found = Cannot locate shuttle.
 salvage-expedition-not-everyone-aboard = Not all crew aboard! {CAPITALIZE(THE($target))} is still out there!
