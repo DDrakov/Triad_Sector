@@ -260,10 +260,10 @@ public sealed partial class SalvageSystem
                                 continue;
                             }
 
-                            // rescue all the losers on the map who arent on the ship for whatever reason
                             var shuttleGrid = shuttleXform.GridUid;
                             DestinationPriority? deadLoserDestinations = null;
-                            if (shuttleGrid != null)
+                            // Need to check if the shuttle have any FTLComponent or not.
+                            if (shuttleGrid != null && !HasComp<FTLComponent>(shuttleGrid))
                             {
                                 var mobQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent>();
                                 while (mobQuery.MoveNext(
@@ -284,22 +284,20 @@ public sealed partial class SalvageSystem
                                         mobUid,
                                         deadLoserDestinations,
                                         shuttleGrid.Value);
-                                    Spawn("EffectSparks", Transform(mobUid).Coordinates);
-                                    Spawn("EffectGravityPulse", Transform(mobUid).Coordinates);
-                                    SoundSpecifier Sound = new SoundPathSpecifier("/Audio/_COYOTE/ExpedReturnToBed.ogg");
-                                    _audio.PlayPvs(Sound, mobUid);
+                                    SoundSpecifier sound = new SoundPathSpecifier("/Audio/_COYOTE/ExpedReturnToBed.ogg");
+                                    _audio.PlayPvs(sound, mobUid);
                                 }
                             }
 
-                                // Destination generator parameters (move to CVAR?)
-                            int numRetries = 20; // Maximum number of retries
-                            float minDistance = 200f; // Minimum distance from another object, in meters
-                            float minRange = 750f; // Minimum distance from sector centre, in meters
-                            float maxRange = 3500f; // Maximum distance from sector centre, in meters
+                            // Destination generator parameters (move to CVAR?)
+                            var numRetries = 20; // Maximum number of retries
+                            var minDistance = 200f; // Minimum distance from another object, in meters
+                            var minRange = 750f; // Minimum distance from sector centre, in meters
+                            var maxRange = 3500f; // Maximum distance from sector centre, in meters
 
                             // Get a list of all grid positions on the destination map
                             List<Vector2> gridCoords = new();
-                            var gridQuery = EntityManager.AllEntityQueryEnumerator<MapGridComponent, TransformComponent>();
+                            var gridQuery = AllEntityQuery<MapGridComponent, TransformComponent>();
                             while (gridQuery.MoveNext(out var _, out _, out var xform))
                             {
                                 if (xform.MapID == mapId)
@@ -423,8 +421,6 @@ public sealed partial class SalvageSystem
         EntityUid shuttleGrid)
     {
         PrepareRescue(mobUid);
-        Spawn("EffectGravityPulse", Transform(mobUid).Coordinates);
-        Spawn("EffectSparks", Transform(mobUid).Coordinates);
         // unbuckle them if they are buckled
         _buckle.TryUnbuckle(mobUid, null);
         // try beds first
@@ -529,21 +525,6 @@ public sealed partial class SalvageSystem
         {
             FireStacksAdjustment = 1000,
         };
-        RaiseLocalEvent(mobUid, ref ev);
-        if (TryComp<DamageableComponent>(mobUid, out var damageable)
-            && damageable.Damage.DamageDict.TryGetValue("Heat", out var burnAmount)
-            && burnAmount > 300)
-        {
-            var reduceBy = burnAmount - 300;
-            var burnDamageSpecifier = new DamageSpecifier()
-            {
-                DamageDict = { ["Heat"] = -reduceBy }
-            };
-            _damageable.TryChangeDamage(
-                mobUid,
-                burnDamageSpecifier,
-                true);
-        }
         if (!TryComp<TemperatureComponent>(mobUid, out var comp))
             return;
         if (TryComp<ThermalRegulatorComponent>(
@@ -687,7 +668,7 @@ public sealed partial class SalvageSystem
             }
         }
         // everyone is dead or ssd, abort the expedition
-        const int departTime = 20;
+        const int departTime = 60;
         Announce(mapUid, Loc.GetString("salvage-expedition-abort-wipe", ("departTime", departTime)));
         component.NextAutoAbortCheck = TimeSpan.FromDays(1); // prevent further checks
         var newEndTime = _timing.CurTime + TimeSpan.FromSeconds(departTime);
