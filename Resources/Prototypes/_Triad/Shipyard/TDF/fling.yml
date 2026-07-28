@@ -21,7 +21,7 @@
   minPlayers: 0
   stations:
     Fling:
-      stationProto: StandardTriadVessel
+      stationProto: StandardTriadTdfVessel
       components:
       - type: StationNameSetup
         mapNameTemplate: 'Fling TDF{1}'

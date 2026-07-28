@@ -14,22 +14,26 @@
   components:
   - type: Transform
   - type: ExtraShuttleInformation
-  - type: StationFaxDeadDropHintExempt
 
 - type: entity
   id: StandardTriadExpedVessel
   parent:
-  - BaseStation
-  - BaseStationJobsSpawning
-  - BaseStationRecords
-  - BaseStationAllEventsEligible
-  - BaseStationRenameFaxes
-  - BaseStationRenameHolopads
-  - BaseStationRenameWarpPoints
-  - BaseStationSiliconLawFrontierShips
-  - BaseStationDeadDropHintExempt
+  - StandardTriadVessel
   - BaseStationExpeditions
   categories: [ HideSpawnMenu ]
+
+# Important for Tdf vessel.
+- type: entity
+  id: StandardTriadTdfVessel
+  parent:
+  - StandardTriadVessel
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Transform
-  - type: ExtraShuttleInformation
+  - type: StationFaxDeadDropHintExempt
+
+# For non exped faction vessel, can recieve deaddrop
+- type: entity
+  id: StandardTriadFactionVessel
+  parent:
+  - StandardTriadVessel
+  categories: [ HideSpawnMenu ]

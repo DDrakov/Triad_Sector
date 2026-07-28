@@ -27,7 +27,7 @@
   minPlayers: 0
   stations:
     Ravager:
-      stationProto: StandardTriadVessel
+      stationProto: StandardTriadTdfVessel
       components:
       - type: StationNameSetup
         mapNameTemplate: 'Ravager TDF{1}'
