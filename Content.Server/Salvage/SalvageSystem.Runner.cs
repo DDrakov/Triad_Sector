@@ -513,12 +513,14 @@ public sealed partial class SalvageSystem
         {
             // Force stamcrit when rescue
             _stamina.TakeStaminaDamage(mobUid, 200);
+            _inventorySystem.TryUnequip(mobUid, "suitStorage", true, true, false);
         }
         if (!_mobState.IsAlive(mobUid))
         {
-            // Force strip backpack and outerClothing if they're not alive
+            // Force strip backpack, outerClothing, and suitStorage if they're not alive
             _inventorySystem.TryUnequip(mobUid, "back", true, true, false);
             _inventorySystem.TryUnequip(mobUid, "outerClothing", true, true, false);
+            _inventorySystem.TryUnequip(mobUid, "suitStorage", true, true, false);
         }
 
         var ev = new ExtinguishEvent
@@ -668,7 +670,7 @@ public sealed partial class SalvageSystem
             }
         }
         // everyone is dead or ssd, abort the expedition
-        const int departTime = 60;
+        const int departTime = 30;
         Announce(mapUid, Loc.GetString("salvage-expedition-abort-wipe", ("departTime", departTime)));
         component.NextAutoAbortCheck = TimeSpan.FromDays(1); // prevent further checks
         var newEndTime = _timing.CurTime + TimeSpan.FromSeconds(departTime);
