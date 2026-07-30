@@ -279,13 +279,11 @@ public sealed partial class SalvageSystem
                                     if (!mindC.HasMind)
                                         continue;
                                     // move them to the shuttle
-                                    deadLoserDestinations ??= GetDeadLoserDestinations(shuttleGrid.Value);
+                                    deadLoserDestinations ??= GetDeadPersonDestinations(shuttleGrid.Value);
                                     RescuePlayer(
                                         mobUid,
                                         deadLoserDestinations,
                                         shuttleGrid.Value);
-                                    SoundSpecifier sound = new SoundPathSpecifier("/Audio/_COYOTE/ExpedReturnToBed.ogg");
-                                    _audio.PlayPvs(sound, mobUid);
                                 }
                             }
 
@@ -463,7 +461,7 @@ public sealed partial class SalvageSystem
     /// 3: Chairs with no mobs in them.
     /// 4: I dunno the console I guess
     /// </summary>
-    private DestinationPriority GetDeadLoserDestinations(EntityUid shuttleGrid)
+    private DestinationPriority GetDeadPersonDestinations(EntityUid shuttleGrid)
     {
         DestinationPriority destinations = new();
         // first, find the exped consoles on the grid
