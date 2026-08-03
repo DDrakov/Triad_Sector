@@ -129,7 +129,7 @@
   parent: ClothingModsuitGauntletsBase
   id: ClothingModsuitGauntletsHeadOfSecurity
   name: bulwark modsuit gauntlets
-  description: Robust modular suit gloves for gripping perps and guns tight. Equiped with a pair of shotgun laser gloves.
+  description: Robust modular suit gloves for gripping perps and guns tight. Equipped with a pair of shotgun laser gloves.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
