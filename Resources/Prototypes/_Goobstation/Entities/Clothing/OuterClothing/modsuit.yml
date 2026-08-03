@@ -143,12 +143,10 @@
       outerClothing-vox:
       - state: equipped-OUTERCLOTHING-sealed-vox
   - type: ClothingSpeedModifier
-    walkModifier: 0.90
-    sprintModifier: 0.90
+    walkModifier: 0.85 # Triad change, nerfed from 0.9 to 0.85 and 0.75 for sprint
+    sprintModifier: 0.75
   - type: ExplosionResistance
     damageCoefficient: 0.4
-  - type: StaminaDamageResistance
-    coefficient: 0.7
   - type: Armor
     modifiers:
       coefficients:
