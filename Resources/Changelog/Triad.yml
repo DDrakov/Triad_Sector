@@ -3222,3 +3222,186 @@ Entries:
   id: 2461
   time: '2026-07-28T02:53:24.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/434
+- author: DDrakov
+  changes:
+    - type: Tweak
+      message: All ship exped capable
+  id: 2462
+  time: '2026-07-28T14:36:34.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/394
+- author: TheRealMasterChief117
+  changes:
+    - type: Add
+      message: Added Slimy equivalents of Reptilian markings to slime person!
+  id: 2463
+  time: '2026-07-28T14:44:09.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/436
+- author: Eillyrea
+  changes:
+    - type: Add
+      message: Mute Command to Admin perms
+  id: 2464
+  time: '2026-07-28T21:09:28.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/435
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        The tesla can no longer chaotic-jump its way out of an intact
+        containment cage.
+  id: 2465
+  time: '2026-07-28T23:13:02.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/433
+- author: SketchiiArtist
+  changes:
+    - type: Add
+      message: 'Added new science ship: Goida'
+    - type: Add
+      message: 'Added new Taxi ship: Marshrutka'
+    - type: Add
+      message: 'Added new Library ship: Povest'
+    - type: Add
+      message: 'Added new Attorney ship: Ruchka'
+    - type: Add
+      message: 'Added new Livery ship: Ugol'
+  id: 2466
+  time: '2026-07-29T01:46:15.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/258
+- author: Eillyrea
+  changes:
+    - type: Tweak
+      message: Admin Logs now show in an admins local time instead of UTC
+    - type: Tweak
+      message: Tips are now be more relevant and accurate to Triad
+  id: 2467
+  time: '2026-07-31T14:00:00.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/444
+- author: Khaomi
+  changes:
+    - type: Tweak
+      message: >-
+        Changed the medical implanter to send a recurring message every 5
+        minutes after someone is dead
+  id: 2468
+  time: '2026-07-31T22:34:12.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/445
+- author: rebaserHEAD
+  changes:
+    - type: Tweak
+      message: >-
+        Every species guidebook page has been rewritten as a TDF Bureau of
+        Personnel dossier with a randomized paper-doll preview. Same mechanics,
+        more paperwork.
+    - type: Tweak
+      message: The species sidebar in the guidebook is now alphabetized.
+    - type: Tweak
+      message: Arachnid suffocate 50% faster than baseline once oxygen runs out.
+    - type: Tweak
+      message: Protogen take 30% more cold damage.
+    - type: Tweak
+      message: Reptilian heat-boost threshold raised to 47°C ambient.
+    - type: Tweak
+      message: Resomi slow down at temperatures above 30°C.
+    - type: Tweak
+      message: Feroxi get thirsty roughly twice as fast.
+    - type: Tweak
+      message: >-
+        Avali and Feroxi are no longer restricted to a meat-only diet and can
+        eat all food.
+    - type: Tweak
+      message: >-
+        Oni hit harder in melee (+35% Blunt/Asphyxiation, +20% Slash/Piercing)
+        and pry doors open in about half the time.
+    - type: Tweak
+      message: Felinid stamina reduced.
+    - type: Fix
+      message: Hydrakin no longer extract oxygen from carbon dioxide.
+    - type: Remove
+      message: >-
+        Felinid OwOnavirus immunity removed (the disease system itself is
+        unimplemented in this fork).
+  id: 2469
+  time: '2026-08-01T01:00:49.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/112
+- author: gaywolfgirl6
+  changes:
+    - type: Add
+      message: 'Added new Expedition ship: the DIRE Behir.'
+    - type: Add
+      message: Added Guidebook for the DIRE Behir.
+  id: 2470
+  time: '2026-08-01T06:56:38.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/446
+- author: Khaomi
+  changes:
+    - type: Tweak
+      message: >-
+        Changed the recurring medical alert to only alert while outside the
+        morgue
+  id: 2471
+  time: '2026-08-02T17:26:53.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/452
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: >-
+        Portable scrubbers and space heaters now persist through ship saves even
+        when unanchored.
+    - type: Tweak
+      message: Desk bells now persist through ship saves.
+  id: 2472
+  time: '2026-08-02T17:28:34.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/451
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed people appearing naked when you examine them.
+  id: 2473
+  time: '2026-08-03T14:31:46.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/457
+- author: BoiWab
+  changes:
+    - type: Add
+      message: 3 new sprites for shield generators
+    - type: Add
+      message: Shield generators now function as power monitoring consoles.
+  id: 2474
+  time: '2026-08-03T15:39:53.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/450
+- author: Eillyrea
+  changes:
+    - type: Add
+      message: Phalanx, Mech Carrier capitol ship to the TDF fleet
+    - type: Remove
+      message: Ravager
+  id: 2475
+  time: '2026-08-03T15:51:50.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/449
+- author: IrkallaEpsilon
+  changes:
+    - type: Tweak
+      message: >-
+        AME is now more efficient at multiple cores like it used to be. However
+        a maximum power output of 20 cores is implemented to prevent antimatter
+        tumors at Edison
+    - type: Tweak
+      message: DDrakov Marr Pass retained (For now)
+  id: 2476
+  time: '2026-08-03T16:46:46.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/438
+- author: Dimasw99
+  changes:
+    - type: Add
+      message: Added Edison AME fuel canister with 4x the capacity
+    - type: Tweak
+      message: AME production energy cost reduced by half
+  id: 2477
+  time: '2026-08-03T16:56:12.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/439
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed the TDF riot MMG having the wrong sprite.
+  id: 2478
+  time: '2026-08-03T20:22:55.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/459

@@ -25,11 +25,21 @@ public sealed partial class RattleComponent : Component
     [DataField("deathMessage")]
     public LocId DeathMessage = "deathrattle-implant-dead-message";
 
-    // The message that the implant will send when crit still
+    // Triad: Add recurring rattle
+    // The message that the implant will send IF they are still dead
     [DataField]
-    public LocId CritRetryMessage = "deathrattle-implant-critical-message-still";
+    public LocId StillDeadMessage = "deathrattle-implant-still-dead-message";
 
-    // The message that the implant will send when dead still
+    // The time of death of the person.
     [DataField]
-    public LocId DeathRetryMessage = "deathrattle-implant-dead-message-still";
+    public TimeSpan DeathTime = TimeSpan.Zero;
+
+    // The time of next trigger.
+    [DataField]
+    public TimeSpan NextTrigger = TimeSpan.Zero;
+
+    // The duration of the trigger's delay.
+    [DataField]
+    public TimeSpan RetriggerDelay = TimeSpan.FromMinutes(5);
+    // End Triad
 }
