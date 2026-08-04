@@ -153,7 +153,10 @@
         Blunt: 0.45
         Slash: 0.30
         Piercing: 0.4
-        Heat: 0.65
+Blunt: 0.50 # 0.45 -> 0.5
+Slash: 0.35 # 0.3 -> 0.35
+Piercing: 0.45 # 0.4 -> 0.45
+Heat: 0.7 # 0.65 -> 0.7
         Radiation: 0.6
         Caustic: 0.35
   - type: ComponentToggler
