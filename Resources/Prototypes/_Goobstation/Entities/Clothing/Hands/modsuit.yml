@@ -129,7 +129,7 @@
   parent: ClothingModsuitGauntletsBase
   id: ClothingModsuitGauntletsHeadOfSecurity
   name: bulwark modsuit gauntlets
-  description: Robust modular suit gloves for gripping perps and guns tight. Equipped with a pair of shotgun laser gloves.
+  description: Robust modular suit gloves for gripping perps and guns tight. Equipped with a pair of shotgun laser gloves. # Triad
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -153,7 +153,7 @@
   - type: Battery
     maxCharge: 600
     startingCharge: 600
-  - type: BatterySelfRecharger # Recharge rate the same as
+  - type: BatterySelfRecharger # Recharge rate the same as NT Shotgun
     autoRecharge: true
     autoRechargeRate: 120
     autoRechargePause: true
