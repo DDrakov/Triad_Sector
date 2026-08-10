@@ -76,11 +76,6 @@ public sealed partial class TriggerSystem
         var hasUserId = mind?.UserId;
         if (hasUserId == null)
             return;
-
-        // then do it AGAIN
-        component.RattleCancelToken.Cancel();
-        component.RattleCancelToken = new CancellationTokenSource();
-        Robust.Shared.Timing.Timer.Spawn(component.RattleRefireDelay, () => CheckAndTryRefire(uid, component, changedStateMobUid), component.RattleCancelToken.Token);
     }
 
     /// <summary>

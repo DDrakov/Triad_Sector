@@ -39,7 +39,11 @@ public sealed partial class SalvageSystem
     /*
      * Handles actively running a salvage expedition.
      */
-
+    [Dependency] private BuckleSystem _buckle = default!;
+    [Dependency] private IPlayerManager _players = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private StaminaSystem _stamina = default!;
+    [Dependency] private TemperatureSystem _temperature = default!;
     [Dependency] private MobStateSystem _mobState = default!;
     [Dependency] private GameTicker _gameTicker = default!;
     private void InitializeRunner()
@@ -268,7 +272,6 @@ public sealed partial class SalvageSystem
                                         continue;
                                     if (mobXform.GridUid == shuttleGrid)
                                         continue; // they're already on the shuttle
-                                    // only count creatures that have at one point had a player controlling them
                                     if (!mindC.HasMind)
                                         continue;
                                     // move them to the shuttle
@@ -514,10 +517,6 @@ public sealed partial class SalvageSystem
             _inventorySystem.TryUnequip(mobUid, "suitStorage", true, true, false);
         }
 
-        var ev = new ExtinguishEvent
-        {
-            FireStacksAdjustment = 1000,
-        };
         if (!TryComp<TemperatureComponent>(mobUid, out var comp))
             return;
         if (TryComp<ThermalRegulatorComponent>(
@@ -663,7 +662,7 @@ public sealed partial class SalvageSystem
         // everyone is dead or ssd, abort the expedition
         const int departTime = 30;
         Announce(mapUid, Loc.GetString("salvage-expedition-abort-wipe", ("departTime", departTime)));
-        component.NextAutoAbortCheck = TimeSpan.FromDays(1); // prevent further checks
+        component.NextAutoAbortCheck = _timing.CurTime + TimeSpan.FromDays(1); // prevent further checks
         var newEndTime = _timing.CurTime + TimeSpan.FromSeconds(departTime);
 
         if (component.EndTime <= newEndTime)

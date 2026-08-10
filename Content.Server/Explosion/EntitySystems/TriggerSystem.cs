@@ -70,12 +70,6 @@ namespace Content.Server.Explosion.EntitySystems
     }
 
     /// <summary>
-    /// Raised before a trigger is activated.
-    /// </summary>
-    [ByRefEvent]
-    public record struct BeforeTriggerEvent(EntityUid Triggered, EntityUid? User, bool Cancelled = false);
-
-    /// <summary>
     /// Raised when timer trigger becomes active.
     /// </summary>
     [ByRefEvent]
