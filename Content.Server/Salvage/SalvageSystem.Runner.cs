@@ -40,15 +40,8 @@ public sealed partial class SalvageSystem
      * Handles actively running a salvage expedition.
      */
 
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!; // Frontier
-    [Dependency] private readonly BuckleSystem _buckle = default!;
-    [Dependency] private readonly IPlayerManager _players = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
-
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
     private void InitializeRunner()
     {
         SubscribeLocalEvent<FTLRequestEvent>(OnFTLRequest);
@@ -100,7 +93,7 @@ public sealed partial class SalvageSystem
             ChatChannel.Radio,
             text,
             text,
-            _mapManager.GetMapEntityId(mapId),
+            _mapSystem.GetMapOrInvalid(mapId),
             false,
             true,
             null);
@@ -151,7 +144,7 @@ public sealed partial class SalvageSystem
     {
         // Started a mining mission so work out exempt entities
         if (TryComp<SalvageMiningExpeditionComponent>(
-                _mapManager.GetMapEntityId(ev.TargetCoordinates.ToMap(EntityManager, _transform).MapId),
+                _mapSystem.GetMapOrInvalid(_transform.ToMapCoordinates(ev.TargetCoordinates).MapId),
                 out var mining))
         {
             var ents = new List<EntityUid>();
