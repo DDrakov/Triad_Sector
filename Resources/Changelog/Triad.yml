@@ -3794,3 +3794,10 @@ Entries:
   id: 2512
   time: '2026-08-14T18:53:31.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/510
+- author: BoiWab
+  changes:
+    - type: Add
+      message: New sprite for treasure chests
+  id: 2513
+  time: '2026-08-14T19:40:51.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/503
