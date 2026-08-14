@@ -3768,3 +3768,29 @@ Entries:
   id: 2511
   time: '2026-08-14T17:42:42.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/502
+- author: Eillyrea
+  changes:
+    - type: Add
+      message: >-
+        MAPPING: Edison - We sacrificed an intern to the blood gods and they've
+        permitted the Plasma Storage to be filled on shift start
+    - type: Add
+      message: >-
+        MAPPING: Auric Outpost - Criminal dropped off these Contraband Consoles,
+        said they're totally legit and we should trust them
+    - type: Tweak
+      message: >-
+        MAPPING: Venmar - Whipped a service worker until they repainted all of
+        Security to TDF colours
+    - type: Tweak
+      message: >-
+        MAPPING: Venmar - An Engineer thought greebles looked pretty so put them
+        all over the outside of the station.  Don't know what they do honestly.
+    - type: Tweak
+      message: >-
+        MAPPING: Venmar - A Janitor got really annoyed, kidnapped my family and
+        said if we didn't include more cleanades I'd never see them again.  So I
+        made venmar more dirty. (And added 3 cleanade boxes)
+  id: 2512
+  time: '2026-08-14T18:53:31.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/510
