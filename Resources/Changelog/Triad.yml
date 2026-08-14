@@ -3761,3 +3761,10 @@ Entries:
   id: 2510
   time: '2026-08-12T23:28:44.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/454
+- author: BoiWab
+  changes:
+    - type: Add
+      message: New sprites for mercenary hardsuits
+  id: 2511
+  time: '2026-08-14T17:42:42.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/502
