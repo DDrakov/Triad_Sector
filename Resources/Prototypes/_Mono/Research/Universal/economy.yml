@@ -36,6 +36,7 @@
 
 - type: entity
   id: UraniumEnrichedProcessingIcon
+  categories: [ HideSpawnMenu ] # Triad
   components:
   - type: Sprite
     sprite: _Mono/Effects/processing.rsi
