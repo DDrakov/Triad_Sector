@@ -3801,3 +3801,18 @@ Entries:
   id: 2513
   time: '2026-08-14T19:40:51.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/503
+- author: Nox38
+  changes:
+    - type: Tweak
+      message: >-
+        R&D's new, updated pattern of TDF webbing allows more storage, at the
+        cost of mobility.
+    - type: Tweak
+      message: TDFDrobes have finally been restocked with pouches and SWAT gas masks.
+    - type: Tweak
+      message: >-
+        A previous logistical error resulted in TDFDrobes being stocked with
+        station security armor vests. TDF logistics has rectified this.
+  id: 2514
+  time: '2026-08-15T02:48:08.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/511
