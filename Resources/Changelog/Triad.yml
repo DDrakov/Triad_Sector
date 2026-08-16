@@ -3845,3 +3845,12 @@ Entries:
   id: 2517
   time: '2026-08-16T14:01:54.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/509
+- author: Stedar111
+  changes:
+    - type: Tweak
+      message: >-
+        5% reduction in pierce plate piercing absorbtion, 40% reduction in
+        Stamina Damage multiplier (4 gauge buck won't one tap stun you now)
+  id: 2518
+  time: '2026-08-16T15:53:40.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/514
