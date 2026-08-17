@@ -3867,3 +3867,12 @@ Entries:
   id: 2519
   time: '2026-08-16T22:00:42.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/504
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        Structures built on rotating ships no longer come out slightly crooked
+        if you build while the camera is still settling.
+  id: 2520
+  time: '2026-08-17T00:44:20.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/516
