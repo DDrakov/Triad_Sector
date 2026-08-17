@@ -3905,3 +3905,12 @@ Entries:
   id: 2523
   time: '2026-08-17T17:09:02.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/519
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        Construction ghosts no longer build crooked or a quarter turn off on
+        rotated grids.
+  id: 2524
+  time: '2026-08-17T20:27:09.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/520
