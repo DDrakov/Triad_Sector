@@ -3889,3 +3889,10 @@ Entries:
   id: 2521
   time: '2026-08-17T04:27:44.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/517
+- author: Minerva
+  changes:
+    - type: Add
+      message: TFA banners are now buildable.
+  id: 2522
+  time: '2026-08-17T12:17:47.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/518
