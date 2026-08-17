@@ -3896,3 +3896,12 @@ Entries:
   id: 2522
   time: '2026-08-17T12:17:47.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/518
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        Planet terrain and creatures no longer stop loading in for the rest of
+        the round after a single hiccup.
+  id: 2523
+  time: '2026-08-17T17:09:02.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/519
