@@ -3914,3 +3914,14 @@ Entries:
   id: 2524
   time: '2026-08-17T20:27:09.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/520
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        The Pit's bus stop no longer strands you on the outer gantry. The bus
+        docks at a bay that opens into the station.
+    - type: Add
+      message: The Pit has a bus bay with a schedule sign and a navmap beacon.
+  id: 2525
+  time: '2026-08-17T22:51:45.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/521
