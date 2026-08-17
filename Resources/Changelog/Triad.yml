@@ -3876,3 +3876,16 @@ Entries:
   id: 2520
   time: '2026-08-17T00:44:20.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/516
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        The mass scanner no longer crashes when viewed, and ship and asteroid
+        outlines draw correctly.
+    - type: Fix
+      message: >-
+        The tile spawn menu no longer crashes when opened, and tile icons show a
+        single tile instead of the whole variant sheet.
+  id: 2521
+  time: '2026-08-17T04:27:44.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/517
