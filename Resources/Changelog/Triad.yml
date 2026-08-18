@@ -3925,3 +3925,14 @@ Entries:
   id: 2525
   time: '2026-08-17T22:51:45.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/521
+- author: Stedar111
+  changes:
+    - type: Tweak
+      message: >-
+        Adjusted 4 gauge shotgun size, ammo box capacity, and nerfed 4 gauge
+        buckshot slightly. It does 2 less damage, and is a bit weaker against
+        armored opponents, but is still insanely effective against anything with
+        little piercing armor.
+  id: 2526
+  time: '2026-08-18T13:21:20.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/507
