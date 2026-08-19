@@ -26,4 +26,7 @@
     interactFailureString: petting-failure-syndicate-cyborg # Fits well enough!
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Damageable
+    damageContainer: Silicon
+    damageModifierSet: FactionBorgChassisAssault
 # TODO selectable faction borg types. Move all the module whitelists to the borg type rather than here.
