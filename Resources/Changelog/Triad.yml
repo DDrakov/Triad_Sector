@@ -3990,3 +3990,12 @@ Entries:
   id: 2532
   time: '2026-08-19T22:43:44.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/506
+- author: Kepteyn
+  changes:
+    - type: Tweak
+      message: PDAs can now store privacy holoprojectors and start with one inside.
+    - type: Tweak
+      message: Reduced the opacity of privacy holoprojectors.
+  id: 2533
+  time: '2026-08-19T22:48:48.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/529
