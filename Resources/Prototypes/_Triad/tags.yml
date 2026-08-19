@@ -46,6 +46,10 @@
 - type: Tag
   id: DockTdf
 
+#For privacy projectors to fit in PDAs
+- type: Tag
+  id: CivilianHoloprojector
+
 # Borg stuff
 - type: Tag
   id: BorgModuleSolarian
