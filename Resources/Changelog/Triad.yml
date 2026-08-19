@@ -3959,3 +3959,16 @@ Entries:
   id: 2529
   time: '2026-08-19T13:14:10.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/526
+- author: TheRealMasterChief117
+  changes:
+    - type: Add
+      message: >-
+        Added Solarian Directive Silicon NPCS for admins. You'll be seeing these
+        in dungeons in the future.
+    - type: Tweak
+      message: The Syndicate Weapons Cache's lockers now has random contents.
+    - type: Tweak
+      message: The Syndicate Weapon Cache now has a random gunnery server spawner.
+  id: 2530
+  time: '2026-08-19T20:06:21.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/523
