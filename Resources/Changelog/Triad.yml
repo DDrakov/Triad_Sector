@@ -3943,3 +3943,12 @@ Entries:
   id: 2527
   time: '2026-08-19T01:49:05.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/524
+- author: TheRealMasterChief117
+  changes:
+    - type: Add
+      message: Added two new Reptilian HeadSide markings, Tongue Flick and Tongue Weh.
+    - type: Fix
+      message: Fixed Reptilian Tails while wagging having incorrect colors.
+  id: 2528
+  time: '2026-08-19T03:11:48.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/525
