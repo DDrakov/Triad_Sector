@@ -3936,3 +3936,10 @@ Entries:
   id: 2526
   time: '2026-08-18T13:21:20.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/507
+- author: gaywolfgirl6
+  changes:
+    - type: Add
+      message: Added load bearing fixes to the Behir
+  id: 2527
+  time: '2026-08-19T01:49:05.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/524
