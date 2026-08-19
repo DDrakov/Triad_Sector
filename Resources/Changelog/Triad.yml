@@ -3972,3 +3972,12 @@ Entries:
   id: 2530
   time: '2026-08-19T20:06:21.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/523
+- author: nanbyt
+  changes:
+    - type: Fix
+      message: >-
+        Temperature slowdowns now correctly work for thresholds above normal
+        body temperatures.
+  id: 2531
+  time: '2026-08-19T20:07:58.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/470
