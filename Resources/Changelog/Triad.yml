@@ -3952,3 +3952,10 @@ Entries:
   id: 2528
   time: '2026-08-19T03:11:48.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/525
+- author: gaywolfgirl6
+  changes:
+    - type: Tweak
+      message: Removed the movement speed debuff given upon wielding a Breaching Hammer
+  id: 2529
+  time: '2026-08-19T13:14:10.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/526
