@@ -18,12 +18,23 @@
     laws: SolarianDirective
   - type: IntrinsicRadioTransmitter
     channels:
-    - Traffic
     - Common
+    - Traffic
+    - SolarianDirective
   - type: ActiveRadio
     channels:
     - Common
     - Traffic
+    - SolarianDirective
+  - type: LanguageKnowledge
+    speaks:
+    - SolCommon
+    - TauCetiBasic
+    - RobotTalk
+    understands:
+    - SolCommon
+    - TauCetiBasic
+    - RobotTalk
   - type: CollectiveMind
     channels:
     - Binary
