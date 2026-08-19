@@ -45,3 +45,6 @@
       Unsexed: UnisexSiliconSyndicate # Fits them well enough
   - type: ExplosionResistance
     damageCoefficient: 0.50
+  - type: Damageable
+    damageContainer: Silicon
+    damageModifierSet: FactionBorgChassis
