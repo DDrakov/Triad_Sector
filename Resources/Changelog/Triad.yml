@@ -3981,3 +3981,12 @@ Entries:
   id: 2531
   time: '2026-08-19T20:07:58.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/470
+- author: Kepteyn
+  changes:
+    - type: Add
+      message: >-
+        Added and ported some sanitation and medical-themed decorative elements
+        for mappers.
+  id: 2532
+  time: '2026-08-19T22:43:44.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/506
