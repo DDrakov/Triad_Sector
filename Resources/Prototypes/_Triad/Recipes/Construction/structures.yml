@@ -15,7 +15,7 @@
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
-  canRotate: true
+  canRotate: false
 
 - type: construction
   name: diagonal plastitanium window
