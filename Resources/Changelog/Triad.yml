@@ -4039,3 +4039,12 @@ Entries:
   id: 2534
   time: '2026-08-20T02:08:27.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/530
+- author: Stedar111
+  changes:
+    - type: Add
+      message: >-
+        Added plastitanium windows to the construction menu, shipwrights
+        rejoice! :D
+  id: 2535
+  time: '2026-08-20T02:11:17.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/527
