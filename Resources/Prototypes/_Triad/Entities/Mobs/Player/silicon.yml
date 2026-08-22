@@ -58,6 +58,10 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
+  - type: NFSalvageMobRestrictions
+    removeComponentsOnDeath:
+    - type: Prying
+    - type: Access
   - type: SiliconLawProvider
     laws: SolarianDirectiveVesselProtection
   - type: IntrinsicRadioTransmitter
