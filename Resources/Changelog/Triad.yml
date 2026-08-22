@@ -4093,3 +4093,21 @@ Entries:
   id: 2539
   time: '2026-08-22T15:25:44.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/532
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        Ship saves no longer fail outright when a smart fridge, a wired docking
+        button, an assembled grenade, a severed limb or an ore silo link is
+        aboard.
+    - type: Fix
+      message: >-
+        Loading a saved ship no longer leaves a stocked smart fridge reporting
+        itself empty.
+    - type: Tweak
+      message: >-
+        Flatpackers and their machine boards can now be saved with a ship
+        instead of being seized.
+  id: 2540
+  time: '2026-08-22T21:20:52.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/540
