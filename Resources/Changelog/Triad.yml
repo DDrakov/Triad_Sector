@@ -4057,3 +4057,25 @@ Entries:
   id: 2536
   time: '2026-08-21T22:21:16.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/537
+- author: rebaserHEAD
+  changes:
+    - type: Tweak
+      message: >-
+        Radiators now run on a temperature-driven thermal model. Gas flow
+        matters: a pumped loop cools far better than a static one, and radiators
+        connected in a row share heat as one array.
+    - type: Add
+      message: >-
+        Radiators glow from dull red to white hot as they heat up, throw light,
+        and creak as the metal expands.
+    - type: Add
+      message: Standing on a very hot or very cold radiator now burns or chills you.
+    - type: Add
+      message: Connected radiators render as one continuous run.
+    - type: Remove
+      message: >-
+        The inline radiator can no longer be built. Existing ones still work but
+        are much weaker than a standard radiator.
+  id: 2537
+  time: '2026-08-22T09:18:43.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/538
