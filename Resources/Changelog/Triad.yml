@@ -4111,3 +4111,10 @@ Entries:
   id: 2540
   time: '2026-08-22T21:20:52.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/540
+- author: gaywolfgirl6
+  changes:
+    - type: Tweak
+      message: Reverted the 12 Gauge Box ammo count nerf
+  id: 2541
+  time: '2026-08-23T09:05:47.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/541
