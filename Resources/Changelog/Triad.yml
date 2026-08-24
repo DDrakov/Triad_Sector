@@ -4118,3 +4118,29 @@ Entries:
   id: 2541
   time: '2026-08-23T09:05:47.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/541
+- author: rebaserHEAD
+  changes:
+    - type: Add
+      message: >-
+        Artifacts have been reworked into node-graph puzzles: perform trigger
+        chains inside an unlock window to unlock nodes and fire their effects.
+    - type: Add
+      message: >-
+        Every artifact rolls a severity profile. Effects climb from gentle roots
+        toward a peak danger class, and the analysis console reveals the shape
+        and peak as you earn them.
+    - type: Add
+      message: >-
+        Solving more of an artifact compounds its Extraction Bonus, up to five
+        times the research points and sale price on a full solve.
+    - type: Add
+      message: The node scanner shows which triggers an awake artifact has registered.
+    - type: Remove
+      message: >-
+        Artifexium and artifact glue no longer exist, and artifact fragments can
+        no longer be ground into reagents.
+    - type: Tweak
+      message: Artifact fragments now craft into an artifact at ten fragments.
+  id: 2542
+  time: '2026-08-24T01:35:38.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/542
