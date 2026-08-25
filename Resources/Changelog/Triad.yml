@@ -4187,3 +4187,10 @@ Entries:
   id: 2546
   time: '2026-08-25T12:06:04.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/543
+- author: Stedar111
+  changes:
+    - type: Add
+      message: Added the HZD Besieger, a high-end, researchable, and stompy modsuit!
+  id: 2547
+  time: '2026-08-25T12:13:50.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/505
