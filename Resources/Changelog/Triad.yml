@@ -4180,3 +4180,10 @@ Entries:
   id: 2545
   time: '2026-08-25T07:01:22.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/546
+- author: Wuffindy
+  changes:
+    - type: Tweak
+      message: Changed Most if not all ballistic bullet to new sprites
+  id: 2546
+  time: '2026-08-25T12:06:04.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/543
