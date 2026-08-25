@@ -4158,3 +4158,25 @@ Entries:
   id: 2544
   time: '2026-08-24T19:09:39.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/545
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        Artifacts stored on a ship no longer come back inert, unsolvable, or
+        wearing the wrong sprite.
+    - type: Fix
+      message: >-
+        Artifact effects and triggers are now local to the ship running the
+        artifact. Docking next to someone no longer lets their artifact gas your
+        hull, and their salvage magnet no longer solves your nodes.
+    - type: Fix
+      message: The blink and phasing artifact effects now actually do something.
+    - type: Fix
+      message: >-
+        The analysis console says so when there is no research server to bank
+        points to, instead of quietly banking nothing.
+    - type: Fix
+      message: Artifact "friendly fauna" no longer spawns angry bees and space bears.
+  id: 2545
+  time: '2026-08-25T07:01:22.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/546
