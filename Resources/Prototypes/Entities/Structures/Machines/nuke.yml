@@ -185,3 +185,7 @@
     transferAmount: 100
   - type: StaticPrice
     price: 5000 # That's a pretty fancy keg you got there.
+  # Triad Start
+  - type: SavingContraband
+    examineText: ship-saving-contraband-2-text
+  # Triad End
