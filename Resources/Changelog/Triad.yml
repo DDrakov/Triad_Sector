@@ -4194,3 +4194,10 @@ Entries:
   id: 2547
   time: '2026-08-25T12:13:50.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/505
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed some technology disks not giving you the recipes on the disk.
+  id: 2548
+  time: '2026-08-25T14:02:27.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/548
