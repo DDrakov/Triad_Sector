@@ -1,6 +1,6 @@
 ﻿- type: entity
   name: sonic screwdriver
-  parent: [BaseItem, BaseClass2AShipContraband]
+  parent: [BaseItem, BaseClass2ShipContraband] # Triad
   id: SonicScrewdriver
   description: Wzzzzz....
   components:
