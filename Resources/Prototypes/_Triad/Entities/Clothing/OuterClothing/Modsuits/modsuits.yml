@@ -45,8 +45,8 @@
   - type: Sprite
     sprite: _Triad/Clothing/OuterClothing/Modsuits/HZDBesieger.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.83
-    sprintModifier: 0.83
+    walkModifier: 0.84
+    sprintModifier: 0.84
   - type: ExplosionResistance
     damageCoefficient: 0.2
   - type: StaminaDamageResistance
@@ -54,11 +54,11 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.55
+        Blunt: 0.45
         Slash: 0.55
-        Piercing: 0.55
+        Piercing: 0.45
         Heat: 0.35
         Caustic: 0.6
         Radiation: 0.35
   - type: FireProtection
-    reduction: 0.65
+    reduction: 0.35
