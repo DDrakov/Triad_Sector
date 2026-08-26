@@ -85,7 +85,7 @@
   table: !type:GroupSelector
     children:
     - id: GunneryServerMedium
-      weight: 0.9
+      weight: 0.5
     - id: GunneryServerHigh
       weight: 1
     - id: GunneryServerUltra
