@@ -4212,3 +4212,10 @@ Entries:
   id: 2549
   time: '2026-08-25T19:29:05.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/549
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed the supermatter console having the incorrect sprite
+  id: 2550
+  time: '2026-08-26T17:39:11.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/555
