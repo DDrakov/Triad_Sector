@@ -23,7 +23,7 @@
       - Storage
       - SafetyDepositBox
       tags:
-      - Unstashable
+      - SavingContraband
   - type: SafetyDepositBox
   - type: Appearance
   - type: Tag
