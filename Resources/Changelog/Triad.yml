@@ -4272,3 +4272,10 @@ Entries:
   id: 2555
   time: '2026-08-28T15:03:12.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/564
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: Leather satchels have been added to the general backpack loadout.
+  id: 2556
+  time: '2026-08-28T15:03:28.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/563
