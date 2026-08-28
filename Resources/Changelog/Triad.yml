@@ -4244,3 +4244,10 @@ Entries:
   id: 2552
   time: '2026-08-27T02:36:47.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/474
+- author: nitrous-heart
+  changes:
+    - type: Add
+      message: Added Ghostlight player faction. Glory Glory Glory.
+  id: 2553
+  time: '2026-08-28T01:50:56.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/536
