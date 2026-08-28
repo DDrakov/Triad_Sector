@@ -4279,3 +4279,19 @@ Entries:
   id: 2556
   time: '2026-08-28T15:03:28.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/563
+- author: rebaserHEAD
+  changes:
+    - type: Fix
+      message: >-
+        The RPD now follows the same placement rules as the construction menu:
+        no more stacking devices on one tile, air alarms need a wall, and
+        T-junctions, half pipes and manifolds fit under walls.
+    - type: Fix
+      message: A freshly picked-up RPD places pipes facing the way its ghost shows.
+    - type: Fix
+      message: >-
+        Moving the cursor during an RPD placement no longer changes which layer
+        the pipe lands on.
+  id: 2557
+  time: '2026-08-28T19:19:46.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/568
