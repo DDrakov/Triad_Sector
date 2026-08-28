@@ -4260,3 +4260,15 @@ Entries:
   id: 2554
   time: '2026-08-28T15:02:45.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/566
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: >-
+        The default Pilot jumpsuit has been swapped to the darker military
+        variant. If you haven't explicitly set a jumpsuit on existing
+        characters, it will be changed to the military variant. If you wish to
+        continue using the lighter-colored jumpsuit, just switch back to it in
+        loadout.
+  id: 2555
+  time: '2026-08-28T15:03:12.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/564
