@@ -4251,3 +4251,12 @@ Entries:
   id: 2553
   time: '2026-08-28T01:50:56.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/536
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: >-
+        Decorative ELINT greebles can now be built everywhere an antenna can be
+        built. Including on walls.
+  id: 2554
+  time: '2026-08-28T15:02:45.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/566
