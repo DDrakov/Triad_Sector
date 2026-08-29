@@ -4321,3 +4321,10 @@ Entries:
   id: 2559
   time: '2026-08-29T03:11:08.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/570
+- author: Eillyrea
+  changes:
+    - type: Tweak
+      message: Rules 1.4.  Please reread the rules next time you join a round.
+  id: 2560
+  time: '2026-08-29T14:37:36.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/553
