@@ -4328,3 +4328,10 @@ Entries:
   id: 2560
   time: '2026-08-29T14:37:36.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/553
+- author: mirrorcult
+  changes:
+    - type: Tweak
+      message: Made do-after animations smoother.
+  id: 2561
+  time: '2026-08-29T17:33:21.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/572
