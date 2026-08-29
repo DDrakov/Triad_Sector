@@ -4344,3 +4344,12 @@ Entries:
   id: 2562
   time: '2026-08-29T19:05:06.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/574
+- author: Wizden
+  changes:
+    - type: Add
+      message: >-
+        Ghosts can now click a follow button next to chat messages to jump there
+        immediately! Can be turned off in settings.
+  id: 2563
+  time: '2026-08-29T19:12:02.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/573
