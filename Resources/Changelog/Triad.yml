@@ -4295,3 +4295,20 @@ Entries:
   id: 2557
   time: '2026-08-28T19:19:46.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/568
+- author: TheRealMasterChief117
+  changes:
+    - type: Tweak
+      message: Renamed TDF warden into 'Lieutenant'!
+    - type: Tweak
+      message: Tweaked TDF combat medic's PDA sprite.
+    - type: Add
+      message: Added new job icons for the Lieutenant and Chief Enforcer.
+    - type: Tweak
+      message: Resprited TDF energy shield
+    - type: Tweak
+      message: >-
+        TDF SOP - Changed mentions of 'Warden' to 'Lieutenant'. Brig sentences
+        should be done by the Commander, if possible.
+  id: 2558
+  time: '2026-08-29T02:27:19.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/567
