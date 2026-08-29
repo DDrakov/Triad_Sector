@@ -4353,3 +4353,10 @@ Entries:
   id: 2563
   time: '2026-08-29T19:12:02.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/573
+- author: Nox38
+  changes:
+    - type: Tweak
+      message: Minor fixes for the TDF Phalanx.
+  id: 2564
+  time: '2026-08-29T21:27:41.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/554
