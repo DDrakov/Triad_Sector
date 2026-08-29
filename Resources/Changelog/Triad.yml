@@ -4312,3 +4312,12 @@ Entries:
   id: 2558
   time: '2026-08-29T02:27:19.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/567
+- author: rebaserHEAD
+  changes:
+    - type: Tweak
+      message: >-
+        Radiators are now copper-cored: they cost 2 steel + 2 copper, shed more
+        heat per tile, and spread heat along a connected array much faster.
+  id: 2559
+  time: '2026-08-29T03:11:08.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/570
