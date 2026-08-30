@@ -4376,3 +4376,10 @@ Entries:
   id: 2566
   time: '2026-08-30T12:21:53.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/579
+- author: Eillyrea
+  changes:
+    - type: Remove
+      message: Shipyard consoles saving on Ships
+  id: 2567
+  time: '2026-08-30T13:16:23.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/575
