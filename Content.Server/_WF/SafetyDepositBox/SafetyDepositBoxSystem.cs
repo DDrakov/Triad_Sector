@@ -144,7 +144,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             );
         }
 
-        // Get all available box types from prototypes
+        // Triad : Get all available box types from prototypes
         var availableBoxTypes = GetAvailableBoxTypes();
 
         var state = new SafetyDepositConsoleState(
@@ -159,6 +159,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         _uiSystem.SetUiState(consoleUid, SafetyDepositConsoleUiKey.Key, state);
     }
 
+    // Triad Start : Get all available box types instead of hardcoded
     private List<BoxTypeInfo> GetAvailableBoxTypes()
     {
         var boxTypes = new List<BoxTypeInfo>();
@@ -181,6 +182,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
         return boxTypes;
     }
+    // Triad End
 
     private void OnPurchase(EntityUid uid, SafetyDepositConsoleComponent component, SafetyDepositPurchaseMessage args)
     {
