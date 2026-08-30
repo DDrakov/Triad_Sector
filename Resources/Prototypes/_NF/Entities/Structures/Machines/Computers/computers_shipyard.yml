@@ -1,6 +1,6 @@
 - type: entity
   name: shipyard console
-  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, BaseComputer]
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, BaseComputer, BaseClass2AShipContrabandSilent] # Triad
   id: ComputerShipyardBase
   description: Used to purchase and sell shuttles
   abstract: true
