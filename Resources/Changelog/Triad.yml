@@ -4360,3 +4360,12 @@ Entries:
   id: 2564
   time: '2026-08-29T21:27:41.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/554
+- author: TheRealMasterChief117
+  changes:
+    - type: Tweak
+      message: >-
+        Laser pointers on guns and the like are no longer blocked by ship
+        shields, so they should be useable on grids with shields.
+  id: 2565
+  time: '2026-08-30T01:13:14.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/577
