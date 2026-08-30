@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -107,7 +107,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                 isDeposited = box.Items.Count > 0;
             }
 
-            boxInfoList.Add(new (
+            boxInfoList.Add(new(
                 box.BoxId,
                 box.OwnerName,
                 isDeposited,
@@ -167,19 +167,22 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
         if (!TryComp<ActorComponent>(player, out var actor))
             return;
-
-        if (_prototypeManager.TryIndex(args.BoxProto, out var proto) && proto.TryGetComponent<SafetyDepositBoxComponent>(out var boxComponent, _componentFactory))
-        {
-            cost = boxComponent.Cost;
-            prototypeId = proto;
-        }
-        else
+        if (!_prototypeManager.TryIndex(args.BoxProto, out var proto))
         {
             ConsolePopup(player, "Error: Invalid box size.");
             PlayDenySound(uid, component);
             return;
         }
 
+        cost = GetBoxCost(proto.ID);
+        if (cost <= 0)
+        {
+            ConsolePopup(player, "Error: Invalid box size.");
+            PlayDenySound(uid, component);
+            return;
+        }
+
+        prototypeId = proto;
         // Check bank account
         if (!TryComp<BankAccountComponent>(player, out var bank))
         {
@@ -222,7 +225,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     public int GetBoxCost(EntProtoId boxProto)
     {
         if (_prototypeManager.TryIndex(boxProto, out var proto) &&
-            proto.TryGetComponent<SafetyDepositBoxComponent>(out var boxComponent, _componentFactory))
+            proto.TryGetComponent<SafetyDepositBoxComponent>(out var boxComponent))
             return boxComponent.Cost;
         else
             return 0;
