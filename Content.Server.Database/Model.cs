@@ -56,6 +56,14 @@ namespace Content.Server.Database
         public DbSet<TriadShipyardAuditEvent>       TriadShipyardAuditEvents        { get; set; } = default!;
         public DbSet<TriadShipyardMigrationPermit>  TriadShipyardMigrationPermits   { get; set; } = default!;
         // End Triad
+        // Triad: market data. Shapes and reasoning live in Model.Market.cs.
+        public DbSet<MarketTransaction>         MarketTransaction       { get; set; } = default!;
+        public DbSet<MarketTransactionSplit>    MarketTransactionSplit  { get; set; } = default!;
+        public DbSet<MarketTransactionLine>     MarketTransactionLine   { get; set; } = default!;
+        public DbSet<MarketPriceStat>           MarketPriceStat         { get; set; } = default!;
+        public DbSet<MarketRoundParticipant>    MarketRoundParticipant  { get; set; } = default!;
+        public DbSet<SectorAccountSample>       SectorAccountSample     { get; set; } = default!;
+        // End Triad
         public DbSet<CompanyMember> CompanyMembers { get; set; } = null!;
         public DbSet<WayfarerSafetyDepositBox> WayfarerSafetyDepositBox { get; set; } = null!;
         public DbSet<WayfarerSafetyDepositBoxItem> WayfarerSafetyDepositBoxItem { get; set; } = null!;
@@ -350,6 +358,9 @@ namespace Content.Server.Database
             modelBuilder.Entity<TriadShipyardMigrationPermit>()
                 .HasIndex(p => p.PlayerUserId)
                 .IsUnique();
+            // End Triad
+            // Triad: market data
+            ModelMarket.OnModelCreating(modelBuilder);
             // End Triad
             // Mono
             modelBuilder.Entity<CompanyMember>()
