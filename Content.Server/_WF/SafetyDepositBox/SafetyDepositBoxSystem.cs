@@ -147,13 +147,19 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         // Triad : Get all available box types from prototypes
         var availableBoxTypes = GetAvailableBoxTypes();
 
+        // Triad (Include bank balance in BUI state for right-side affordability display)
+        var bankBalance = 0;
+        if (TryComp<BankAccountComponent>(player, out var playerBank))
+            bankBalance = playerBank.Balance;
+
         var state = new SafetyDepositConsoleState(
             boxInfoList,
             0, // No cash display needed anymore
             boxInSlot != null,
             boxInSlotInfo,
             availableBoxTypes,
-            _gameTicker.RoundId
+            _gameTicker.RoundId,
+            bankBalance
         );
 
         _uiSystem.SetUiState(consoleUid, SafetyDepositConsoleUiKey.Key, state);

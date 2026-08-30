@@ -39,13 +39,20 @@ public sealed class SafetyDepositConsoleState : BoundUserInterfaceState
     /// </summary>
     public int CurrentRoundId;
 
+    // Triad Start - Add bank balance for inspect-before-buy affordability comparison on right detail panel
+    /// <summary>
+    /// Player bank balance for affordability display.
+    /// </summary>
+    public int BankBalance;
+
     public SafetyDepositConsoleState(
         List<SafetyDepositBoxInfo> ownedBoxes,
         int insertedCash,
         bool hasBoxInSlot,
         SafetyDepositBoxInfo? boxInSlot,
         List<BoxTypeInfo> availableBoxTypes,
-        int currentRoundId)
+        int currentRoundId,
+        int bankBalance = 0)
     {
         OwnedBoxes = ownedBoxes;
         InsertedCash = insertedCash;
@@ -53,7 +60,9 @@ public sealed class SafetyDepositConsoleState : BoundUserInterfaceState
         BoxInSlot = boxInSlot;
         AvailableBoxTypes = availableBoxTypes;
         CurrentRoundId = currentRoundId;
+        BankBalance = bankBalance;
     }
+    // Triad End
 }
 
 /// <summary>

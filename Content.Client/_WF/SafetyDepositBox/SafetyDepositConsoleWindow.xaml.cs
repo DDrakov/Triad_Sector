@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.UserInterface.Controls;
+using Content.Shared._NF.Bank;
 using Content.Shared._WF.SafetyDepositBox.BUI;
 using Content.Shared._WF.SafetyDepositBox.Components;
 using Content.Shared._WF.SafetyDepositBox.Events;
@@ -11,41 +12,79 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
+// Triad Start - Refactor Safety Deposit UI to clickable sprite grid with right-side inspect detail (name/desc/price/sprite), buy-after-inspect flow and bank balance comparison (reference: ContrabandPermitConsoleWindow)
 namespace Content.Client._WF.SafetyDepositBox;
 
 [GenerateTypedNameReferences]
 public sealed partial class SafetyDepositConsoleWindow : FancyWindow
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
     public event Action<string>? OnPurchasePressed;
     public event Action? OnDepositPressed;
     public event Action<Guid>? OnWithdrawPressed;
     public event Action<Guid>? OnReclaimPressed;
 
+    private readonly ButtonGroup _boxButtonGroup = new();
+    private readonly Dictionary<string, Button> _boxButtons = new();
+    private string? _selectedProtoId;
+    private BoxTypeInfo? _selectedBox;
+    private int _cachedBankBalance;
+    private SafetyDepositConsoleState? _lastState;
+
     public SafetyDepositConsoleWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         DepositButton.OnPressed += _ => OnDepositPressed?.Invoke();
+        BuyButton.OnPressed += _ =>
+        {
+            if (_selectedProtoId != null)
+                OnPurchasePressed?.Invoke(_selectedProtoId);
+        };
+
+        // Start with nothing selected; detail view will show placeholder
+        UpdateDetailPanel(null);
     }
 
     public void UpdateState(SafetyDepositConsoleState state)
     {
-        // Update purchase buttons with costs - dynamically generate from available box types
-        PurchaseButtonsContainer.RemoveAllChildren();
+        _lastState = state;
+        _cachedBankBalance = state.BankBalance;
 
-        foreach (var boxType in state.AvailableBoxTypes)
+        RebuildAvailableBoxesGrid(state.AvailableBoxTypes);
+
+        // Update detail panel for current selection (or auto-select first if none)
+        if (_selectedProtoId == null && state.AvailableBoxTypes.Count > 0)
         {
-            var button = new Button
+            // Auto-select first box (cheapest) for initial UX; keep visuals consistent
+            SelectBox(state.AvailableBoxTypes[0].ProtoId, state.AvailableBoxTypes[0]);
+        }
+        else if (_selectedProtoId != null)
+        {
+            var selected = state.AvailableBoxTypes.FirstOrDefault(b => b.ProtoId == _selectedProtoId);
+            if (selected.ProtoId != null)
             {
-                Text = Loc.GetString("safety-deposit-console-purchase-button", ("name", boxType.Name), ("cost", boxType.Cost)),
-                HorizontalAlignment = Control.HAlignment.Stretch,
-                MinSize = new Vector2(0, 30),
-                StyleClasses = { "OpenBoth" }
-            };
-
-            var protoId = boxType.ProtoId;
-            button.OnPressed += _ => OnPurchasePressed?.Invoke(protoId);
-            PurchaseButtonsContainer.AddChild(button);
+                // Refresh panel with latest costs/desc (bank balance may have changed)
+                _selectedBox = selected;
+                UpdateDetailPanel(selected);
+                // Ensure button remains pressed
+                if (_boxButtons.TryGetValue(selected.ProtoId, out var btn))
+                    btn.Pressed = true;
+            }
+            else
+            {
+                // Previously selected proto no longer available
+                _selectedProtoId = null;
+                _selectedBox = null;
+                UpdateDetailPanel(null);
+            }
+        }
+        else
+        {
+            UpdateDetailPanel(null);
         }
 
         // Update deposit button
@@ -62,7 +101,7 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
             BoxSlotLabel.Text = Loc.GetString("safety-deposit-console-no-box-in-slot");
         }
 
-        // Update owned boxes list
+        // Update owned boxes list (unchanged logic)
         OwnedBoxesContainer.RemoveAllChildren();
 
         if (state.OwnedBoxes.Count == 0)
@@ -78,19 +117,18 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
         }
         else
         {
-            // Sort boxes newest first (by BoxId descending)
             var sortedBoxes = state.OwnedBoxes.OrderByDescending(b => b.BoxId).ToList();
-
             var index = 0;
             foreach (var box in sortedBoxes)
             {
-                // Create a clean row similar to shipyard
+                // Triad (remove black AngleRect background, use Contraband style dark panel #1B1B1E with subtle alternating)
                 var rowPanel = new PanelContainer
                 {
                     HorizontalExpand = true,
-                    StyleClasses = { "AngleRect" },
-                    // Alternate row colors for better readability
-                    ModulateSelfOverride = index % 2 == 0 ? new Color(0.15f, 0.15f, 0.15f) : new Color(0.12f, 0.12f, 0.12f)
+                };
+                rowPanel.PanelOverride = new Robust.Client.Graphics.StyleBoxFlat
+                {
+                    BackgroundColor = index % 2 == 0 ? Color.FromHex("#1B1B1E") : Color.FromHex("#212121")
                 };
 
                 var rowContainer = new BoxContainer
@@ -100,7 +138,6 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
                     Margin = new Thickness(8, 4)
                 };
 
-                // Box info label - shows nickname if available, otherwise box ID and size
                 var boxInfoText = !string.IsNullOrEmpty(box.Nickname)
                     ? $"{box.Nickname}"
                     : $"Box {box.BoxId.ToString()[..8]}";
@@ -112,7 +149,6 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
                     VerticalAlignment = Control.VAlignment.Center
                 };
 
-                // Status Label - fixed width, right aligned
                 string statusText;
                 Color statusColor;
 
@@ -123,13 +159,11 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
                 }
                 else if (box.LastWithdrawnRoundId.HasValue && box.LastWithdrawnRoundId.Value != state.CurrentRoundId)
                 {
-                    // Box was withdrawn in a previous round - it's lost
                     statusText = Loc.GetString("safety-deposit-console-box-lost");
                     statusColor = Color.Red;
                 }
                 else
                 {
-                    // Box was withdrawn in current round - it's in world
                     statusText = Loc.GetString("safety-deposit-console-box-in-world");
                     statusColor = Color.Yellow;
                 }
@@ -145,12 +179,10 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
                     FontColorOverride = statusColor
                 };
 
-                // Determine if box is lost (withdrawn in previous round with no items)
                 var isLost = box.LastWithdrawnRoundId.HasValue &&
                              box.LastWithdrawnRoundId.Value != state.CurrentRoundId &&
                              !box.IsDeposited;
 
-                // Action button - either Withdraw or Reclaim depending on state
                 var actionButton = new Button
                 {
                     Text = isLost
@@ -182,4 +214,170 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
             }
         }
     }
+
+    private void RebuildAvailableBoxesGrid(List<BoxTypeInfo> boxTypes)
+    {
+        AvailableBoxesGrid.RemoveAllChildren();
+        _boxButtons.Clear();
+
+        foreach (var boxType in boxTypes)
+        {
+            var button = new Button
+            {
+                ToggleMode = true,
+                Group = _boxButtonGroup,
+                StyleClasses = { "OpenBoth" },
+                MinSize = new Vector2(140, 140),
+                HorizontalExpand = true,
+            };
+
+            // Inner layout: sprite on top, label below (only sprite + small text, no price per spec)
+            var inner = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                HorizontalAlignment = Control.HAlignment.Center,
+                VerticalAlignment = Control.VAlignment.Center,
+                HorizontalExpand = true,
+                VerticalExpand = true,
+                Margin = new Thickness(6)
+            };
+
+            // Triad (style grid items like ContrabandPermit sprite view: bordered dark panel, no white/black backgrounds)
+            var viewContainer = new PanelContainer
+            {
+                HorizontalExpand = true,
+                VerticalExpand = true,
+                HorizontalAlignment = Control.HAlignment.Center,
+                VerticalAlignment = Control.VAlignment.Center,
+                Margin = new Thickness(0, 0, 0, 4)
+            };
+            viewContainer.PanelOverride = new Robust.Client.Graphics.StyleBoxFlat
+            {
+                BorderThickness = new Thickness(2),
+                BorderColor = Color.FromHex("#ffd688"),
+                BackgroundColor = Color.FromHex("#1B1B1E")
+            };
+
+            var view = new EntityPrototypeView
+            {
+                HorizontalAlignment = Control.HAlignment.Center,
+                VerticalAlignment = Control.VAlignment.Center,
+                Scale = new Vector2(2.5f, 2.5f),
+                Stretch = SpriteView.StretchMode.Fit,
+                MinSize = new Vector2(80, 80),
+                Margin = new Thickness(6),
+                SetSize = new Vector2(80, 80),
+            };
+
+            if (_prototypeManager.TryIndex<EntityPrototype>(boxType.ProtoId, out var proto))
+                view.SetPrototype(proto);
+
+            viewContainer.AddChild(view);
+
+            // Size label centered below sprite (no black panel, use Contraband heading style)
+            var sizeLabel = new Label
+            {
+                Text = GetSizeLabel(boxType),
+                HorizontalAlignment = Control.HAlignment.Center,
+                Align = Label.AlignMode.Center,
+                StyleClasses = { "LabelHeading" },
+                Margin = new Thickness(4, 2)
+            };
+
+            inner.AddChild(viewContainer);
+            inner.AddChild(sizeLabel);
+            button.AddChild(inner);
+
+            var protoId = boxType.ProtoId;
+            var capturedBox = boxType;
+            button.OnPressed += _ => SelectBox(protoId, capturedBox);
+
+            // Preserve selection visual
+            if (protoId == _selectedProtoId)
+                button.Pressed = true;
+
+            AvailableBoxesGrid.AddChild(button);
+            _boxButtons[protoId] = button;
+        }
+    }
+
+    private void SelectBox(string protoId, BoxTypeInfo boxType)
+    {
+        _selectedProtoId = protoId;
+        _selectedBox = boxType;
+
+        // Update button pressed states (ButtonGroup handles it, but ensure)
+        if (_boxButtons.TryGetValue(protoId, out var btn))
+            btn.Pressed = true;
+
+        UpdateDetailPanel(boxType);
+    }
+
+    private void UpdateDetailPanel(BoxTypeInfo? box)
+    {
+        if (box == null)
+        {
+            SelectedBoxNameLabel.Text = Loc.GetString("safety-deposit-console-select-a-box");
+            SelectedBoxDescriptionLabel.Text = Loc.GetString("safety-deposit-console-select-to-view");
+            SelectedBoxPriceLabel.Text = "-";
+            SelectedBoxView.SetEntity(null);
+
+            BankBalanceLabel.Text = BankSystemExtensions.ToSpesoString(_cachedBankBalance);
+            BalanceAfterLabel.Text = "-";
+            BalanceAfterLabel.FontColorOverride = Color.White;
+            InsufficientFundsLabel.Visible = false;
+            BuyButton.Disabled = true;
+            BuyButton.Text = Loc.GetString("safety-deposit-console-buy-button");
+            return;
+        }
+
+        var b = box.Value;
+        SelectedBoxNameLabel.Text = b.Name;
+        SelectedBoxDescriptionLabel.Text = string.IsNullOrWhiteSpace(b.Description)
+            ? Loc.GetString("safety-deposit-console-no-description")
+            : b.Description;
+        SelectedBoxPriceLabel.Text = BankSystemExtensions.ToSpesoString(b.Cost);
+
+        if (_prototypeManager.TryIndex<EntityPrototype>(b.ProtoId, out var proto))
+            SelectedBoxView.SetPrototype(proto);
+        else
+            SelectedBoxView.SetEntity(null);
+
+        BankBalanceLabel.Text = BankSystemExtensions.ToSpesoString(_cachedBankBalance);
+        var after = _cachedBankBalance - b.Cost;
+        BalanceAfterLabel.Text = BankSystemExtensions.ToSpesoString(after);
+
+        if (after < 0)
+        {
+            BalanceAfterLabel.FontColorOverride = Color.Red;
+            InsufficientFundsLabel.Visible = true;
+            BuyButton.Disabled = true;
+        }
+        else
+        {
+            BalanceAfterLabel.FontColorOverride = Color.LightGreen;
+            InsufficientFundsLabel.Visible = false;
+            BuyButton.Disabled = false;
+        }
+
+        // Update buy button text to include price for clarity
+        BuyButton.Text = Loc.GetString("safety-deposit-console-buy-button-with-price", ("cost", BankSystemExtensions.ToSpesoString(b.Cost)));
+        // Fallback if loc missing format string issues: keeps english fallback below
+        if (BuyButton.Text.Contains("cost"))
+            BuyButton.Text = $"Buy for {BankSystemExtensions.ToSpesoString(b.Cost)}";
+    }
+
+    private static string GetSizeLabel(BoxTypeInfo boxType)
+    {
+        // Map known prototype IDs to mockup labels SMALL/MEDIUM/BIG/HUGE
+        return boxType.ProtoId switch
+        {
+            "SafetyDepositBox" => "SMALL",
+            "SafetyDepositBoxMedium" => "MEDIUM",
+            "SafetyDepositBoxLarge" => "BIG",
+            "SafetyDepositBoxHeavy" => "HUGE",
+            _ => boxType.Name.ToUpperInvariant()
+        };
+    }
 }
+// Triad End
