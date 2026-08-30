@@ -27,9 +27,9 @@ public sealed class SafetyDepositConsoleBoundUserInterface : BoundUserInterface
         _window.OnReclaimPressed += OnReclaimPressed;
     }
 
-    private void OnPurchasePressed(EntProtoId boxSize)
+    private void OnPurchasePressed(string boxProtoId)
     {
-        SendMessage(new SafetyDepositPurchaseMessage(boxSize));
+        SendMessage(new SafetyDepositPurchaseMessage(boxProtoId));
     }
 
     private void OnDepositPressed()

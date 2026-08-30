@@ -22,23 +22,10 @@
                            Margin="0 0 0 10"
                            HorizontalAlignment="Center"
                            StyleClasses="LabelSecondaryColor LabelSubText"/>
-                    <Button Name="PurchaseSmallButton"
-                            Text="{Loc 'safety-deposit-console-purchase-small'}"
-                            HorizontalAlignment="Stretch"
-                            MinSize="0 30"
-                            Margin="0 0 0 5"
-                            StyleClasses="OpenBoth"/>
-                    <Button Name="PurchaseMediumButton"
-                            Text="{Loc 'safety-deposit-console-purchase-medium'}"
-                            HorizontalAlignment="Stretch"
-                            MinSize="0 30"
-                            Margin="0 0 0 5"
-                            StyleClasses="OpenBoth"/>
-                    <Button Name="PurchaseLargeButton"
-                            Text="{Loc 'safety-deposit-console-purchase-large'}"
-                            HorizontalAlignment="Stretch"
-                            MinSize="0 30"
-                            StyleClasses="OpenBoth"/>
+                    <BoxContainer Name="PurchaseButtonsContainer"
+                                  Orientation="Vertical"
+                                  SeparationOverride="5"
+                                  HorizontalExpand="True"/>
                 </BoxContainer>
             </PanelContainer>
 

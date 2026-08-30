@@ -30,19 +30,9 @@ public sealed class SafetyDepositConsoleState : BoundUserInterfaceState
     public SafetyDepositBoxInfo? BoxInSlot;
 
     /// <summary>
-    /// Purchase cost for a small box.
+    /// Available box types for purchase with their costs and prototype IDs.
     /// </summary>
-    public int SmallBoxCost;
-
-    /// <summary>
-    /// Purchase cost for a medium box.
-    /// </summary>
-    public int MediumBoxCost;
-
-    /// <summary>
-    /// Purchase cost for a large box.
-    /// </summary>
-    public int LargeBoxCost;
+    public List<BoxTypeInfo> AvailableBoxTypes = new();
 
     /// <summary>
     /// The current round ID, used to determine if boxes are lost.
@@ -54,21 +44,28 @@ public sealed class SafetyDepositConsoleState : BoundUserInterfaceState
         int insertedCash,
         bool hasBoxInSlot,
         SafetyDepositBoxInfo? boxInSlot,
-        int smallBoxCost,
-        int mediumBoxCost,
-        int largeBoxCost,
+        List<BoxTypeInfo> availableBoxTypes,
         int currentRoundId)
     {
         OwnedBoxes = ownedBoxes;
         InsertedCash = insertedCash;
         HasBoxInSlot = hasBoxInSlot;
         BoxInSlot = boxInSlot;
-        SmallBoxCost = smallBoxCost;
-        MediumBoxCost = mediumBoxCost;
-        LargeBoxCost = largeBoxCost;
+        AvailableBoxTypes = availableBoxTypes;
         CurrentRoundId = currentRoundId;
     }
 }
+
+/// <summary>
+/// Information about a box type available for purchase.
+/// </summary>
+[Serializable, NetSerializable]
+public record struct BoxTypeInfo(
+    string ProtoId,
+    string Name,
+    string Description,
+    int Cost
+);
 
 /// <summary>
 /// Information about a safety deposit box.

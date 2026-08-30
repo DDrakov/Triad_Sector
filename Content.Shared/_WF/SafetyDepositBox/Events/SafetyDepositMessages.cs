@@ -9,11 +9,11 @@ namespace Content.Shared._WF.SafetyDepositBox.Events;
 [Serializable, NetSerializable]
 public sealed class SafetyDepositPurchaseMessage : BoundUserInterfaceMessage
 {
-    public EntProtoId BoxProto;
+    public string BoxProtoId;
 
-    public SafetyDepositPurchaseMessage(EntProtoId boxProto)
+    public SafetyDepositPurchaseMessage(string boxProtoId)
     {
-        BoxProto = boxProto;
+        BoxProtoId = boxProtoId;
     }
 }
 

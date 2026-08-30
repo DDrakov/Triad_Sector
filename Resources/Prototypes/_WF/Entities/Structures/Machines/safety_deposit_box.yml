@@ -31,9 +31,9 @@
     - SafetyDepositBox
 
 - type: entity
-  id: SafetyDepositBoxSmall
-  name: safety deposit box (small)
-  description: A small secure box for storing valuables. Can hold 2x2 items.
+  id: SafetyDepositBox
+  name: safety deposit box
+  description: A medium secure box for storing valuables. Can hold 3x4 items and is capable of storing normal-sized objects.
   parent: SafetyDepositBoxBase
   components:
   - type: Sprite
@@ -42,16 +42,16 @@
   - type: Item
     size: Small
   - type: SafetyDepositBox
-    cost: 2000000
+    cost: 115000
   - type: Storage
-    maxItemSize: Small
+    maxItemSize: normal
     grid:
-    - 0,0,1,1
+    - 0,0,2,3
 
 - type: entity
   id: SafetyDepositBoxMedium
-  name: safety deposit box (medium)
-  description: A medium secure box for storing valuables. Can hold 2x4 items.
+  name: medium safety deposit box
+  description: A reinforced secure box for storing larger valuables. Can hold 4x4 items and is capable of storing large objects.
   parent: SafetyDepositBoxBase
   components:
   - type: Sprite
@@ -60,16 +60,16 @@
   - type: Item
     size: Normal
   - type: SafetyDepositBox
-    cost: 3500000
+    cost: 155000
   - type: Storage
-    maxItemSize: Normal
+    maxItemSize: large
     grid:
-    - 0,0,1,3
+    - 0,0,3,3
 
 - type: entity
   id: SafetyDepositBoxLarge
-  name: safety deposit box (large)
-  description: A large secure box for storing valuables. Can hold 2x6 items.
+  name: large safety deposit box
+  description: A heavy-duty secure box designed to accommodate oversized valuables. Can hold 4x6 items and is capable of storing huge objects.
   parent: SafetyDepositBoxBase
   components:
   - type: Sprite
@@ -78,11 +78,29 @@
   - type: Item
     size: Large
   - type: SafetyDepositBox
-    cost: 5000000
+    cost: 230000
   - type: Storage
     maxItemSize: Large
     grid:
-    - 0,0,1,5
+    - 0,0,3,5
+
+- type: entity
+  id: SafetyDepositBoxHeavy
+  name: heavy safety deposit box
+  description: A massive, heavily reinforced secure box built to store exceptionally large valuables. Can hold 6x6 items and is capable of storing ginormous objects.
+  parent: SafetyDepositBoxBase
+  components:
+  - type: Sprite
+    sprite: _WF/Objects/Economy/depositboxlarge.rsi
+    state: icon
+  - type: Item
+    size: Large
+  - type: SafetyDepositBox
+    cost: 340000
+  - type: Storage
+    maxItemSize: Ginormous
+    grid:
+    - 0,0,5,5
 
 - type: entity
   id: SafetyDepositConsole
@@ -100,9 +118,6 @@
     - map: ["computerLayerScreen"]
       state: unshaded
   - type: SafetyDepositConsole
-    smallBoxProto: SafetyDepositBoxSmall
-    mediumBoxProto: SafetyDepositBoxMedium
-    largeBoxProto: SafetyDepositBoxLarge
     boxSlot:
       name: safety-deposit-console-boxSlot
       insertSound: /Audio/Machines/scanning.ogg

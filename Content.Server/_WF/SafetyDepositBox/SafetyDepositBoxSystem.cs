@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
@@ -144,37 +144,66 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             );
         }
 
+        // Get all available box types from prototypes
+        var availableBoxTypes = GetAvailableBoxTypes();
+
         var state = new SafetyDepositConsoleState(
             boxInfoList,
             0, // No cash display needed anymore
             boxInSlot != null,
             boxInSlotInfo,
-            GetBoxCost(component.SmallBoxProto),
-            GetBoxCost(component.MediumBoxProto),
-            GetBoxCost(component.LargeBoxProto),
+            availableBoxTypes,
             _gameTicker.RoundId
         );
 
         _uiSystem.SetUiState(consoleUid, SafetyDepositConsoleUiKey.Key, state);
     }
 
+    private List<BoxTypeInfo> GetAvailableBoxTypes()
+    {
+        var boxTypes = new List<BoxTypeInfo>();
+
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (proto.TryGetComponent<SafetyDepositBoxComponent>(out var boxComponent))
+            {
+                boxTypes.Add(new BoxTypeInfo(
+                    proto.ID,
+                    proto.Name,
+                    proto.Description ?? "",
+                    boxComponent.Cost
+                ));
+            }
+        }
+
+        // Sort by cost ascending
+        boxTypes.Sort((a, b) => a.Cost.CompareTo(b.Cost));
+
+        return boxTypes;
+    }
+
     private void OnPurchase(EntityUid uid, SafetyDepositConsoleComponent component, SafetyDepositPurchaseMessage args)
     {
-        int cost;
-        EntityPrototype prototypeId;
         if (args.Actor is not { Valid: true } player)
             return;
 
         if (!TryComp<ActorComponent>(player, out var actor))
             return;
-        if (!_prototypeManager.TryIndex(args.BoxProto, out var proto))
+        if (!_prototypeManager.TryIndex(args.BoxProtoId, out var proto))
         {
             ConsolePopup(player, "Error: Invalid box size.");
             PlayDenySound(uid, component);
             return;
         }
 
-        cost = GetBoxCost(proto.ID);
+        if (!proto.TryGetComponent<SafetyDepositBoxComponent>(out var boxComponent))
+        {
+            ConsolePopup(player, "Error: Invalid box size.");
+            PlayDenySound(uid, component);
+            return;
+        }
+
+        var cost = boxComponent.Cost;
         if (cost <= 0)
         {
             ConsolePopup(player, "Error: Invalid box size.");
@@ -182,7 +211,6 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             return;
         }
 
-        prototypeId = proto;
         // Check bank account
         if (!TryComp<BankAccountComponent>(player, out var bank))
         {
@@ -218,17 +246,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         var characterIndex = prefs.SelectedCharacterIndex;
         var characterName = MetaData(player).EntityName;
 
-        PurchaseBoxAsync(uid, component, player, userId.UserId, characterIndex, characterName, prototypeId, cost);
-    }
-
-    // got tired of doing this
-    public int GetBoxCost(EntProtoId boxProto)
-    {
-        if (_prototypeManager.TryIndex(boxProto, out var proto) &&
-            proto.TryGetComponent<SafetyDepositBoxComponent>(out var boxComponent))
-            return boxComponent.Cost;
-        else
-            return 0;
+        PurchaseBoxAsync(uid, component, player, userId.UserId, characterIndex, characterName, proto, cost);
     }
 
     private async void PurchaseBoxAsync(

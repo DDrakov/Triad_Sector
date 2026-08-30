@@ -16,7 +16,7 @@ namespace Content.Client._WF.SafetyDepositBox;
 [GenerateTypedNameReferences]
 public sealed partial class SafetyDepositConsoleWindow : FancyWindow
 {
-    public event Action<EntProtoId>? OnPurchasePressed;
+    public event Action<string>? OnPurchasePressed;
     public event Action? OnDepositPressed;
     public event Action<Guid>? OnWithdrawPressed;
     public event Action<Guid>? OnReclaimPressed;
@@ -25,24 +25,28 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
     {
         RobustXamlLoader.Load(this);
 
-        PurchaseSmallButton.OnPressed += _ => OnPurchasePressed?.Invoke("SafetyDepositBoxSmall");
-        PurchaseMediumButton.OnPressed += _ => OnPurchasePressed?.Invoke("SafetyDepositBoxMedium");
-        PurchaseLargeButton.OnPressed += _ => OnPurchasePressed?.Invoke("SafetyDepositBoxLarge");
         DepositButton.OnPressed += _ => OnDepositPressed?.Invoke();
     }
 
     public void UpdateState(SafetyDepositConsoleState state)
     {
-        // Update purchase buttons with costs
+        // Update purchase buttons with costs - dynamically generate from available box types
+        PurchaseButtonsContainer.RemoveAllChildren();
 
-        PurchaseSmallButton.Disabled = false; // Bank account check happens server-side
-        PurchaseSmallButton.Text = Loc.GetString("safety-deposit-console-purchase-small", ("cost", state.SmallBoxCost));
+        foreach (var boxType in state.AvailableBoxTypes)
+        {
+            var button = new Button
+            {
+                Text = Loc.GetString("safety-deposit-console-purchase-button", ("name", boxType.Name), ("cost", boxType.Cost)),
+                HorizontalAlignment = Control.HAlignment.Stretch,
+                MinSize = new Vector2(0, 30),
+                StyleClasses = { "OpenBoth" }
+            };
 
-        PurchaseMediumButton.Disabled = false;
-        PurchaseMediumButton.Text = Loc.GetString("safety-deposit-console-purchase-medium", ("cost", state.MediumBoxCost));
-
-        PurchaseLargeButton.Disabled = false;
-        PurchaseLargeButton.Text = Loc.GetString("safety-deposit-console-purchase-large", ("cost", state.LargeBoxCost));
+            var protoId = boxType.ProtoId;
+            button.OnPressed += _ => OnPurchasePressed?.Invoke(protoId);
+            PurchaseButtonsContainer.AddChild(button);
+        }
 
         // Update deposit button
         DepositButton.Disabled = !state.HasBoxInSlot || state.BoxInSlot == null;
