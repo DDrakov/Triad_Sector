@@ -43,6 +43,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     [Dependency] private ShuttleConsoleSystem _shuttleConsole = default!;
     [Dependency] private TriadTamperPolicyService _tamperPolicy = default!;
 
+    private static readonly ProtoId<VesselPrototype> DefaultVesselFallbackId = "Framework";
+
     public void OnSaveMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsoleSaveMessage args)
     {
         if (args.Actor is not { Valid: true } player)
@@ -415,6 +417,10 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
             var vesselInfo = EnsureComp<ExtraShuttleInformationComponent>(shuttleStation.Value);
             vesselInfo.Vessel = vessel;
+        }
+        else
+        {
+            vesselComp.VesselId = DefaultVesselFallbackId; // Set to fallback if it couldn't find a gamemap prototype
         }
 
         SetFtlLockEnabled(shuttleUid);
