@@ -30,9 +30,9 @@ using Content.Shared.Station.Components;
 using Content.Shared.StationRecords;
 using Content.Shared.Whitelist;
 using Robust.Shared.Player;
-
-using Content.Server._Triad.Market; // Triad: market data
-using Content.Server.Database; // Triad: market data
+﻿using Robust.Shared.Prototypes;
+using Content.Server._Triad.Market;
+using Content.Server.Database;
 
 namespace Content.Server._NF.Shipyard.Systems;
 
