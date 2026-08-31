@@ -15,6 +15,7 @@ using Content.Shared._NF.Bank.Components;
 using Content.Shared._NF.Shipyard;
 using Content.Shared._NF.Shipyard.Components;
 using Content.Shared._NF.Shipyard.Events;
+using Content.Shared._NF.Shipyard.Prototypes;
 using Content.Shared._NF.ShuttleRecords;
 using Content.Shared._Triad.CCVar;
 using Content.Shared._Triad.Shipyard.Save;
