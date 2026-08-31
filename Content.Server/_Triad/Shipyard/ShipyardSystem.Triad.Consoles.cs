@@ -30,9 +30,9 @@ using Content.Shared.Station.Components;
 using Content.Shared.StationRecords;
 using Content.Shared.Whitelist;
 using Robust.Shared.Player;
-
-using Content.Server._Triad.Market; // Triad: market data
-using Content.Server.Database; // Triad: market data
+﻿using Robust.Shared.Prototypes;
+using Content.Server._Triad.Market;
+using Content.Server.Database;
 
 namespace Content.Server._NF.Shipyard.Systems;
 
@@ -42,6 +42,8 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private ShuttleConsoleSystem _shuttleConsole = default!;
     [Dependency] private TriadTamperPolicyService _tamperPolicy = default!;
+
+    private static readonly ProtoId<VesselPrototype> DefaultVesselFallbackId = "Framework";
 
     public void OnSaveMessage(EntityUid uid, ShipyardConsoleComponent component, ShipyardConsoleSaveMessage args)
     {
@@ -415,6 +417,10 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
             var vesselInfo = EnsureComp<ExtraShuttleInformationComponent>(shuttleStation.Value);
             vesselInfo.Vessel = vessel;
+        }
+        else
+        {
+            vesselComp.VesselId = DefaultVesselFallbackId; // Set to fallback if it couldn't find a gamemap prototype
         }
 
         SetFtlLockEnabled(shuttleUid);
