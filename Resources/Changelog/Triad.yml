@@ -4392,3 +4392,14 @@ Entries:
   id: 2568
   time: '2026-08-30T23:41:33.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/582
+- author: gaywolfgirl6
+  changes:
+    - type: Add
+      message: Added a new successful melee hit sound to the Tintreach
+    - type: Tweak
+      message: >-
+        Gave the Tintreach, Breaching Hammer, and Kanabou knockback and tuned
+        down their stamina damage done to self on wide swing slightly.
+  id: 2569
+  time: '2026-08-31T02:18:24.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/571
