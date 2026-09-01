@@ -4440,3 +4440,19 @@ Entries:
   id: 2572
   time: '2026-09-01T18:44:01.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/592
+- author: rebaserHEAD
+  changes:
+    - type: Add
+      message: >-
+        Gas tanks and canisters are now equipped with SafeCan™ internal fire
+        suppression, neutralizing flammable contents that approach ignition
+        temperature. Now with MORE used coffee grounds and Giant Space Bat
+        saliva!
+    - type: Tweak
+      message: >-
+        Overpressurized or destroyed gas vessels turn into a block of metal foam
+        instead of exploding or venting their contents. Keep your Spacers safe
+        from shrapnel! It's SHARP!
+  id: 2573
+  time: '2026-09-01T21:44:49.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/594
