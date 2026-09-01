@@ -4403,3 +4403,10 @@ Entries:
   id: 2569
   time: '2026-08-31T02:18:24.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/571
+- author: Minerva
+  changes:
+    - type: Fix
+      message: Melee self-executions are no longer possible.
+  id: 2570
+  time: '2026-09-01T15:43:13.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/589
