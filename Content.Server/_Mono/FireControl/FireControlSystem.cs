@@ -5,6 +5,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared._Mono.FireControl;
 using Content.Shared.Power;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events; // Triad
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -94,6 +95,15 @@ public sealed partial class FireControlSystem : EntitySystem
             )
         );
     }
+
+    // Triad - Prevent firing guns unless controlled.
+    [SubscribeLocalEvent]
+    private void OnShotAttempted(EntityUid uid, FireControllableComponent component, ref ShotAttemptedEvent args)
+    {
+        if (component.ControllingServer == null)
+            args.Cancel();
+    }
+    // End Triad
 
     private void OnControllablePowerChanged(EntityUid uid, FireControllableComponent component, PowerChangedEvent args)
     {
