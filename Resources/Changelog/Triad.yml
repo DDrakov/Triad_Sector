@@ -4410,3 +4410,22 @@ Entries:
   id: 2570
   time: '2026-09-01T15:43:13.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/589
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: >-
+        Fixed mercenary NPCs not being able to be seen with thermal vision
+        goggles.
+    - type: Tweak
+      message: Gave mercenary NPCs a fresh new look.
+    - type: Tweak
+      message: >-
+        Some human NPCs now have a singular hand slot to grab items that they
+        can use alongside their default attacks.
+    - type: Fix
+      message: >-
+        Fixed human NPCs with a melee weapon like the syndicate captain dropping
+        it on the floor on spawn
+  id: 2571
+  time: '2026-09-01T17:37:57.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/587
