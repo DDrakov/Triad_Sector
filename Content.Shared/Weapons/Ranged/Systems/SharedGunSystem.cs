@@ -348,8 +348,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             autoShoot.RemainingTime = duration;
 
         // Triad - autoshoot user
-        if (user != gunUid)
-            autoShoot.User = user;
+        autoShoot.User = user;
     }
 
     protected void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
