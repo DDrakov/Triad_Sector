@@ -21,11 +21,7 @@ using Content.Shared.Interaction;
 using Content.Shared._Mono.ShipGuns;
 using Content.Shared.Examine;
 using Content.Server.Salvage.Expeditions;
-// Triad start
-using Content.Shared._Crescent.DroneControl;
-using Content.Server.NPC.HTN;
-using Content.Server._Mono.NPC.HTN;
-// Triad end
+using Content.Server._Mono.NPC.HTN; // Triad
 
 namespace Content.Server._Mono.FireControl;
 
@@ -105,36 +101,14 @@ public sealed partial class FireControlSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnShotAttempted(EntityUid uid, FireControllableComponent component, ref ShotAttemptedEvent args)
     {
-        if (component.ControllingServer == null)
-        {
-            var gridUid = _xform.GetGrid(uid);
-            if (gridUid != null)
-            {
-                var droneQuery = EntityQueryEnumerator<DroneControlComponent>();
-                while (droneQuery.MoveNext(out var droneEnt, out var droneComp))
-                {
-                    if (_xform.GetGrid(droneEnt) != gridUid)
-                        continue;
+        if (component.ControllingServer != null)
+            return;
 
-                    if (TryComp<HTNComponent>(droneEnt, out var htn)
-                        && htn.Blackboard.TryGetValue<string>(droneComp.OrderKey, out var order, EntityManager))
-                    {
-                        if (order == DroneConsoleConstants.CommandTarget)
-                            return;
-                        continue;
-                    }
-                }
+        // Drones can ignore having a gunnery server
+        if (HasComp<ShipTargetingComponent>(args.User))
+            return;
 
-                var targetingQuery = EntityQueryEnumerator<ShipTargetingComponent>();
-                while (targetingQuery.MoveNext(out var targetingEnt, out _))
-                {
-                    if (_xform.GetGrid(targetingEnt) == gridUid)
-                        return;
-                }
-            }
-
-            args.Cancel();
-        }
+        args.Cancel();
     }
     // End Triad
 
