@@ -274,18 +274,7 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
 
             viewContainer.AddChild(view);
 
-            // Size label centered below sprite (no black panel, use Contraband heading style)
-            var sizeLabel = new Label
-            {
-                Text = GetSizeLabel(boxType),
-                HorizontalAlignment = Control.HAlignment.Center,
-                Align = Label.AlignMode.Center,
-                StyleClasses = { "LabelHeading" },
-                Margin = new Thickness(4, 2)
-            };
-
             inner.AddChild(viewContainer);
-            inner.AddChild(sizeLabel);
             button.AddChild(inner);
 
             var protoId = boxType.ProtoId;
@@ -317,10 +306,9 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
     {
         if (box == null)
         {
-            SelectedBoxNameLabel.Text = Loc.GetString("safety-deposit-console-select-a-box");
-            SelectedBoxDescriptionLabel.Text = Loc.GetString("safety-deposit-console-select-to-view");
+            SelectedBoxNameLabel.SetMessage(Loc.GetString("safety-deposit-console-select-a-box"));
+            SelectedBoxDescriptionLabel.SetMessage(Loc.GetString("safety-deposit-console-select-to-view"));
             SelectedBoxPriceLabel.Text = "-";
-            SelectedBoxView.SetEntity(null);
 
             BankBalanceLabel.Text = BankSystemExtensions.ToSpesoString(_cachedBankBalance);
             BalanceAfterLabel.Text = "-";
@@ -332,16 +320,11 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
         }
 
         var b = box.Value;
-        SelectedBoxNameLabel.Text = b.Name;
-        SelectedBoxDescriptionLabel.Text = string.IsNullOrWhiteSpace(b.Description)
+        SelectedBoxNameLabel.SetMessage(b.Name);
+        SelectedBoxDescriptionLabel.SetMessage(string.IsNullOrWhiteSpace(b.Description)
             ? Loc.GetString("safety-deposit-console-no-description")
-            : b.Description;
+            : b.Description);
         SelectedBoxPriceLabel.Text = BankSystemExtensions.ToSpesoString(b.Cost);
-
-        if (_prototypeManager.TryIndex<EntityPrototype>(b.ProtoId, out var proto))
-            SelectedBoxView.SetPrototype(proto);
-        else
-            SelectedBoxView.SetEntity(null);
 
         BankBalanceLabel.Text = BankSystemExtensions.ToSpesoString(_cachedBankBalance);
         var after = _cachedBankBalance - b.Cost;
@@ -365,19 +348,6 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
         // Fallback if loc missing format string issues: keeps english fallback below
         if (BuyButton.Text.Contains("cost"))
             BuyButton.Text = $"Buy for {BankSystemExtensions.ToSpesoString(b.Cost)}";
-    }
-
-    private static string GetSizeLabel(BoxTypeInfo boxType)
-    {
-        // Map known prototype IDs to mockup labels SMALL/MEDIUM/BIG/HUGE
-        return boxType.ProtoId switch
-        {
-            "SafetyDepositBox" => "SMALL",
-            "SafetyDepositBoxMedium" => "MEDIUM",
-            "SafetyDepositBoxLarge" => "BIG",
-            "SafetyDepositBoxHeavy" => "HUGE",
-            _ => boxType.Name.ToUpperInvariant()
-        };
     }
 }
 // Triad End

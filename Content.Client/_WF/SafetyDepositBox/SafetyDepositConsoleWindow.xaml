@@ -20,24 +20,20 @@
                           HorizontalExpand="True"
                           MinWidth="320"
                           Margin="10 10 10 10">
-                <PanelContainer>
+                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
                     </PanelContainer.PanelOverride>
-                    <BoxContainer Orientation="Vertical" Margin="10">
-                        <Label Text="{Loc 'safety-deposit-console-available-boxes'}"
-                               StyleClasses="LabelHeading"
-                               HorizontalAlignment="Center"/>
+                    <BoxContainer Orientation="Vertical" Margin="10" VerticalExpand="True" HorizontalExpand="True">
                         <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 10"/>
-                        <GridContainer Name="AvailableBoxesGrid"
-                                       Columns="2"
-                                       HorizontalExpand="True"
-                                       HSeparationOverride="8"
-                                       VSeparationOverride="8"
-                                       Margin="0 0 0 10"/>
-                        <Label Text="{Loc 'safety-deposit-console-click-to-inspect'}"
-                               StyleClasses="LabelSecondaryColor LabelSubText"
-                               HorizontalAlignment="Center"/>
+                        <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                            <GridContainer Name="AvailableBoxesGrid"
+                                           Columns="2"
+                                           HorizontalExpand="True"
+                                           HSeparationOverride="8"
+                                           VSeparationOverride="8"
+                                           Margin="0 0 0 10"/>
+                        </ScrollContainer>
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>
@@ -51,25 +47,26 @@
                           MinWidth="340"
                           Margin="10 10 10 10"
                           HorizontalAlignment="Center">
-                <PanelContainer>
+                <PanelContainer VerticalExpand="True" HorizontalExpand="True">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
                     </PanelContainer.PanelOverride>
-                    <BoxContainer Orientation="Vertical" Margin="10">
+                    <BoxContainer Orientation="Vertical" Margin="10" VerticalExpand="True" HorizontalExpand="True">
                         <Label HorizontalAlignment="Center"
                                Text="{Loc 'safety-deposit-console-box-details'}"
                                StyleClasses="LabelHeading"/>
                         <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 10"/>
-                        <Label Name="SelectedBoxNameLabel"
+                        <RichTextLabel Name="SelectedBoxNameLabel"
+                               HorizontalExpand="True"
                                HorizontalAlignment="Center"
                                StyleClasses="LabelHeading"
-                               Margin="0 0 0 5"
-                               Text="{Loc 'safety-deposit-console-select-a-box'}"/>
-                        <Label Name="SelectedBoxDescriptionLabel"
+                               MaxWidth="320"
+                               Margin="5 0 2 0"/>
+                        <RichTextLabel Name="SelectedBoxDescriptionLabel"
+                               HorizontalExpand="True"
                                HorizontalAlignment="Center"
-                               StyleClasses="LabelSecondaryColor"
-                               Margin="0 0 0 10"
-                               Text="{Loc 'safety-deposit-console-select-to-view'}"/>
+                               MaxWidth="320"
+                               Margin="0 2 0 10"/>
                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
                             <Label Text="{Loc 'safety-deposit-console-price-label'}"
                                    StyleClasses="LabelHeading"
@@ -107,46 +104,20 @@
                                HorizontalAlignment="Center"
                                Margin="0 0 0 5"
                                StyleClasses="LabelSubText"/>
+                        <Control VerticalExpand="True"/>
+                        <Button Name="BuyButton"
+                                HorizontalExpand="True"
+                                Margin="0 10 0 0"
+                                SetHeight="40"
+                                Text="{Loc 'safety-deposit-console-buy-button'}">
+                            <TextureRect HorizontalAlignment="Left"
+                                         VerticalAlignment="Center"
+                                         SetSize="32 32"
+                                         Stretch="KeepAspectCentered"
+                                         TexturePath="/Textures/Interface/VerbIcons/plus.svg.192dpi.png"/>
+                        </Button>
                     </BoxContainer>
                 </PanelContainer>
-
-                <!-- Sprite display (styled like ContrabandPermit PermitItemView) -->
-                <PanelContainer Margin="10"
-                                HorizontalAlignment="Center">
-                    <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxFlat BorderThickness="3"
-                                          BorderColor="#ffd688"
-                                          BackgroundColor="#000000FF"/>
-                    </PanelContainer.PanelOverride>
-                    <BoxContainer HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Margin="4">
-                        <EntityPrototypeView Name="SelectedBoxView"
-                                             Margin="10 10 10 10"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             MinSize="192 192"
-                                             Scale="4 4"
-                                             Stretch="Fill"/>
-                    </BoxContainer>
-                </PanelContainer>
-
-                <BoxContainer HorizontalExpand="True"
-                              Orientation="Vertical"
-                              HorizontalAlignment="Center"
-                              Margin="5 0 5 0">
-                    <Button Name="BuyButton"
-                            HorizontalExpand="True"
-                            Margin="0 10 0 0"
-                            SetHeight="40"
-                            Text="{Loc 'safety-deposit-console-buy-button'}">
-                        <TextureRect HorizontalAlignment="Left"
-                                     VerticalAlignment="Center"
-                                     SetSize="32 32"
-                                     Stretch="KeepAspectCentered"
-                                     TexturePath="/Textures/Interface/VerbIcons/plus.svg.192dpi.png"/>
-                    </Button>
-                </BoxContainer>
             </BoxContainer>
         </BoxContainer>
 
