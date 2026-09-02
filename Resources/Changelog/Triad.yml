@@ -4456,3 +4456,13 @@ Entries:
   id: 2573
   time: '2026-09-01T21:44:49.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/594
+- author: rebaserHEAD
+  changes:
+    - type: Tweak
+      message: >-
+        Radiator heat exchange now scales with how much gas actually flows
+        through the device instead of saturating at a trickle. Pumped loops
+        behave as before.
+  id: 2574
+  time: '2026-09-02T00:29:57.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/596
