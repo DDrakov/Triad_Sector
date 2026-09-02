@@ -4466,3 +4466,20 @@ Entries:
   id: 2574
   time: '2026-09-02T00:29:57.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/596
+- author: gaywolfgirl6
+  changes:
+    - type: Remove
+      message: >-
+        Removed a few ships from the Shipyard Console, including: Baeg,
+        McChicken, Olympus, Shareholder, Gondola, Ethereal, Jitterbug, Noble,
+        Archer, M-CLass Salvage Carrior, Antlion, Ample, Claymore, Fortunate,
+        Sabine MkII, Hydra, Phantom, Dervi, and Intermission.
+    - type: Tweak
+      message: >-
+        Tweaked illegal thruster placement on affected ships, including: Femur,
+        Rig, Praetorian, Sellsword, Takeaway, Tiger, Bratan, Zeros, Erudite,
+        Comet, Siebel, Prospector, Adjutant, Phalanx, Mite, Tzipora, Hermes, and
+        SolarSail.
+  id: 2575
+  time: '2026-09-02T10:15:38.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/584
