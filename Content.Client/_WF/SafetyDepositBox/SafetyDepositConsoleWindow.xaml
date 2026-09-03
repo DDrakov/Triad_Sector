@@ -1,7 +1,7 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                      MinSize="900 600"
+                      MinSize="900 900"
                       SetSize="900 600"
                       Title="{Loc 'safety-deposit-console-title'}">
     <BoxContainer Orientation="Vertical" Margin="5">
@@ -26,14 +26,14 @@
                     </PanelContainer.PanelOverride>
                     <BoxContainer Orientation="Vertical" Margin="10" VerticalExpand="True" HorizontalExpand="True">
                         <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 10"/>
-                        <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+                        <BoxContainer VerticalExpand="True" HorizontalExpand="True">
                             <GridContainer Name="AvailableBoxesGrid"
                                            Columns="2"
                                            HorizontalExpand="True"
                                            HSeparationOverride="8"
                                            VSeparationOverride="8"
                                            Margin="0 0 0 10"/>
-                        </ScrollContainer>
+                        </BoxContainer>
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>
@@ -44,7 +44,6 @@
             <BoxContainer Orientation="Vertical"
                           VerticalExpand="True"
                           HorizontalExpand="True"
-                          MinWidth="340"
                           Margin="10 10 10 10"
                           HorizontalAlignment="Center">
                 <PanelContainer VerticalExpand="True" HorizontalExpand="True">
@@ -65,7 +64,8 @@
                         <RichTextLabel Name="SelectedBoxDescriptionLabel"
                                HorizontalExpand="True"
                                HorizontalAlignment="Center"
-                               MaxWidth="320"
+                               MinWidth="400"
+                               MaxWidth="400"
                                Margin="0 2 0 10"/>
                         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
                             <Label Text="{Loc 'safety-deposit-console-price-label'}"
@@ -110,11 +110,6 @@
                                 Margin="0 10 0 0"
                                 SetHeight="40"
                                 Text="{Loc 'safety-deposit-console-buy-button'}">
-                            <TextureRect HorizontalAlignment="Left"
-                                         VerticalAlignment="Center"
-                                         SetSize="32 32"
-                                         Stretch="KeepAspectCentered"
-                                         TexturePath="/Textures/Interface/VerbIcons/plus.svg.192dpi.png"/>
                         </Button>
                     </BoxContainer>
                 </PanelContainer>
@@ -144,11 +139,6 @@
                         MinSize="140 35"
                         StyleClasses="OpenBoth"
                         Margin="10 0 0 0">
-                    <TextureRect HorizontalAlignment="Left"
-                                 VerticalAlignment="Center"
-                                 SetSize="32 32"
-                                 Stretch="KeepAspectCentered"
-                                 TexturePath="/Textures/Interface/VerbIcons/eject.svg.192dpi.png"/>
                 </Button>
             </BoxContainer>
         </PanelContainer>
