@@ -12,7 +12,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-// Triad Start - Refactor Safety Deposit UI to clickable sprite grid with right-side inspect detail (name/desc/price/sprite), buy-after-inspect flow and bank balance comparison (reference: ContrabandPermitConsoleWindow)
+// Triad Start - Refactor Safety Deposit UI to clickable sprite grid with right-side inspect detail (name/desc/price/sprite), buy-after-inspect flow and bank balance.
 namespace Content.Client._WF.SafetyDepositBox;
 
 [GenerateTypedNameReferences]
