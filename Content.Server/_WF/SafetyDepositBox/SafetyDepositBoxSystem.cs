@@ -23,6 +23,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Serialization.Manager;
+using Content.Shared._Triad.ContrabandPermit;
+using Content.Shared._Triad.Shipyard.Save.Contraband;
 
 namespace Content.Server._WF.SafetyDepositBox;
 
@@ -367,6 +369,8 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         {
             try
             {
+                if (HasComp<SavingContrabandComponent>(item) && !HasComp<ContrabandPermitItemComponent>(item))
+                    continue; // Triad : If item have contraband component and not contraband permit component then ship.
                 Log.Info($"Serializing item: {ToPrettyString(item)}");
                 using var writer = new StringWriter();
                 _loader.TrySaveEntity(item, writer);
