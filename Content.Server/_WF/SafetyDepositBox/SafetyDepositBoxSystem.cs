@@ -25,7 +25,7 @@ using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
-
+using Content.Server._WF.StorageItemData;
 namespace Content.Server._WF.SafetyDepositBox;
 
 public sealed partial class SafetyDepositBoxSystem : EntitySystem
@@ -361,11 +361,12 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         StorageComponent storageComp)
     {
         var entityDataList = new List<string>();
+        var locationDataList = new List<StoredItemData>();
 
         Log.Info($"DepositBoxAsync: Box has {storageComp.Container.ContainedEntities.Count} items");
 
         // Serialize each item in the box - store prototype + component data
-        foreach (var item in storageComp.Container.ContainedEntities)
+        foreach (var (item, location) in storageComp.StoredItems)
         {
             try
             {
@@ -373,8 +374,15 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                     continue; // Triad : If item have contraband component and not contraband permit component then ship.
                 Log.Info($"Serializing item: {ToPrettyString(item)}");
                 using var writer = new StringWriter();
+                using var locationWriter = new StringWriter();
                 _loader.TrySaveEntity(item, writer);
+                var data = new StoredItemData(
+                    Rotation: location.Rotation.Theta,
+                    X: location.Position.X,
+                    Y: location.Position.Y
+                );
                 entityDataList.Add(writer.ToString());
+                locationDataList.Add(data);
             }
             catch (Exception ex)
             {
