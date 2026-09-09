@@ -158,28 +158,6 @@
   parent: BaseSubjectPhrase
   text: phrase-fabricator
 
-# Lewd Phrases
-
-# - type: quickPhrase
-#   id: ButtPhrase
-#   parent: BaseSubjectPhrase
-#   text: phrase-butt
-
-# - type: quickPhrase
-#   id: WeinerPhrase
-#   parent: BaseSubjectPhrase
-#   text: phrase-weiner
-
-# - type: quickPhrase
-#   id: BallsPhrase
-#   parent: BaseSubjectPhrase
-#   text: phrase-balls
-
-# - type: quickPhrase
-#   id: AssPhrase
-#   parent: BaseSubjectPhrase
-#   text: phrase-ass
-
 # Phonetic Alphabet
 
 - type: quickPhrase
@@ -926,64 +904,6 @@
   id: WildflowersPhrase
   parent: [BaseSubjectPhrase, BaseSmellPhrase]
   text: phrase-wildflowers
-
-# lewd scents
-
-- type: quickPhrase
-  id: BaseSmellLewdPhrase
-  group: Scents (Lewd)
-  styleClass: ScienceButton
-  abstract: true
-
-- type: quickPhrase
-  id: BankCustomersPhrase
-  parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-  text: phrase-bankcustomers
-
-- type: quickPhrase
-  id: BoysmellPhrase
-  parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-  text: phrase-boysmell
-
-- type: quickPhrase
-  id: BoystinkPhrase
-  parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-  text: phrase-boystink
-
-- type: quickPhrase
-  id: GirlsmellPhrase
-  parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-  text: phrase-girlsmell
-
-- type: quickPhrase
-  id: GirlStinkPhrase
-  parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-  text: phrase-girlstink
-
-# - type: quickPhrase
-#   id: HeatPhrase
-#   parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-#   text: phrase-heat
-
-# - type: quickPhrase
-#   id: InHeatPhrase
-#   parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-#   text: phrase-inheat
-
-# - type: quickPhrase
-#   id: LatexPhrase
-#   parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-#   text: phrase-latex
-
-# - type: quickPhrase
-#   id: MuskPhrase
-#   parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-#   text: phrase-musk
-
-# - type: quickPhrase
-#   id: SkunkPhrase
-#   parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
-#   text: phrase-skunk
 
 - type: quickPhrase
   id: SpaceweedPhrase
