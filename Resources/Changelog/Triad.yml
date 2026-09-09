@@ -4760,3 +4760,10 @@ Entries:
   id: 2596
   time: '2026-09-07T16:40:09.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/625
+- author: Jakumba
+  changes:
+    - type: Add
+      message: Added the AAC Tablet from DeltaV
+  id: 2597
+  time: '2026-09-09T14:51:50.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/618
