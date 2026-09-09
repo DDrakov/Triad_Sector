@@ -31,12 +31,6 @@ phrase-first = first
 phrase-last = last
 phrase-fabricator = fabricator
 
-# lewd phrases
-phrase-butt = butt
-phrase-weiner = weiner
-phrase-balls = balls
-phrase-ass = ass
-
 # phonetic alphabet
 phrase-alpha = alpha
 phrase-bravo = bravo
@@ -187,20 +181,6 @@ phrase-vanilla = vanilla
 phrase-warmhoney = warm honey
 phrase-weldingfuel = welding fuel
 phrase-wildflowers = wildflowers
-
-# lewd scents
-
-phrase-bankcustomers = bank customers
-phrase-boysmell = boysmell
-phrase-boystink = boystink
-phrase-girlsmell = girlsmell
-phrase-girlstink = girlstink
-phrase-heat = heat
-phrase-inheat = in heat
-phrase-latex = latex
-phrase-musk = musk
-phrase-skunk = skunk
-phrase-spaceweed = spaceweed
 
 # pride
 
