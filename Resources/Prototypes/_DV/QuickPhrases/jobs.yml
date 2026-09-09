@@ -47,25 +47,15 @@
 
 - type: quickPhrase
   parent: BaseCivilianJobPhrase
-  id: PassengerPhrase
-  text: job-name-passenger
-
-- type: quickPhrase
-  parent: BaseCivilianJobPhrase
   id: VisitorPhrase
   text: job-name-visitor
 
-# Command
-
 - type: quickPhrase
-  parent: BaseCommandJobPhrase
+  parent: BaseCivilianJobPhrase
   id: CaptainPhrase
   text: job-name-captain
 
-- type: quickPhrase
-  parent: BaseCommandJobPhrase
-  id: CentralCommandOfficialPhrase
-  text: job-name-centcomoff
+# Command
 
 - type: quickPhrase
   parent: BaseCommandJobPhrase
@@ -79,37 +69,12 @@
   id: ChiefEngineerPhrase
   text: job-name-ce
 
-- type: quickPhrase
-  parent: BaseEngineeringJobPhrase
-  id: AtmosTechPhrase
-  text: job-name-atmostech
-
-- type: quickPhrase
-  parent: BaseEngineeringJobPhrase
-  id: EngineerPhrase
-  text: job-name-engineer
-
-- type: quickPhrase
-  parent: BaseEngineeringJobPhrase
-  id: TechAssistantPhrase
-  text: job-name-technical-assistant
-
 # Science
-
-- type: quickPhrase
-  parent: BaseScienceJobPhrase
-  id: ResearchDirectorPhrase
-  text: job-name-rd
 
 - type: quickPhrase
   parent: BaseScienceJobPhrase
   id: ScientistPhrase
   text: job-name-scientist
-
-- type: quickPhrase
-  parent: BaseScienceJobPhrase
-  id: ResearchAssistantPhrase
-  text: job-name-research-assistant
 
 - type: quickPhrase
   parent: BaseScienceJobPhrase
@@ -133,22 +98,7 @@
   id: CargoTechnicianPhrase
   text: job-name-cargotech
 
-- type: quickPhrase
-  parent: BaseLogisticsJobPhrase
-  id: SalvageSpecialistPhrase
-  text: job-name-salvagespec
-
 # Medical
-
-- type: quickPhrase
-  parent: BaseMedicalJobPhrase
-  id: ChiefMedicalOfficerPhrase
-  text: job-name-cmo
-
-- type: quickPhrase
-  parent: BaseMedicalJobPhrase
-  id: ChemistPhrase
-  text: job-name-chemist
 
 - type: quickPhrase
   parent: BaseMedicalJobPhrase
@@ -159,11 +109,6 @@
   parent: BaseMedicalJobPhrase
   id: MedicalDoctorPhrase
   text: job-name-doctor
-
-- type: quickPhrase
-  parent: BaseMedicalJobPhrase
-  id: MedicalInternPhrase
-  text: job-name-intern
 
 # Security
 
@@ -235,16 +180,6 @@
   parent: BaseServiceJobPhrase
   id: ServiceWorkerPhrase
   text: job-name-serviceworker
-
-- type: quickPhrase
-  parent: BaseServiceJobPhrase
-  id: ClownPhrase
-  text: job-name-clown
-
-- type: quickPhrase
-  parent: BaseServiceJobPhrase
-  id: MimePhrase
-  text: job-name-mime
 
 # CS - start
 # - type: quickPhrase
