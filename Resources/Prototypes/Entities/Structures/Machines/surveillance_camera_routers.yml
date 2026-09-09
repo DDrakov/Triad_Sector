@@ -127,29 +127,55 @@
   name: wireless camera router
   description: A wireless surveillance camera router. It routes. Perhaps.
   components:
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: SurveillanceCamera
-      transmitFrequencyId: SurveillanceCamera
-#    - type: WirelessNetworkConnection
-#      range: 200
-    - type: DeviceNetworkRequiresPower
-    - type: UserInterface
-      interfaces:
-        enum.SurveillanceCameraSetupUiKey.Router:
-          type: SurveillanceCameraSetupBoundUi
-    - type: Machine
-      board: SurveillanceCameraWirelessRouterCircuitboard
-    - type: Sprite
-      sprite: Structures/Machines/server.rsi
-      layers:
-        - state: server
-    - type: AmbientOnPowered
-    - type: AmbientSound
-      volume: -9
-      range: 5
-      sound:
-        path: /Audio/Ambience/Objects/server_fans.ogg
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: server_o
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Appearance
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    enabled: false
+    sound:
+      collection: ServerFans
+  - type: WiresVisuals
+  - type: WiresPanel
+  - type: Machine
+    board: SurveillanceCameraWirelessRouterCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 175
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+    prefix: device-address-prefix-camera-router-wireless
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceNetworkRequiresPower
+  - type: DeviceNetworkRouter
+  - type: SurveillanceCameraRouter
+  - type: UserInterface
+    interfaces:
+      enum.SurveillanceCameraSetupUiKey.Router:
+        type: SurveillanceCameraSetupBoundUi
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase
