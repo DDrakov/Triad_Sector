@@ -4767,3 +4767,23 @@ Entries:
   id: 2597
   time: '2026-09-09T14:51:50.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/618
+- author: BoiWab
+  changes:
+    - type: Add
+      message: 4 new researchable hardsuits for mercs, of RMT brand.
+    - type: Tweak
+      message: >-
+        UI hardsuits and weapons have been moved on the research tree. Advanced
+        energy weapons are now near the advanced mercenary weapons, while the
+        Enforcer hardsuits have been moved to Specialized Armored Hardsuits.
+    - type: Add
+      message: >-
+        3 new researchable hardsuits for TDF: The TA-82 hazmat suit, good for
+        lasers and biological threats. The TA-67 'Brick', a juggernaut-type
+        suit, and the TA-99x, a very high end suit with a built-in shield
+        generator.
+    - type: Fix
+      message: Removed minor grammatical fixes for TDF tech tree nodes
+  id: 2598
+  time: '2026-09-09T16:40:43.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/547
