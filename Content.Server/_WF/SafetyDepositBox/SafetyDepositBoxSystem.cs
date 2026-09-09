@@ -25,7 +25,9 @@ using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Serialization.Manager;
 using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
-using Content.Server._WF.StorageItemData;
+using Content.Shared._Triad.Item.Location;
+using Content.Shared.Item;
+
 namespace Content.Server._WF.SafetyDepositBox;
 
 public sealed partial class SafetyDepositBoxSystem : EntitySystem
@@ -373,16 +375,14 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                 if (HasComp<SavingContrabandComponent>(item) && !HasComp<ContrabandPermitItemComponent>(item))
                     continue; // Triad : If item have contraband component and not contraband permit component then ship.
                 Log.Info($"Serializing item: {ToPrettyString(item)}");
+                if (!TryComp<ItemStorageLocationComponent>(item, out var locationComp))
+                {
+                    locationComp = EnsureComp<ItemStorageLocationComponent>(item);
+                }
+                locationComp.ItemLocation = location;
                 using var writer = new StringWriter();
-                using var locationWriter = new StringWriter();
                 _loader.TrySaveEntity(item, writer);
-                var data = new StoredItemData(
-                    Rotation: location.Rotation.Theta,
-                    X: location.Position.X,
-                    Y: location.Position.Y
-                );
                 entityDataList.Add(writer.ToString());
-                locationDataList.Add(data);
             }
             catch (Exception ex)
             {
@@ -603,6 +603,17 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                     var itemEntity = entity.Value.Owner;
                     // Mark item as having been stored in a deposit box
                     EnsureComp<SafetyDepositStoredComponent>(itemEntity);
+                    TryComp<ItemComponent>(itemEntity, out var entityComp);
+                    Entity<ItemComponent?> insertEnt = (itemEntity, entityComp);
+                    Entity<StorageComponent?> storage = (boxEntity, storageComp);
+                    if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp))
+                    {
+                        locationComp = EnsureComp<ItemStorageLocationComponent>(itemEntity);
+                        if (_storage.InsertAt(storage, insertEnt, locationComp.ItemLocation, out _, playSound: false))
+                        {
+                            continue;
+                        }
+                    }
 
                     // Insert into storage
                     if (!_storage.Insert(boxEntity, itemEntity, out _, storageComp: storageComp, playSound: false))
