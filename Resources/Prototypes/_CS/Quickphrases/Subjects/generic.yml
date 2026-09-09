@@ -907,7 +907,7 @@
 
 - type: quickPhrase
   id: SpaceweedPhrase
-  parent: [BaseSubjectPhrase, BaseSmellLewdPhrase]
+  parent: [BaseSubjectPhrase, BaseSmellPhrase]
   text: phrase-spaceweed
 
 # pride phrases
