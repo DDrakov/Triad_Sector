@@ -17,9 +17,23 @@
   components:
   - type: StorageFill
     contents:
-    - id: WeaponLauncherNfsdLake
-    - id: 40mmGrenadeEMP
-      amount: 12
+      - id: WeaponLauncherNfsdLake
+      - id: 40mmGrenadeEMP
+        amount: 12
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelOuterHardsuitTacticoolBundle
+  name: syndicate hardsuit bundle
+  description: "Contains the Syndicate's signature blood red hardsuit. Uh... wait.. where's the red?"
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitAshen
+    - id: ClothingMaskGasSyndicate
+    - id: ClothingHandsGlovesCombat
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelTdf
