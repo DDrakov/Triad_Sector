@@ -12,11 +12,6 @@
   text: job-name-stc
 
 - type: quickPhrase
-  parent: [BaseCommandJobPhrase, BaseNFSDPhrase]
-  id: SheriffPhrase
-  text: job-name-sheriff
-
-- type: quickPhrase
   parent: [BaseCommandJobPhrase, BaseMedicalJobPhrase]
   id: DirectorOfCarePhrase
   text: job-name-doc
@@ -77,53 +72,6 @@
 #   id: MassageTherapistPhrase
 #   text: job-name-massage-therapist
 
-- type: quickPhrase
-  parent: BaseCivilianJobPhrase
-  id: ChaplainPhrase
-  text: job-name-chaplain
-
-# Sheriff's Dept Jobs
-- type: quickPhrase
-  parent: BaseNFSDPhrase
-  id: BailiffPhrase
-  text: job-name-bailiff
-
-- type: quickPhrase
-  parent: BaseNFSDPhrase
-  id: DeputyPhrase
-  text: job-name-deputy
-
-- type: quickPhrase
-  parent: BaseNFSDPhrase
-  id: SeargentPhrase
-  text: JobSeniorOfficer
-
-- type: quickPhrase
-  parent: BaseNFSDPhrase
-  id: NFCadetPhrase
-  text: job-name-cadet-nf
-
-- type: quickPhrase
-  parent: BaseNFSDPhrase
-  id: PublicAffairsLiasonPhrase
-  text: job-name-pal
-
-- type: quickPhrase
-  parent: BaseNFSDPhrase
-  id: NFDetectivePhrase
-  text: job-name-nf-detective
-
-- type: quickPhrase
-  parent: BaseNFSDPhrase
-  id: NFCorpsmanPhrase
-  text: job-name-brigmedic
-
-  # Security Jobs
-- type: quickPhrase
-  parent: BaseSecurityJobPhrase
-  id: SecurityGuardPhrase
-  text: job-name-security-guard
-
 # Engineering Jobs
 - type: quickPhrase
   parent: BaseEngineeringJobPhrase
@@ -156,11 +104,6 @@
 #   parent: BasePiratePhrase
 #   id: NFPirateFirstMatePhrase
 #   text: job-name-nf-pirate-first-mate
-
-- type: quickPhrase
-  parent: BasePiratePhrase
-  id: PrisonerPhrase
-  text: job-name-prisoner
 
 # - type: quickPhrase
 #   parent: BasePiratePhrase
