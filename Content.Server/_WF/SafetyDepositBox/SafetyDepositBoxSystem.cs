@@ -363,7 +363,6 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         StorageComponent storageComp)
     {
         var entityDataList = new List<string>();
-        var locationDataList = new List<StoredItemData>();
 
         Log.Info($"DepositBoxAsync: Box has {storageComp.Container.ContainedEntities.Count} items");
 
@@ -608,7 +607,6 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                     Entity<StorageComponent?> storage = (boxEntity, storageComp);
                     if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp))
                     {
-                        locationComp = EnsureComp<ItemStorageLocationComponent>(itemEntity);
                         if (_storage.InsertAt(storage, insertEnt, locationComp.ItemLocation, out _, playSound: false))
                         {
                             continue;
