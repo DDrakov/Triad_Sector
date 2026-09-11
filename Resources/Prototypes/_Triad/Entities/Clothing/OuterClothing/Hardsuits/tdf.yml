@@ -166,14 +166,14 @@
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.75
+    damageCoefficient: 0.55
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.65
+        Blunt: 0.5
         Slash: 0.35
         Piercing: 0.65
-        Heat: 0.5
+        Heat: 0.35
         Radiation: 0.1
         Caustic: 0.1
   - type: StaminaDamageResistance
@@ -197,7 +197,7 @@
 - type: entity
   parent: [ClothingOuterHardsuitSyndieCommander, BaseFactionGearTDFT3, BaseClass2AShipContraband]
   id: ClothingOuterHardsuitTdfCasket
-  name: 'TA-67 "The Brick" superheavy riot casket'
+  name: TA-67 'The Brick' superheavy riot casket
   description: You are against the wall, and I am the wall.
   components:
   - type: Sprite
@@ -266,7 +266,7 @@
         Blunt: 0.75
         Slash: 0.75
         Piercing: 0.7
-        Heat: 0.3
+        Heat: 0.4
         Radiation: 0.4
         Caustic: 0.5
   - type: Item
