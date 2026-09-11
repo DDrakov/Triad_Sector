@@ -4813,3 +4813,10 @@ Entries:
   id: 2601
   time: '2026-09-11T16:07:35.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/632
+- author: Frontier
+  changes:
+    - type: Add
+      message: Added 21 more hair customization options. Mostly mohawks and emo stuff.
+  id: 2602
+  time: '2026-09-11T19:49:34.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/633
