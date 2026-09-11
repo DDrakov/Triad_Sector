@@ -4787,3 +4787,10 @@ Entries:
   id: 2598
   time: '2026-09-09T16:40:43.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/547
+- author: BoskiYourk
+  changes:
+    - type: Add
+      message: Added stairs to the construction menu!
+  id: 2599
+  time: '2026-09-11T01:50:04.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/630
