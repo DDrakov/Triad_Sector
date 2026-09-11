@@ -135,12 +135,7 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
-    - HeadTop
-    - HeadSide
+        Radiation: 0.5
 
 - type: entity
   parent: [ClothingHeadHelmetHardsuitSyndieElite, ShowSecurityIcons]
