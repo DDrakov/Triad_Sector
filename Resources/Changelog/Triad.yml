@@ -4801,3 +4801,15 @@ Entries:
   id: 2600
   time: '2026-09-11T15:52:04.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/631
+- author: Skybailey-dev
+  changes:
+    - type: Fix
+      message: Co2 now absorbs neutron in a reactor before plasma.
+    - type: Fix
+      message: >-
+        Plasma in a reactor's gas loop will now actually form tritium in the
+        outlet line, instead of sacrificing it to the god of floating point
+        errors.
+  id: 2601
+  time: '2026-09-11T16:07:35.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/632
