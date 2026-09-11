@@ -4794,3 +4794,10 @@ Entries:
   id: 2599
   time: '2026-09-11T01:50:04.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/630
+- author: runicguardian
+  changes:
+    - type: Add
+      message: Added Shackford Heavy Industries player faction. Awoooo~!
+  id: 2600
+  time: '2026-09-11T15:52:04.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/631
