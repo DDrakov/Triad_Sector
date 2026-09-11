@@ -48,3 +48,11 @@
   image: /Textures/_Triad/PlayerFactions/Ghostlights.png
   color: "#3ffff6"
   whitelisted: true
+
+- type: company
+  id: SHI
+  name: Shackford Heavy Industries
+  description: shi-description
+  image: /Textures/_Triad/PlayerFactions/SHI.png
+  color: "#4eb930"
+  whitelisted: true
