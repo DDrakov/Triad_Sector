@@ -11,6 +11,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared._Triad.CCVar;
+using Robust.Shared.Configuration;
 
 // Triad : Refactor Safety Deposit UI to clickable sprite grid with right-side inspect detail (name/desc/price/sprite), buy-after-inspect flow and bank balance.
 namespace Content.Client._WF.SafetyDepositBox;
@@ -18,6 +20,7 @@ namespace Content.Client._WF.SafetyDepositBox;
 [GenerateTypedNameReferences]
 public sealed partial class SafetyDepositConsoleWindow : FancyWindow
 {
+    [Dependency] private IConfigurationManager _cfg = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IEntityManager _entityManager = default!;
 
@@ -325,6 +328,10 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
 
     private void UpdateDetailPanel(BoxTypeInfo? box)
     {
+        var maxBoxes = _cfg.GetCVar(TriadCCVars.SafetyBoxLimit);
+        var ownedBoxesCount = _lastState?.OwnedBoxes.Count ?? 0;
+        var atMaxBoxes = ownedBoxesCount >= maxBoxes;
+
         if (box == null)
         {
             SelectedBoxNameLabel.SetMessage(Loc.GetString("safety-deposit-console-select-a-box"));
@@ -350,19 +357,27 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
         var after = _cachedBankBalance - b.Cost;
         BalanceAfterLabel.Text = BankSystemExtensions.ToSpesoString(after);
 
-        if (after < 0)
+        if (after < 0 || atMaxBoxes)
         {
-            BalanceAfterLabel.FontColorOverride = Color.Red;
+            if (!atMaxBoxes)
+            {
+                BalanceAfterLabel.FontColorOverride = Color.Red;
+                BuyButton.Text = Loc.GetString("safety-deposit-console-insufficient-funds");
+            }
+            else
+            {
+                BuyButton.Text = Loc.GetString("safety-deposit-console-buy-button-limit");
+            }
             BuyButton.Disabled = true;
         }
         else
         {
             BalanceAfterLabel.FontColorOverride = Color.LightGreen;
             BuyButton.Disabled = false;
+            // Update buy button text to include price for clarity
+            BuyButton.Text = Loc.GetString("safety-deposit-console-buy-button-with-price", ("cost", BankSystemExtensions.ToSpesoString(b.Cost)));
         }
 
-        // Update buy button text to include price for clarity
-        BuyButton.Text = Loc.GetString("safety-deposit-console-buy-button-with-price", ("cost", BankSystemExtensions.ToSpesoString(b.Cost)));
         // Fallback if loc missing format string issues: keeps english fallback below
         if (BuyButton.Text.Contains("cost"))
             BuyButton.Text = $"Buy for {BankSystemExtensions.ToSpesoString(b.Cost)}";

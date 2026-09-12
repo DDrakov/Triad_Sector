@@ -22,7 +22,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.EntitySerialization.Systems;
-using Robust.Shared.Serialization.Manager;
 using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
 using Content.Shared._Triad.Item.Location;
