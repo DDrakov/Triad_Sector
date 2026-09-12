@@ -13,6 +13,6 @@ public sealed partial class ItemStorageLocationComponent : Component
     /// <summary>
     /// The location of this item within the storage container's grid.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ItemStorageLocation ItemLocation;
 }

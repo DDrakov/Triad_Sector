@@ -375,10 +375,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                 if (HasComp<SavingContrabandComponent>(item) && !HasComp<ContrabandPermitItemComponent>(item))
                     continue; // Triad : If item have contraband component and not contraband permit component then ship.
                 Log.Info($"Serializing item: {ToPrettyString(item)}");
-                if (!TryComp<ItemStorageLocationComponent>(item, out var locationComp))
-                {
-                    locationComp = EnsureComp<ItemStorageLocationComponent>(item);
-                }
+                var locationComp = EnsureComp<ItemStorageLocationComponent>(item);
                 locationComp.ItemLocation = location;
                 using var writer = new StringWriter();
                 _loader.TrySaveEntity(item, writer);
@@ -695,12 +692,10 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                     TryComp<ItemComponent>(itemEntity, out var entityComp);
                     Entity<ItemComponent?> insertEnt = (itemEntity, entityComp);
                     Entity<StorageComponent?> storage = (boxEntity, storageComp);
-                    if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp))
+                    if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp)
+                        && _storage.InsertAt(storage, insertEnt, locationComp.ItemLocation, out _, playSound: false))
                     {
-                        if (_storage.InsertAt(storage, insertEnt, locationComp.ItemLocation, out _, playSound: false))
-                        {
-                            continue;
-                        }
+                        continue;
                     }
 
                     // Insert into storage
