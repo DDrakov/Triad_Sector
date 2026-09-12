@@ -4820,3 +4820,19 @@ Entries:
   id: 2602
   time: '2026-09-11T19:49:34.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/633
+- author: TheRealMasterChief117
+  changes:
+    - type: Tweak
+      message: >-
+        Night vision has been standardized across the board with goggles and
+        helmets, into four tiers. Monotube, Dualtube, Quadtube, and Quadtube
+        Wide.
+    - type: Tweak
+      message: Most simple mobs with night vision have been given 360 degree vision.
+    - type: Tweak
+      message: Monolithic mob night vision tint is now purple.
+    - type: Tweak
+      message: Space dragon and carp night vision tint is now light red.
+  id: 2603
+  time: '2026-09-12T20:10:07.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/635
