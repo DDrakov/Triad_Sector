@@ -52,3 +52,18 @@ public sealed class SafetyDepositReclaimMessage : BoundUserInterfaceMessage
         BoxId = boxId;
     }
 }
+
+/// <summary>
+/// Message to remove/delete a safety deposit box permanently.
+/// Allowed only if box is deposited (in database) or lost (missing).
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class SafetyDepositRemoveMessage : BoundUserInterfaceMessage
+{
+    public Guid BoxId;
+
+    public SafetyDepositRemoveMessage(Guid boxId)
+    {
+        BoxId = boxId;
+    }
+}

@@ -59,6 +59,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         SubscribeLocalEvent<SafetyDepositConsoleComponent, SafetyDepositDepositMessage>(OnDeposit);
         SubscribeLocalEvent<SafetyDepositConsoleComponent, SafetyDepositWithdrawMessage>(OnWithdraw);
         SubscribeLocalEvent<SafetyDepositConsoleComponent, SafetyDepositReclaimMessage>(OnReclaim);
+        SubscribeLocalEvent<SafetyDepositConsoleComponent, SafetyDepositRemoveMessage>(OnRemove);
         SubscribeLocalEvent<SafetyDepositConsoleComponent, EntInsertedIntoContainerMessage>(OnSlotChanged);
         SubscribeLocalEvent<SafetyDepositConsoleComponent, EntRemovedFromContainerMessage>(OnSlotChanged);
     }
@@ -538,6 +539,95 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(player):actor} reclaimed lost safety deposit box {boxId}");
+
+        UpdateUI(consoleUid, component, player);
+    }
+
+    // Triad : add OnRemove function, to remove not needed boxes
+    private void OnRemove(EntityUid uid, SafetyDepositConsoleComponent component, SafetyDepositRemoveMessage args)
+    {
+        if (args.Actor is not { Valid: true } player)
+            return;
+
+        if (!TryComp<ActorComponent>(player, out var actor))
+            return;
+
+        var userId = actor.PlayerSession.UserId;
+        if (!_prefsManager.TryGetCachedPreferences(userId, out var prefs))
+            return;
+
+        var characterIndex = prefs.SelectedCharacterIndex;
+
+        RemoveBoxAsync(uid, component, player, userId.UserId, characterIndex, args.BoxId);
+    }
+
+    private async void RemoveBoxAsync(
+        EntityUid consoleUid,
+        SafetyDepositConsoleComponent component,
+        EntityUid player,
+        Guid userId,
+        int characterIndex,
+        Guid boxId)
+    {
+        // Get box from database
+        var box = await _dbManager.GetSafetyDepositBox(boxId);
+
+        if (box == null)
+        {
+            ConsolePopup(player, "Box not found.");
+            PlayDenySound(consoleUid, component);
+            return;
+        }
+
+        // Verify ownership
+        if (box.OwnerUserId != userId || box.CharacterIndex != characterIndex)
+        {
+            ConsolePopup(player, "This box does not belong to you.");
+            PlayDenySound(consoleUid, component);
+            return;
+        }
+
+        // Check if box is deposited (in database) OR lost (withdrawn in previous round with no items)
+        // Box CAN be removed if:
+        // - It's deposited (IsDeposited = true) - items are safely in database
+        // - It's lost (withdrawn in previous round, no items) - box is missing
+        // Box CANNOT be removed if:
+        // - It's "in world" (withdrawn in current round, not deposited back)
+
+        bool isDeposited;
+        if (!box.LastWithdrawn.HasValue)
+            isDeposited = true;
+        else if (box.LastWithdrawnRoundId.HasValue && box.LastWithdrawnRoundId.Value != _gameTicker.RoundId)
+        {
+            // Withdrawn in a previous round - lost regardless of items
+            isDeposited = false;
+        }
+        else
+        {
+            // Withdrawn in current round - deposited only if it has items
+            isDeposited = box.Items.Count > 0;
+        }
+
+        bool isLost = box.LastWithdrawn.HasValue &&
+                      box.LastWithdrawnRoundId.HasValue &&
+                      box.LastWithdrawnRoundId.Value != _gameTicker.RoundId &&
+                      box.Items.Count == 0;
+
+        if (!isDeposited && !isLost)
+        {
+            ConsolePopup(player, "This box is currently in the world and cannot be removed. Deposit it first or wait until it's lost.");
+            PlayDenySound(consoleUid, component);
+            return;
+        }
+
+        // Delete the database record
+        await _dbManager.DeleteSafetyDepositBox(boxId);
+
+        ConsolePopup(player, "Safety deposit box permanently removed.");
+        PlayConfirmSound(consoleUid, component);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(player):actor} removed safety deposit box {boxId}");
 
         UpdateUI(consoleUid, component, player);
     }

@@ -12,19 +12,20 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-// Triad Start - Refactor Safety Deposit UI to clickable sprite grid with right-side inspect detail (name/desc/price/sprite), buy-after-inspect flow and bank balance.
+// Triad : Refactor Safety Deposit UI to clickable sprite grid with right-side inspect detail (name/desc/price/sprite), buy-after-inspect flow and bank balance.
 namespace Content.Client._WF.SafetyDepositBox;
 
 [GenerateTypedNameReferences]
 public sealed partial class SafetyDepositConsoleWindow : FancyWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     public event Action<string>? OnPurchasePressed;
     public event Action? OnDepositPressed;
     public event Action<Guid>? OnWithdrawPressed;
     public event Action<Guid>? OnReclaimPressed;
+    public event Action<Guid>? OnRemovePressed;
 
     private readonly ButtonGroup _boxButtonGroup = new();
     private readonly Dictionary<string, Button> _boxButtons = new();
@@ -183,6 +184,10 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
                              box.LastWithdrawnRoundId.Value != state.CurrentRoundId &&
                              !box.IsDeposited;
 
+                // Triad changes :
+                // Box can be removed if deposited (in database) OR lost (missing)
+                // Box cannot be removed if "in world" (withdrawn in current round, not deposited)
+                var canRemove = box.IsDeposited || isLost;
                 var actionButton = new Button
                 {
                     Text = isLost
@@ -192,6 +197,18 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
                     MinWidth = 100,
                     HorizontalAlignment = Control.HAlignment.Right,
                     VerticalAlignment = Control.VAlignment.Center
+                };
+
+                // Triad : Remove button (shown when box can be removed)
+                var removeButton = new ConfirmButton
+                {
+                    Text = Loc.GetString("safety-deposit-console-remove-button"),
+                    ConfirmationText = Loc.GetString("safety-deposit-console-remove-confirmation"),
+                    Disabled = !canRemove,
+                    MinWidth = 80,
+                    HorizontalAlignment = Control.HAlignment.Right,
+                    VerticalAlignment = Control.VAlignment.Center,
+                    StyleClasses = { "ButtonDanger" }
                 };
 
                 var boxId = box.BoxId;
@@ -204,9 +221,13 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
                     actionButton.OnPressed += _ => OnWithdrawPressed?.Invoke(boxId);
                 }
 
+                removeButton.OnPressed += _ => OnRemovePressed?.Invoke(boxId);
+
                 rowContainer.AddChild(boxIdLabel);
                 rowContainer.AddChild(statusLabel);
                 rowContainer.AddChild(actionButton);
+                if (canRemove)
+                    rowContainer.AddChild(removeButton);
                 rowPanel.AddChild(rowContainer);
                 OwnedBoxesContainer.AddChild(rowPanel);
 
@@ -313,7 +334,6 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
             BankBalanceLabel.Text = BankSystemExtensions.ToSpesoString(_cachedBankBalance);
             BalanceAfterLabel.Text = "-";
             BalanceAfterLabel.FontColorOverride = Color.White;
-            InsufficientFundsLabel.Visible = false;
             BuyButton.Disabled = true;
             BuyButton.Text = Loc.GetString("safety-deposit-console-buy-button");
             return;
@@ -333,13 +353,11 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
         if (after < 0)
         {
             BalanceAfterLabel.FontColorOverride = Color.Red;
-            InsufficientFundsLabel.Visible = true;
             BuyButton.Disabled = true;
         }
         else
         {
             BalanceAfterLabel.FontColorOverride = Color.LightGreen;
-            InsufficientFundsLabel.Visible = false;
             BuyButton.Disabled = false;
         }
 
@@ -350,4 +368,3 @@ public sealed partial class SafetyDepositConsoleWindow : FancyWindow
             BuyButton.Text = $"Buy for {BankSystemExtensions.ToSpesoString(b.Cost)}";
     }
 }
-// Triad End

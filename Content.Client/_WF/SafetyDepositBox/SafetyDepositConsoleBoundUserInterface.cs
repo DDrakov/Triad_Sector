@@ -25,6 +25,7 @@ public sealed class SafetyDepositConsoleBoundUserInterface : BoundUserInterface
         _window.OnDepositPressed += OnDepositPressed;
         _window.OnWithdrawPressed += OnWithdrawPressed;
         _window.OnReclaimPressed += OnReclaimPressed;
+        _window.OnRemovePressed += OnRemovePressed;
     }
 
     private void OnPurchasePressed(string boxProtoId)
@@ -45,6 +46,12 @@ public sealed class SafetyDepositConsoleBoundUserInterface : BoundUserInterface
     private void OnReclaimPressed(Guid boxId)
     {
         SendMessage(new SafetyDepositReclaimMessage(boxId));
+    }
+
+    // Triad : add OnRemovePressed function to delete not needed boxes
+    private void OnRemovePressed(Guid boxId)
+    {
+        SendMessage(new SafetyDepositRemoveMessage(boxId));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

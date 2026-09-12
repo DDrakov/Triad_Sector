@@ -114,13 +114,6 @@
                                                     Text="-"
                                                     VerticalAlignment="Center"/>
                                             </BoxContainer>
-                                            <Label Name="InsufficientFundsLabel"
-                                                Text="{Loc 'safety-deposit-console-insufficient-funds'}"
-                                                FontColorOverride="Red"
-                                                Visible="False"
-                                                HorizontalAlignment="Center"
-                                                Margin="0 0 0 5"
-                                                StyleClasses="LabelSubText"/>
                                             <Control VerticalExpand="True"/>
                                             <Button Name="BuyButton"
                                                     HorizontalExpand="True"
@@ -177,13 +170,11 @@
                     </ScrollContainer>
                 </BoxContainer>
 
-                <!-- Footer (like ContrabandPermit) -->
                 <BoxContainer Orientation="Vertical" Margin="0 5 0 0">
                     <PanelContainer StyleClasses="LowDivider"/>
                     <BoxContainer Margin="10,2,5,0" Orientation="Horizontal" VerticalAlignment="Bottom">
                         <Label StyleClasses="WindowFooterText" Text="{Loc 'safety-deposit-console-header'}"/>
                         <Control HorizontalExpand="True"/>
-                        <Label StyleClasses="WindowFooterText" Text="{Loc 'safety-deposit-console-bank-payment-note'}"/>
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>
