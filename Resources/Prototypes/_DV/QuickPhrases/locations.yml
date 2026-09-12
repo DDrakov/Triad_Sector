@@ -155,7 +155,7 @@
 
 - type: quickPhrase
   parent: BaseEngineeringLocationPhrase
-  id: LocationDirectorOfficePhrase
+  id: LocationDirectorQuarterPhrase
   text: station-beacon-managers-quarters
 
 - type: quickPhrase

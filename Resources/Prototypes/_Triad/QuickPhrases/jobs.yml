@@ -6,11 +6,6 @@
 
 - type: quickPhrase
   parent: BaseEngineeringJobPhrase
-  id: PlantManagerPhrase
-  text: job-name-plant-manager
-
-- type: quickPhrase
-  parent: BaseEngineeringJobPhrase
   id: PlantTechnicianPhrase
   text: job-name-plant-technician
 
