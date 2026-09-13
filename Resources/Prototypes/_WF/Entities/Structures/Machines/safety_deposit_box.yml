@@ -41,7 +41,7 @@
   - type: SafetyDepositBox
     cost: 115000
   - type: Storage
-    maxItemSize: normal
+    maxItemSize: Normal
     grid:
     - 0,0,2,3
 
@@ -59,7 +59,7 @@
   - type: SafetyDepositBox
     cost: 155000
   - type: Storage
-    maxItemSize: large
+    maxItemSize: Large
     grid:
     - 0,0,3,3
 
