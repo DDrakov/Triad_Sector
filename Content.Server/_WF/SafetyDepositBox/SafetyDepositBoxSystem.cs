@@ -22,6 +22,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.EntitySerialization.Systems;
+using Content.Shared.Timing;
 using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
 using Content.Shared._Triad.Item.Location;
@@ -48,6 +49,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private IComponentFactory _componentFactory = default!;
     [Dependency] private MapLoaderSystem _loader = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!; // Triad : _useDelay system
 
     public override void Initialize()
     {
@@ -733,6 +735,10 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                     // Mark item as having been stored in a deposit box
                     EnsureComp<SafetyDepositStoredComponent>(itemEntity);
                     TryComp<ItemComponent>(itemEntity, out var entityComp);
+                    if (TryComp<UseDelayComponent>(itemEntity, out var useDelayComp))
+                    {
+                        _useDelay.ResetAllDelays((itemEntity, useDelayComp));
+                    }
                     Entity<ItemComponent?> insertEnt = (itemEntity, entityComp);
                     Entity<StorageComponent?> storage = (boxEntity, storageComp);
                     if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp)
