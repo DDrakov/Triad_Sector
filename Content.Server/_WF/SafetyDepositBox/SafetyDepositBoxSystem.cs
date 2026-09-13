@@ -26,6 +26,7 @@ using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
 using Content.Shared._Triad.Item.Location;
 using Content.Shared.Item;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server._WF.SafetyDepositBox;
 
@@ -351,6 +352,16 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             return;
         }
 
+        // Check for contraband items that cannot be stored
+        var invalidItems = CheckContrabandValidity(player, storageComp);
+        if (invalidItems.Count > 0)
+        {
+            var itemNames = string.Join(", ", invalidItems);
+            ConsolePopup(player, $"Cannot deposit box: The following items cannot be stored in a safety deposit box: {itemNames}");
+            PlayDenySound(uid, component);
+            return;
+        }
+
         DepositBoxAsync(uid, component, player, boxEntity.Value, boxComp, storageComp);
     }
 
@@ -371,8 +382,6 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         {
             try
             {
-                if (HasComp<SavingContrabandComponent>(item) && !HasComp<ContrabandPermitItemComponent>(item))
-                    continue; // Triad : If item have contraband component and not contraband permit component then ship.
                 Log.Info($"Serializing item: {ToPrettyString(item)}");
                 var locationComp = EnsureComp<ItemStorageLocationComponent>(item);
                 locationComp.ItemLocation = location;
@@ -419,6 +428,41 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
         UpdateUI(consoleUid, component, player);
     }
+
+    // Triad : recursive check for contraband items
+    private List<string> CheckContrabandValidity(
+        EntityUid player,
+        StorageComponent storageComp
+    )
+    {
+        var invalidItems = new List<string>();
+        RecursiveStorageCheck(player, storageComp, invalidItems);
+        return invalidItems;
+    }
+
+    private void RecursiveStorageCheck(
+        EntityUid player,
+        StorageComponent storageItemComp,
+        List<string> invalidItems
+    )
+    {
+        foreach (var (item, location) in storageItemComp.StoredItems)
+        {
+            if (HasComp<SavingContrabandComponent>(item))
+            {
+                if (!TryComp<ContrabandPermitItemComponent>(item, out var permitComp) || permitComp.PermitOwner != player)
+                {
+                    var itemName = Identity.Name(item, EntityManager);
+                    invalidItems.Add(itemName);
+                }
+            }
+            if (TryComp<StorageComponent>(item, out var nestedStorage))
+            {
+                RecursiveStorageCheck(player, nestedStorage, invalidItems);
+            }
+        }
+    }
+    // Triad end
 
     private void OnWithdraw(EntityUid uid, SafetyDepositConsoleComponent component, SafetyDepositWithdrawMessage args)
     {
