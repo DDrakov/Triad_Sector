@@ -55,7 +55,7 @@
     sprite: _WF/Objects/Economy/depositboxmedium.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Large
   - type: SafetyDepositBox
     cost: 155000
   - type: Storage
@@ -91,7 +91,7 @@
     sprite: _WF/Objects/Economy/depositboxlarge.rsi
     state: icon
   - type: Item
-    size: Large
+    size: Ginormous
   - type: SafetyDepositBox
     cost: 340000
   - type: Storage
