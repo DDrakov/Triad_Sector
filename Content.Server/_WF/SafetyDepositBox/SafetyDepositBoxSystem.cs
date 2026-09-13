@@ -460,18 +460,12 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
             TryComp<ContrabandPermitItemComponent>(item, out var permitComp);
 
-            if (HasComp<SavingContrabandComponent>(item))
-            {
-                // If it's an invalid permit (other player's permit) or it doesn't have a valid permit at all, add it to the list
-                if (permitComp == null)
-                    invalidItems.Add(itemName);
-                else if (_contrabandPermit.IsInvalidPermit((item, permitComp), player))
-                    invalidItems.Add(itemName);
-            }
-            else if (permitComp != null && _contrabandPermit.IsInvalidPermit((item, permitComp), player))
-            {
+            // Save contraband is invalid
+            // Save contraband that is permittable and has a valid active permit are valid
+            if (HasComp<SavingContrabandComponent>(item) && permitComp == null)
                 invalidItems.Add(itemName);
-            }
+            else if (permitComp != null && _contrabandPermit.IsInvalidPermit((item, permitComp), player))
+                invalidItems.Add(itemName);
         }
     }
     // Triad end
