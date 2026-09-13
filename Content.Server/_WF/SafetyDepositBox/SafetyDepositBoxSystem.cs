@@ -458,13 +458,19 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
             var itemName = Identity.Name(item, EntityManager);
 
+            TryComp<ContrabandPermitItemComponent>(item, out var permitComp);
+
             if (HasComp<SavingContrabandComponent>(item))
             {
                 // If it's an invalid permit (other player's permit) or it doesn't have a valid permit at all, add it to the list
-                if (!TryComp<ContrabandPermitItemComponent>(item, out var permitComp))
+                if (permitComp == null)
                     invalidItems.Add(itemName);
                 else if (_contrabandPermit.IsInvalidPermit((item, permitComp), player))
                     invalidItems.Add(itemName);
+            }
+            else if (permitComp != null && _contrabandPermit.IsInvalidPermit((item, permitComp), player))
+            {
+                invalidItems.Add(itemName);
             }
         }
     }
@@ -742,17 +748,17 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                     Entity<ItemComponent?> insertEnt = (itemEntity, entityComp);
                     Entity<StorageComponent?> storage = (boxEntity, storageComp);
 
-                    if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp)
-                        && _storage.InsertAt(storage, insertEnt, locationComp.ItemLocation, out _, playSound: false))
-                    {
-                        continue;
-                    }
-
                     if (TryComp<UseDelayComponent>(itemEntity, out var useDelayComp))
                         _useDelay.ResetAllDelays((itemEntity, useDelayComp));
 
                     if (TryComp<ContrabandPermitItemComponent>(itemEntity, out var permitItem))
                         _contrabandPermit.InitializePermitItem((itemEntity, permitItem), player); // Set the permit item owner to the box owner's mind
+
+                    if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp)
+                        && _storage.InsertAt(storage, insertEnt, locationComp.ItemLocation, out _, playSound: false))
+                    {
+                        continue;
+                    }
 
                     // Insert into storage
                     if (!_storage.Insert(boxEntity, itemEntity, out _, storageComp: storageComp, playSound: false))
