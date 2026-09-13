@@ -4836,3 +4836,12 @@ Entries:
   id: 2603
   time: '2026-09-12T20:10:07.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/635
+- author: Skybailey-dev
+  changes:
+    - type: Fix
+      message: >-
+        Fixed the Z-Pinch having no limit to its fuel capacity, now 100 sheets
+        like the rest of the generators.
+  id: 2604
+  time: '2026-09-13T02:03:20.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/636
