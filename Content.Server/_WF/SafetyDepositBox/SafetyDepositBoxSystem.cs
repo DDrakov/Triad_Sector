@@ -25,9 +25,11 @@ using Robust.Shared.EntitySerialization.Systems;
 using Content.Shared.Timing;
 using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
-using Content.Shared._Triad.Item.Location;
+using Content.Shared._Triad.Storage;
 using Content.Shared.Item;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mind;
+using Content.Server._Triad.ContrabandPermit;
 
 namespace Content.Server._WF.SafetyDepositBox;
 
@@ -47,9 +49,10 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     [Dependency] private SharedLabelSystem _label = default!; // Wicce: LabelSystem -> SharedLabelSystem
     [Dependency] private IServerPreferencesManager _prefsManager = default!;
     [Dependency] private GameTicker _gameTicker = default!;
-    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private SharedMindSystem _mind = default!; // Triad
     [Dependency] private MapLoaderSystem _loader = default!;
     [Dependency] private UseDelaySystem _useDelay = default!; // Triad : _useDelay system
+    [Dependency] private ContrabandPermitSystem _contrabandPermit = default!; // Triad
 
     public override void Initialize()
     {
@@ -438,29 +441,30 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     )
     {
         var invalidItems = new List<string>();
-        RecursiveStorageCheck(player, storageComp, invalidItems);
+        ContrabandStorageCheck(player, storageComp, ref invalidItems);
         return invalidItems;
     }
 
-    private void RecursiveStorageCheck(
+    private void ContrabandStorageCheck(
         EntityUid player,
         StorageComponent storageItemComp,
-        List<string> invalidItems
+        ref List<string> invalidItems
     )
     {
         foreach (var (item, location) in storageItemComp.StoredItems)
         {
+            if (TryComp<StorageComponent>(item, out var nestedStorage))
+                ContrabandStorageCheck(player, nestedStorage, ref invalidItems);
+
+            var itemName = Identity.Name(item, EntityManager);
+
             if (HasComp<SavingContrabandComponent>(item))
             {
-                if (!TryComp<ContrabandPermitItemComponent>(item, out var permitComp) || permitComp.PermitOwner != player)
-                {
-                    var itemName = Identity.Name(item, EntityManager);
+                // If it's an invalid permit (other player's permit) or it doesn't have a valid permit at all, add it to the list
+                if (!TryComp<ContrabandPermitItemComponent>(item, out var permitComp))
                     invalidItems.Add(itemName);
-                }
-            }
-            if (TryComp<StorageComponent>(item, out var nestedStorage))
-            {
-                RecursiveStorageCheck(player, nestedStorage, invalidItems);
+                else if (_contrabandPermit.IsInvalidPermit((item, permitComp), player))
+                    invalidItems.Add(itemName);
             }
         }
     }
@@ -735,17 +739,20 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                     // Mark item as having been stored in a deposit box
                     EnsureComp<SafetyDepositStoredComponent>(itemEntity);
                     TryComp<ItemComponent>(itemEntity, out var entityComp);
-                    if (TryComp<UseDelayComponent>(itemEntity, out var useDelayComp))
-                    {
-                        _useDelay.ResetAllDelays((itemEntity, useDelayComp));
-                    }
                     Entity<ItemComponent?> insertEnt = (itemEntity, entityComp);
                     Entity<StorageComponent?> storage = (boxEntity, storageComp);
+
                     if (TryComp<ItemStorageLocationComponent>(itemEntity, out var locationComp)
                         && _storage.InsertAt(storage, insertEnt, locationComp.ItemLocation, out _, playSound: false))
                     {
                         continue;
                     }
+
+                    if (TryComp<UseDelayComponent>(itemEntity, out var useDelayComp))
+                        _useDelay.ResetAllDelays((itemEntity, useDelayComp));
+
+                    if (TryComp<ContrabandPermitItemComponent>(itemEntity, out var permitItem))
+                        _contrabandPermit.InitializePermitItem((itemEntity, permitItem), player); // Set the permit item owner to the box owner's mind
 
                     // Insert into storage
                     if (!_storage.Insert(boxEntity, itemEntity, out _, storageComp: storageComp, playSound: false))

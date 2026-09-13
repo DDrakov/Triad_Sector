@@ -1,8 +1,7 @@
 using Content.Shared.Storage;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared._Triad.Item.Location;
+namespace Content.Shared._Triad.Storage;
 
 /// <summary>
 /// Attached to an entity when it is stored in a storage container to track its location within that container.
