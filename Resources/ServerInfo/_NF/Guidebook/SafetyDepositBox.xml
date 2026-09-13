@@ -15,7 +15,7 @@ The [color=#44cc00]Safety Deposit Box System[/color] allows you to securely stor
 
 ## Box Sizes and Pricing
   <Box>
-    <GuideEntityEmbed Entity="SafetyDepositBoxSmall"/>
+    <GuideEntityEmbed Entity="SafetyDepositBox"/>
     <GuideEntityEmbed Entity="SafetyDepositBoxMedium"/>
     <GuideEntityEmbed Entity="SafetyDepositBoxLarge"/>
   </Box>
