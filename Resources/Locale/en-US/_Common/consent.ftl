@@ -7,7 +7,7 @@ consent-window-freetext-label = Freetext
 consent-window-freetext-placeholder = Put your consent info here, such as:
     If you are okay with engaging in ERP
     Whether you would like to engage in PVP
-    Your stance on other types of extreme roleplay
+    If you are okay with engaging in other types of extreme roleplay
     Sub/Dom/Switch
     Which gender(s) you want your partners to be
     Likes and dislikes
