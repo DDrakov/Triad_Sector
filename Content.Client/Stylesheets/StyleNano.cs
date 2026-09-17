@@ -220,8 +220,8 @@ namespace Content.Client.Stylesheets
 
         // Coyote Frontier - AAC button colors
         // Triad change : NSFD -> TDF
-        public static readonly Color TDFButtonColorDefault = Color.FromHex("#4b653e");
-        public static readonly Color TDFButtonColorHovered = Color.FromHex("#667A76");
+        public static readonly Color TDFButtonColorDefault = Color.FromHex("#ffd580");
+        public static readonly Color TDFButtonColorHovered = Color.FromHex("#587e76");
         public static readonly Color PirateButtonColorDefault = Color.FromHex("#61503A");
         public static readonly Color PirateButtonColorHovered = Color.FromHex("#675C64");
         // end Coyote Frontier
