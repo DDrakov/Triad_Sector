@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
+using System.Text;
 
 namespace Content.Client._Triad.Shipyard.Save;
 
@@ -90,18 +91,20 @@ public sealed partial class ShipFileManagementSystem : EntitySystem
         // Ensure directory exists before saving
         EnsureSavedShipsDirectoryExists();
 
-        var safeFilename = "";
+        var safeFilename = new StringBuilder();
+
         foreach (var c in message.ShipName)
         {
             if (c == '-' || char.IsAsciiLetterOrDigit(c))
             {
-                safeFilename = c;
+                safeFilename.Append(c);
             }
             else
             {
-                safeFilename = '-';
+                safeFilename.Append('-');
             }
         }
+
         var fileName = $"/Exports/{safeFilename}_{DateTime.Now:yyyyMMdd_HHmmss}.yml";
 
         try
