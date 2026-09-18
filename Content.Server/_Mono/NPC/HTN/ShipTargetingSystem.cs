@@ -87,11 +87,13 @@ public sealed partial class ShipTargetingSystem : EntitySystem
                 comp.WeaponCheckAccum += comp.WeaponCheckSpacing;
             }
 
-            FireWeapons(shipUid.Value, comp.Cannons, mapTarget, linVel, comp.CurrentLeadingVelocity);
+            // Triad - added shipTargeter argument for OnAttemptFire
+            FireWeapons(shipUid.Value, comp.Cannons, uid, mapTarget, linVel, comp.CurrentLeadingVelocity);
         }
     }
 
-    private void FireWeapons(EntityUid shipUid, List<EntityUid> cannons, MapCoordinates destMapPos, Vector2 ourVel, Vector2 otherVel)
+    // Triad - added shipTargeter argument for OnAttemptFire
+    private void FireWeapons(EntityUid shipUid, List<EntityUid> cannons, EntityUid shipTargeter, MapCoordinates destMapPos, Vector2 ourVel, Vector2 otherVel)
     {
         var shipXform = Transform(shipUid);
         if (!_physQuery.TryComp(shipUid, out var shipBody))
@@ -119,10 +121,10 @@ public sealed partial class ShipTargetingSystem : EntitySystem
             {
                 var gunToDestVec = destMapPos.Position - _transform.GetWorldPosition(gXform);
 
-                if (proto.TryGetComponent<HitscanAmmoComponent>(out var hitscan, Factory))
+                if (proto.TryComp<HitscanAmmoComponent>(out var hitscan, Factory))
                 {
                     // check if too far
-                    if (proto.TryGetComponent<HitscanBasicRaycastComponent>(out var raycast, Factory)
+                    if (proto.TryComp<HitscanBasicRaycastComponent>(out var raycast, Factory)
                         && raycast.MaxDistance < gunToDestVec.Length()
                     )
                         continue;
@@ -139,7 +141,7 @@ public sealed partial class ShipTargetingSystem : EntitySystem
 
                     var bulletProto = _gun.GetBulletPrototype(proto);
                     var projVel = gun.ProjectileSpeedModified;
-                    if (bulletProto.TryGetComponent<TargetSeekingComponent>(out var seeking, Factory))
+                    if (bulletProto.TryComp<TargetSeekingComponent>(out var seeking, Factory))
                     {
                         hitTime = _seeking.CalculateAdvancedTrackingTime(gunToDestVec, leadBy, seeking.Acceleration);
                     }
@@ -161,14 +163,14 @@ public sealed partial class ShipTargetingSystem : EntitySystem
                     }
 
                     // might take too long to hit
-                    if (bulletProto.TryGetComponent<TimedDespawnComponent>(out var despawn, Factory) && hitTime > despawn.Lifetime)
+                    if (bulletProto.TryComp<TimedDespawnComponent>(out var despawn, Factory) && hitTime > despawn.Lifetime)
                         continue;
                 }
             }
 
             var targetMapPos = destMapPos.Offset(leadBy * hitTime);
 
-            _cannon.AttemptFire(uid, uid, _transform.ToCoordinates(targetMapPos), noServer: true);
+            _cannon.AttemptFire(uid, shipTargeter, _transform.ToCoordinates(targetMapPos), noServer: true); // Triad - Ship targeter
         }
     }
 

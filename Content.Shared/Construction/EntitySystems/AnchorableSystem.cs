@@ -149,7 +149,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         // Snap rotation to cardinal (multiple of 90)
         var rot = xform.LocalRotation;
-        xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+        _transformSystem.SetLocalRotation(uid, Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2), xform);
 
         if (TryComp<PullableComponent>(uid, out var pullable) && pullable.Puller != null)
         {
@@ -159,7 +159,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         // TODO: Anchoring snaps rn anyway!
         if (component.Snap)
         {
-            var coordinates = xform.Coordinates.SnapToGrid(EntityManager, _mapManager);
+            var coordinates = xform.Coordinates.SnapToGrid(EntityManager);
 
             if (AnyUnstackable(uid, coordinates))
             {
@@ -307,6 +307,10 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         while (enumerator.MoveNext(out var ent))
         {
+            // Triad - fixes not being able to anchor objects under directional windows
+            if (ent != null && ShouldIgnoreTileFreeCheck(ent.Value))
+                continue;
+
             if (!_physicsQuery.TryGetComponent(ent, out var body) ||
                 !body.CanCollide ||
                 !body.Hard)
@@ -348,7 +352,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
 
-        var enumerator = _map.GetAnchoredEntitiesEnumerator(gridUid.Value, grid, _map.LocalToTile(gridUid.Value, grid, location));
+        var enumerator = _map.GetAnchoredEntities(gridUid.Value, grid, _map.LocalToTile(gridUid.Value, grid, location));
 
         while (enumerator.MoveNext(out var entity))
         {

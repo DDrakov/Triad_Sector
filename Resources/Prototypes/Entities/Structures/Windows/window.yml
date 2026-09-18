@@ -229,6 +229,7 @@
   - type: ShipRepairable
     repairTime: 2
     repairCost: 2
+  - type: IgnoreAnchorableTileFree # Triad
 
 - type: entity
   id: WindowDirectionalRCDResistant

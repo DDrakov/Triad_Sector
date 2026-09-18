@@ -32,19 +32,20 @@ namespace Content.Shared.Blocking;
 
 public sealed partial class BlockingSystem : SharedBlockingSystem // Mono
 {
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ItemToggleSystem _toggle = default!; // Goobstation
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private ActionContainerSystem _actionContainer = default!;
+    [Dependency] private SharedTransformSystem _transformSystem = default!;
+    [Dependency] private FixtureSystem _fixtureSystem = default!;
+    [Dependency] private SharedHandsSystem _handsSystem = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private ExamineSystemShared _examine = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private ItemToggleSystem _toggle = default!; // Goobstation
+    [Dependency] private IPrototypeManager _protoMan = default!;
 
     public override void Initialize()
     {
@@ -218,52 +219,49 @@ public sealed partial class BlockingSystem : SharedBlockingSystem // Mono
         var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", blockerName), ("shield", shieldName));
 
-        if (component.BlockingToggleAction != null)
+        //Don't allow someone to block if they're not parented to a grid
+        if (xform.GridUid != xform.ParentUid)
         {
-            //Don't allow someone to block if they're not parented to a grid
-            if (xform.GridUid != xform.ParentUid)
-            {
-                CantBlockError(user);
-                return false;
-            }
+            CantBlockError(user);
+            return false;
+        }
 
-            // Don't allow someone to block if they're not holding the shield
-            if(!_handsSystem.IsHolding(user, item, out _))
-            {
-                CantBlockError(user);
-                return false;
-            }
+        // Don't allow someone to block if they're not holding the shield
+        if(!_handsSystem.IsHolding(user, item, out _))
+        {
+            CantBlockError(user);
+            return false;
+        }
 
-            //Don't allow someone to block if someone else is on the same tile
-            var playerTileRef = xform.Coordinates.GetTileRef();
-            if (playerTileRef != null)
+        //Don't allow someone to block if someone else is on the same tile
+        var playerTileRef = _turf.GetTileRef(xform.Coordinates);
+        if (playerTileRef != null)
+        {
+            var intersecting = _lookup.GetLocalEntitiesIntersecting(playerTileRef.Value, 0f);
+            var mobQuery = GetEntityQuery<MobStateComponent>();
+            foreach (var uid in intersecting)
             {
-                var intersecting = _lookup.GetLocalEntitiesIntersecting(playerTileRef.Value, 0f);
-                var mobQuery = GetEntityQuery<MobStateComponent>();
-                foreach (var uid in intersecting)
+                if (uid != user && mobQuery.HasComponent(uid))
                 {
-                    if (uid != user && mobQuery.HasComponent(uid))
-                    {
-                        TooCloseError(user);
-                        return false;
-                    }
+                    TooCloseError(user);
+                    return false;
                 }
             }
+        }
 
-            //Don't allow someone to block if they're somehow not anchored.
-            _transformSystem.AnchorEntity(user, xform);
-            if (!xform.Anchored)
-            {
-                CantBlockError(user);
-                return false;
-            }
-            _actionsSystem.SetToggled(component.BlockingToggleActionEntity, true);
-            if (_gameTiming.IsFirstTimePredicted)
-            {
-                _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
-                if(_gameTiming.InPrediction)
-                    _popupSystem.PopupEntity(msgUser, user, user);
-            }
+        //Don't allow someone to block if they're somehow not anchored.
+        _transformSystem.AnchorEntity(user, xform);
+        if (!xform.Anchored)
+        {
+            CantBlockError(user);
+            return false;
+        }
+        _actionsSystem.SetToggled(component.BlockingToggleActionEntity, true);
+        if (_gameTiming.IsFirstTimePredicted)
+        {
+            _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
+            if(_gameTiming.InPrediction)
+                _popupSystem.PopupEntity(msgUser, user, user);
         }
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
@@ -314,10 +312,10 @@ public sealed partial class BlockingSystem : SharedBlockingSystem // Mono
         var msgUser = Loc.GetString("action-popup-blocking-disabling-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-disabling-other", ("blockerName", blockerName), ("shield", shieldName));
 
-        //If the component blocking toggle isn't null, grab the users SharedBlockingUserComponent and PhysicsComponent
+        //Grab the users SharedBlockingUserComponent and PhysicsComponent
         //then toggle the action to false, unanchor the user, remove the hard fixture
         //and set the users bodytype back to their original type
-        if (component.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
+        if (TryComp<BlockingUserComponent>(user, out var blockingUserComponent)
                                                      && TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
             if (xform.Anchored)

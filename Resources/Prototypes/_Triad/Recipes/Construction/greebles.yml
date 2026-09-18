@@ -13,6 +13,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  ghostOffset: 0,2
 
 - type: construction
   id: GreebleAntenna2
@@ -28,6 +29,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
+  ghostOffset: 0,2
 
 - type: construction
   id: GreebleElint1
@@ -42,10 +44,8 @@
     state: elint1
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-  - !type:TileNotBlocked
-    failIfSpace: false
+  canBuildInImpassable: true
+  ghostOffset: 0,1
 
 - type: construction
   id: GreebleRadarpanel1
@@ -64,6 +64,7 @@
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false
+  ghostOffset: 0.5,0.5
 
 - type: construction
   id: GreebleRadarpanel2
@@ -82,3 +83,4 @@
   conditions:
   - !type:TileNotBlocked
     failIfSpace: false
+  ghostOffset: 0.2,0

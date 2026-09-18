@@ -1,4 +1,4 @@
-using Content.Server.Access.Systems;
+﻿using Content.Server.Access.Systems;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
 using Content.Server._NF.Bank;
@@ -54,6 +54,9 @@ using Robust.Shared.Timing;
 using Content.Server.GameTicking;
 using Content.Shared._NF.Bank.BUI;
 
+using Content.Server._Triad.Market; // Triad: market data
+using Content.Server.Database; // Triad: market data
+
 // Suppress naming style rule for the _NF namespace prefix (project convention)
 #pragma warning disable IDE1006
 
@@ -61,29 +64,29 @@ namespace Content.Server._NF.Shipyard.Systems;
 
 public sealed partial class ShipyardSystem : SharedShipyardSystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly AccessSystem _accessSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly BankSystem _bank = default!;
-    [Dependency] private readonly IdCardSystem _idSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly StationRecordsSystem _records = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly ShuttleRecordsSystem _shuttleRecordsSystem = default!;
-    [Dependency] private readonly ShuttleConsoleLockSystem _shuttleConsoleLock = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!; // Triad: stamp audit rows with the round id
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly ShipyardDirectionSystem _shipyardDirection = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private AccessSystem _accessSystem = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private UserInterfaceSystem _ui = default!;
+    [Dependency] private IServerPreferencesManager _prefManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private RadioSystem _radio = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private BankSystem _bank = default!;
+    [Dependency] private IdCardSystem _idSystem = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private StationRecordsSystem _records = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private MindSystem _mind = default!;
+    [Dependency] private EntityManager _entityManager = default!;
+    [Dependency] private ShuttleRecordsSystem _shuttleRecordsSystem = default!;
+    [Dependency] private ShuttleConsoleLockSystem _shuttleConsoleLock = default!;
+    [Dependency] private GameTicker _gameTicker = default!; // Triad: stamp audit rows with the round id
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private ShipyardDirectionSystem _shipyardDirection = default!;
 
     private static readonly ProtoId<TagPrototype> CrewedShuttleTag = "CrewedShuttle";
     private static readonly Regex DeedRegex = new(@"\s*\([^()]*\)");
@@ -161,7 +164,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        if (!TryPurchaseShuttle(station, vessel.ShuttlePath, out var shuttleUidOut))
+        if (!TryPurchaseShuttle(station, vessel.ShuttlePath, out var shuttleUidOut, vessel.PriorityDockTag))
         {
             PlayDenySound(player, shipyardConsoleUid, component);
             return;
@@ -202,7 +205,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 }
                 return;
             }
-            else if (voucher!.ConsoleType != (ShipyardConsoleUiKey)args.UiKey)
+            else if (!voucher!.ConsoleTypes.Contains((ShipyardConsoleUiKey)args.UiKey)) // Triad - multiple voucher console types
             {
                 Del(shuttleUid);
                 ConsolePopup(player, Loc.GetString("shipyard-console-invalid-voucher-type"));
@@ -222,7 +225,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 return;
             }
 
-            if (!_bank.TryBankWithdraw(player, vessel.Price))
+            if (!_bank.TryBankWithdraw(player, vessel.Price, new MarketRecord { Kind = MarketTransactionKind.ShipyardPurchase })) // Triad: market data
             {
                 Del(shuttleUid);
                 ConsolePopup(player, Loc.GetString("cargo-console-insufficient-funds", ("cost", vessel.Price)));
@@ -514,7 +517,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             }
             bill = int.Max(0, bill);
 
-            _bank.TryBankDeposit(player, bill);
+            _bank.TryBankDeposit(player, bill, new MarketRecord { Kind = MarketTransactionKind.ShipyardSale }); // Triad: market data
             PlayConfirmSound(player, uid, component);
         }
 
@@ -820,7 +823,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (TryComp<ShipyardVoucherComponent>(targetId, out var voucher))
         {
             voucherAllowed = voucher.Vessels;
-            if (voucher.ConsoleType == key)
+            if (key != null && voucher.ConsoleTypes.Contains(key.Value)) // Triad - multiple voucher console types
             {
                 accesses.Tags = voucher.Access;
                 accesses.Groups = voucher.AccessGroups;

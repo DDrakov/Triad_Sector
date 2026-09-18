@@ -1,7 +1,7 @@
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.RCD;
@@ -20,18 +20,20 @@ namespace Content.Shared.RPD.Systems;
 /// pipe-layer alternative chosen by cursor quadrant. The operator's pipe-color stain lives server-side in
 /// <c>RPDPipeColorSystem</c>, which owns the canonical <c>AtmosPipeColorComponent</c>.
 /// </summary>
-public sealed class RPDSystem : EntitySystem
+public sealed partial class RPDSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly SharedAtmosPipeLayersSystem _pipeLayers = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private SharedAtmosPipeLayersSystem _pipeLayers = default!;
+    [Dependency] private SharedMapSystem _mapSystem = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<RPDComponent, RCDDeconstructAttemptEvent>(OnDeconstructAttempt);
+        SubscribeLocalEvent<RPDComponent, RCDPlacementCommitEvent>(OnPlacementCommit);
         SubscribeLocalEvent<RPDComponent, RCDObjectSpawnAttemptEvent>(OnObjectSpawnAttempt);
         SubscribeLocalEvent<RPDComponent, RCDDeconstructTargetResolveEvent>(OnDeconstructTargetResolve);
         SubscribeLocalEvent<RPDComponent, RPDColorChangeMessage>(OnColorChange);
@@ -69,8 +71,19 @@ public sealed class RPDSystem : EntitySystem
     }
 
     /// <summary>
+    /// Stamps the cursor-aimed layer onto the placement at the commit click. From here on the RCD pipeline carries
+    /// it in the do-after; <see cref="RPDComponent.CurrentLayer"/> keeps streaming for the next click and for
+    /// deconstruct targeting, but this placement no longer reads it.
+    /// </summary>
+    private void OnPlacementCommit(Entity<RPDComponent> ent, ref RCDPlacementCommitEvent args)
+    {
+        args.Layer = ent.Comp.CurrentLayer;
+    }
+
+    /// <summary>
     /// Rewrites the spawn prototype to the AtmosPipeLayer alternative when the recipe is layer-capable and the
-    /// target entity defines pipe-layer variants. Falls through to the original prototype otherwise.
+    /// target entity defines pipe-layer variants. Falls through to the original prototype otherwise. Reads the
+    /// layer captured at commit (<see cref="RCDObjectSpawnAttemptEvent.Layer"/>), never the live cursor state.
     /// </summary>
     private void OnObjectSpawnAttempt(Entity<RPDComponent> ent, ref RCDObjectSpawnAttemptEvent args)
     {
@@ -80,10 +93,10 @@ public sealed class RPDSystem : EntitySystem
         if (!_protoManager.TryIndex<EntityPrototype>(args.SpawnProto, out var entityProto))
             return;
 
-        if (!entityProto.TryGetComponent<AtmosPipeLayersComponent>(out var atmosPipeLayers, EntityManager.ComponentFactory))
+        if (!entityProto.TryComp<AtmosPipeLayersComponent>(out var atmosPipeLayers, EntityManager.ComponentFactory))
             return;
 
-        if (_pipeLayers.TryGetAlternativePrototype(atmosPipeLayers, ent.Comp.CurrentLayer, out var layerProto))
+        if (_pipeLayers.TryGetAlternativePrototype(atmosPipeLayers, args.Layer, out var layerProto))
             args.SpawnProto = layerProto.Id;
     }
 
@@ -102,7 +115,9 @@ public sealed class RPDSystem : EntitySystem
 
     /// <summary>
     /// Client streams its cursor-aimed pipe layer; stored per-RPD for spawn and deconstruct targeting. Validated
-    /// to the sender's active-hand RPD so a client can't set the layer on a tool it isn't holding.
+    /// to the sender holding the RPD in any hand so a client can't set the layer on a tool it isn't holding. Any
+    /// hand, not the active one: the select can arrive in the same server tick as the hand swap that made the tool
+    /// active, and the active-hand test then dropped it silently.
     /// </summary>
     private void OnLayerSelect(RPDLayerSelectEvent ev, EntitySessionEventArgs session)
     {
@@ -111,7 +126,7 @@ public sealed class RPDSystem : EntitySystem
         if (session.SenderSession.AttachedEntity is not { } player)
             return;
 
-        if (!TryComp<HandsComponent>(player, out var hands) || uid != hands.ActiveHand?.HeldEntity)
+        if (!_hands.IsHolding(player, uid))
             return;
 
         if (!TryComp<RPDComponent>(uid, out var rpd))
@@ -123,14 +138,15 @@ public sealed class RPDSystem : EntitySystem
     /// <summary>
     /// Sets the RPD's selected pipe layer. Clamps to a defined enum value so a malicious client can't store
     /// garbage; an unsupported-but-valid layer (target has fewer layers) simply no-ops the alternative-prototype
-    /// lookup at spawn. Server-only ephemeral state, not networked.
+    /// lookup at spawn. Dirtied so the client can reconcile its stream against it.
     /// </summary>
     public void SetLayer(Entity<RPDComponent> ent, AtmosPipeLayer layer)
     {
-        if (!Enum.IsDefined(layer))
+        if (!Enum.IsDefined(layer) || ent.Comp.CurrentLayer == layer)
             return;
 
         ent.Comp.CurrentLayer = layer;
+        Dirty(ent);
     }
 
     /// <summary>

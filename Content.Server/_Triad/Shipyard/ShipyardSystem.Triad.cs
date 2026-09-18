@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Server._HL.Shipyard;
 using Content.Server._Triad.Shipyard;
 using Content.Server.Shuttles.Components;
 using Content.Shared._Crescent.ShipShields;
@@ -14,8 +15,8 @@ namespace Content.Server._NF.Shipyard.Systems;
 
 public sealed partial class ShipyardSystem : SharedShipyardSystem
 {
-    [Dependency] private readonly ShipyardGridSaveSystem _shipyardGridSave = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private ShipyardGridSaveSystem _shipyardGridSave = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
     /// <summary>
     /// Writes YAML data to a temporary file and attempts the same initial strict load path as purchase-from-file.
@@ -26,6 +27,14 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         ResPath tempPath = default;
         try
         {
+            // Triad: strip stale nodes before the loader sees them: dangling entity references from
+            // pre-287 saves, and legacy xenoarch entities/components from pre-rework saves. Ship files
+            // live on the player's machine, so there is no backlog we can migrate; a file written by
+            // the current build has nothing to remove and comes back byte-identical.
+            yamlData = ShipSaveYamlSanitizer.ScrubShipLoadYaml(yamlData, out var scrubbed);
+            if (scrubbed > 0)
+                _sawmill.Info($"Scrubbed {scrubbed} stale node(s) (dangling references / legacy entities) from an older ship file on load");
+
             // Create a temp path under UserData/ShipyardTemp
             var fileName = $"shipyard_load_{DateTime.UtcNow:yyyyMMdd_HHmmss_fff}_{Guid.NewGuid():N}.yml";
             var dir = new ResPath("/") / "UserData" / "ShipyardTemp";
@@ -154,7 +163,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     /// </summary>
     private void TryResetUseDelays(EntityUid shuttleGrid)
     {
-        var useDelayQuery = EntityManager.EntityQueryEnumerator<UseDelayComponent, TransformComponent>();
+        var useDelayQuery = EntityQueryEnumerator<UseDelayComponent, TransformComponent>();
 
         while (useDelayQuery.MoveNext(out var uid, out var comp, out var xform))
         {

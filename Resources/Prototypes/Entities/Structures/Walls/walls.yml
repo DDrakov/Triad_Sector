@@ -3,7 +3,7 @@
   parent: BaseStructure
   id: BaseWall
   name: basewall
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and space out. # Triad
   placement:
     mode: SnapgridCenter
     snap:
@@ -312,7 +312,7 @@
   parent: BaseWall
   id: WallPlastitaniumIndestructible
   name: plastitanium wall
-  description: Skub knows this wall is too hard to destroy. # Frontier
+  description: Far too tough to destroy. # Triad
   suffix: indestructible
   components:
   - type: Tag
@@ -350,7 +350,7 @@
   parent: [ WallPlastitaniumIndestructible, BaseWallTierThree ]
   id: WallPlastitanium
   name: plastitanium wall
-  description: Keeps the air in and the chimera out. # Frontier: restore base value
+  description: Keeps the air in and space out. # Triad
   suffix: ""
   components:
   - type: Construction # Mono
@@ -365,7 +365,7 @@
   parent: [ WallPlastitaniumDiagonalIndestructible, BaseWallTierTwo ] # Mono
   id: WallPlastitaniumDiagonal
   name: plastitanium wall
-  description: Keeps the air in and the chimera out. #Mono
+  description: Keeps the air in and space out. # Triad
   suffix: diagonal
   placement:
     mode: SnapgridCenter
@@ -383,8 +383,8 @@
 - type: entity
   id: WallPlastitaniumDiagonalIndestructible
   name: plastitanium wall
+  description: Far too tough to destroy. # Triad
   suffix: diagonal, indestructible
-  description: Skub knows this wall is too hard to destroy. # Frontier
   placement:
     mode: SnapgridCenter
     snap:
@@ -628,7 +628,6 @@
   name: shuttle wall
   parent: BaseWallTierOne
   suffix: Diagonal
-  description: Keeps the air in and the greytide out.
   placement:
     mode: SnapgridCenter
     snap:
@@ -973,7 +972,7 @@
   parent: BaseWallTierOne
   id: WallWeb
   name: web wall
-  description: Keeps the spiders in and the chimera out.
+  description: Keeps the spiders in and space out. # Triad
   components:
   - type: Clickable
   - type: MeleeSound

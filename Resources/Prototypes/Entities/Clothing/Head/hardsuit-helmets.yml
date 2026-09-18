@@ -387,9 +387,16 @@
   - type: PressureProtection
     highPressureMultiplier: 0.60
     lowPressureMultiplier: 1000
-  - type: NightVision # Mono - remove light, replace with NVG
-    flashDurationMultiplier: 2
-    isEquipment: true
+    # Mono - remove light, replace with NVG
+  - type: NightVision # Gen 4 quadtube-wide
+    relayOverlay: true
+    goggleEffect: true
+    viewCircleRadius: 450
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#41D7D9"
+    lightingColor: "#FFFFFF32"
 
 #Head of Security's hardsuit
 - type: entity
@@ -459,6 +466,15 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: NightVision # Gen 2 monotubee # Triad: Improve blood-red night vision.
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
 
 #Blood-red Medic Hardsuit
 - type: entity
@@ -484,6 +500,15 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: NightVision # Gen 2 monotubee # Triad: Improve blood-red night vision.
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
 
 #Syndicate Elite Hardsuit
 - type: entity
@@ -514,6 +539,15 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: NightVision # Gen 2 monotubee # Triad: Improve blood-red night vision.
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -539,6 +573,15 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: NightVision # Gen 2 monotubee # Triad: Improve blood-red night vision.
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
@@ -561,6 +604,15 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: NightVision # Gen 2 monotubee # Triad: Improve blood-red night vision.
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
 
 #Wizard Hardsuit
 - type: entity

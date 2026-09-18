@@ -184,7 +184,7 @@ uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
 
 uplink-freedom-implanter-name = Freedom Implanter
-uplink-freedom-implanter-desc = Get away from those nasty TSFMC officers with this implant!
+uplink-freedom-implanter-desc = Get away from those nasty NT dogs with this implant!
 
 uplink-scram-implanter-name = Scram Implanter
 uplink-scram-implanter-desc = An implant which teleports you within a large radius. Attempts to teleport you onto an unobstructed tile. May sometimes fail to do so. Life insurance not included.
@@ -338,6 +338,9 @@ uplink-hardsuit-carp-desc = Looks like an ordinary carp suit, except fully space
 
 uplink-hardsuit-syndie-name = Syndicate Hardsuit
 uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hardsuit, capable of space walks and taking bullets.
+
+uplink-hardsuit-syndie-black-name = Midnight Operative Special Tacticool Suit
+uplink-hardsuit-syndie-black-desc = Following a crippling strike on Gorlex paint factories, their supply of signature blood-red ran dry. This was a last-ditch rebrand attempt.
 
 uplink-syndie-raid-name = Syndicate Raid Suit
 uplink-syndie-raid-desc = A very durable and reasonably flexible suit of blood-red armor, reinforced against all common forms of damage but not capable of space walks. Comes with a sick helmet.

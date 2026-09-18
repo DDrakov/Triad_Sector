@@ -2,7 +2,7 @@
   parent: ClothingHeadHardsuitBase
   id: ClothingHelmetHardsuitUIEnforcer
   name: U.I. ENFORCER MKI helmet
-  description: Flash-proof lining, in built night vision system, and looks good as hell. Other than information display port being snapped, what's more to ask for?
+  description: Built-in night vision system and looks good as hell. Other than information display port being snapped, what's more to ask for?
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -12,10 +12,15 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: FlashImmunity
-  - type: NightVision
-    flashDurationMultiplier: 0.85
-    isEquipment: true
+  - type: NightVision # Gen 2
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
   - type: Armor
     modifiers:
       coefficients:
@@ -37,7 +42,7 @@
   parent: [ClothingHeadHardsuitBase, ShowMedicalIcons]
   id: ClothingHelmetHardsuitUIEnforcerMKII
   name: U.I. ENFORCER MKII Combat helmet
-  description: This top of the line helmet comes with flashproof lining, a mass scanner and an inbuilt medical diagnostic system.
+  description: This top of the line helmet comes with a mass scanner and an inbuilt medical diagnostic system.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -57,10 +62,15 @@
     interfaces:
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
-  - type: FlashImmunity
-  - type: NightVision
-    flashDurationMultiplier: 0.85
-    isEquipment: true
+  - type: NightVision # Gen 2 quadtube
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
   - type: Armor
     modifiers:
       coefficients:
@@ -94,9 +104,15 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: NightVision
-    flashDurationMultiplier: 0.85
-    isEquipment: true
+  - type: NightVision # Gen 2 monotube
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 1
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
   - type: Armor
     modifiers:
       coefficients:
@@ -128,9 +144,15 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: NightVision
-    flashDurationMultiplier: 0.85
-    isEquipment: true
+  - type: NightVision # Gen 2
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 2
+    viewCircleSpacing: 280
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
   - type: Armor
     modifiers:
       coefficients:
@@ -173,10 +195,15 @@
     interfaces:
       enum.RadarConsoleUiKey.Key:
         type: RadarConsoleBoundUserInterface
-  - type: FlashImmunity
-  - type: NightVision
-    flashDurationMultiplier: 0.85
-    isEquipment: true
+  - type: NightVision # Gen 4
+    relayOverlay: true
+    goggleEffect: true
+    action: ActionToggleNightVision
+    viewCircleRadius: 400
+    viewCircleCount: 4
+    viewCircleSpacing: 260
+    phosphorColor: "#41D7D9"
+    lightingColor: "#FFFFFF32"
   - type: Armor
     modifiers:
       coefficients:
@@ -185,12 +212,3 @@
         Piercing: 0.9
         Heat: 0.9
         Radiation: 0.9
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - Special
-    - FacialHair
-    - Snout
-    - Head
-    - HeadTop
-    - HeadSide
