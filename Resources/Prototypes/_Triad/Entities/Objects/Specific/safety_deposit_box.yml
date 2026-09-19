@@ -30,47 +30,48 @@
 - type: entity
   id: SafetyDepositBox
   name: safety deposit box
-  description: A medium secure box for storing valuables. Can hold 3x4 items and is capable of storing normal-sized objects.
+  description: A deposit box for storing small valuables. Can hold 3x4 items and is capable of storing small-sized objects.
   parent: SafetyDepositBoxBase
   components:
   - type: Sprite
-    sprite: _WF/Objects/Economy/depositboxsmall.rsi
+    sprite: _Triad/Storage/Cases/depositbox.rsi
     state: icon
   - type: Item
-    size: Normal
+    size: Small
   - type: SafetyDepositBox
     cost: 115000
   - type: Storage
-    maxItemSize: Normal
+    maxItemSize: Small
     grid:
     - 0,0,2,3
 
 - type: entity
   id: SafetyDepositBoxMedium
   name: medium safety deposit box
-  description: A reinforced secure box for storing larger valuables. Can hold 4x4 items and is capable of storing large objects.
+  description: A medium deposit box for storing valuables. Can hold 4x4 items and is capable of storing normal-sized objects.
   parent: SafetyDepositBoxBase
   components:
   - type: Sprite
-    sprite: _WF/Objects/Economy/depositboxmedium.rsi
+    sprite: _Triad/Storage/Cases/medium_depositbox.rsi
     state: icon
   - type: Item
-    size: Large
+    size: Normal
   - type: SafetyDepositBox
     cost: 155000
   - type: Storage
-    maxItemSize: Large
+    maxItemSize: Normal
     grid:
     - 0,0,3,3
 
 - type: entity
   id: SafetyDepositBoxLarge
   name: large safety deposit box
-  description: A heavy-duty secure box designed to accommodate oversized valuables. Can hold 4x6 items and is capable of storing huge objects.
+  description: A large deposit box designed to accommodate oversized valuables. Can hold 4x6 items and is capable of storing large objects.
   parent: SafetyDepositBoxBase
   components:
+  - type: MultiHandedItem
   - type: Sprite
-    sprite: _WF/Objects/Economy/depositboxlarge.rsi
+    sprite: _Triad/Storage/Cases/large_depositbox.rsi
     state: icon
   - type: Item
     size: Large
@@ -84,11 +85,12 @@
 - type: entity
   id: SafetyDepositBoxHeavy
   name: heavy safety deposit box
-  description: A massive, heavily reinforced secure box built to store exceptionally large valuables. Can hold 6x6 items and is capable of storing ginormous objects.
+  description: A heavy deposit box built to store exceptionally large valuables. Can hold 6x6 items and is capable of storing ginormous objects.
   parent: SafetyDepositBoxBase
   components:
+  - type: MultiHandedItem
   - type: Sprite
-    sprite: _WF/Objects/Economy/depositboxlarge.rsi
+    sprite: _Triad/Storage/Cases/heavy_depositbox.rsi
     state: icon
   - type: Item
     size: Ginormous
@@ -108,7 +110,7 @@
   - type: Sprite
     netsync: false
     noRot: true
-    sprite: _WF/Structures/Machines/atm/depositatm.rsi
+    sprite: _WF/Structures/Machines/atm/depositatm.rsi # Need a new sprite for it
     layers:
     - map: ["computerLayerBody"]
       state: icon
