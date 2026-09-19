@@ -50,8 +50,8 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
             int acc = 0;
             foreach (var ent in lookup.GetEntitiesInTile(tile, LookupFlags.Static))
             {
-                var lookupSystem = entityManager.System<EntityLookupSystem>();
-                foreach (var ent in lookupSystem.GetEntitiesInTile(tile))
+                var whitelistSystem = entityManager.System<EntityWhitelistSystem>();
+                if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
                     acc += 1;
 
                 if (acc >= MaxOnTile)
