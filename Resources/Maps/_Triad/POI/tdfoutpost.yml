@@ -111383,7 +111383,7 @@ entities:
       parent: 7100
     - type: Physics
       canCollide: False
-- proto: WeaponRifleMR8T
+- proto: WeaponRifleBishop
   entities:
   - uid: 9368
     components:

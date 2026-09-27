@@ -27,8 +27,8 @@
 
 - type: latheRecipe
   parent: BaseWeaponRecipeLong
-  id: WeaponRifleMR8TRecipeTdf
-  result: WeaponRifleMR8T
+  id: WeaponRifleBishopRecipeTdf
+  result: WeaponRifleBishop
   categories:
   - DMRs
   - Ballistic

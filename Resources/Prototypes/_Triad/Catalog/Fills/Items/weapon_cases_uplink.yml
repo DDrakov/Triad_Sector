@@ -84,7 +84,7 @@
   components:
   - type: StorageFill
     contents:
-    - id: WeaponRifleMR8T
+    - id: WeaponRifleBishop
     - id: Magazine8x65mmSKR
       amount: 6 # No ammo box exists for 8x65 that isn't 100 rounds, so just mags.
 

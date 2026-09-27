@@ -56,7 +56,7 @@
   id: TdfDynamicGun
   recipes:
   - WeaponRifleLecterRecipeTdf
-  - WeaponRifleMR8TRecipeTdf
+  - WeaponRifleBishopRecipeTdf
   - WeaponRifleCrosshairTDF
   - WeaponLMGRiotTdf
   - WeaponShotgunDoubleBarreledTdfBastion

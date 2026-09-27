@@ -40,7 +40,7 @@
   tier: 2
   cost: 35000
   recipeUnlocks:
-  - WeaponRifleMR8TRecipeTdf
+  - WeaponRifleBishopRecipeTdf
   - WeaponShotgunDoubleBarreledTdfBastion
   - WeaponLMGRiotTdf
   - AmmoBox68x52mmCaselessBig
