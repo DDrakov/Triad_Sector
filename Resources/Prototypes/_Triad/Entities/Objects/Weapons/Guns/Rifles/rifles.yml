@@ -102,6 +102,46 @@
             - Cartridge556x45mmFMJ
 
 - type: entity
+  name: TDF M-5 Crosshair (7.62x51mm)
+  parent: [WeaponRifleVulcan, BaseFactionGearTDFT2, BaseShipContrabandPermittableTdf]
+  id: WeaponRifleCrosshair
+  description: A weapon developed from the blueprint of the "Vulcan" rifle to meet the TDF enforcer needs for close- to medium-range combat. Chambered in 7.62×51mm, it delivers considerable stopping power while retaining the versatility required for engagements across varying distances.
+  components:
+  - type: Clothing
+    sprite: _Triad/Objects/Weapons/Guns/Rifles/crosshair_inhands_32.rsi
+  - type: Item
+    sprite: _Triad/Objects/Weapons/Guns/Rifles/crosshair_inhands_32.rsi
+  - type: Sprite
+    sprite: _Triad/Objects/Weapons/Guns/Rifles/crosshair.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: GunWieldBonus
+    minAngle: -5
+    maxAngle: -15
+  - type: Gun
+    minAngle: 10
+    maxAngle: 30
+    angleIncrease: 5
+    angleDecay: 5
+    fireRate: 4
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: SpeedModifiedOnWield # Mono
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: PirateBountyItem # Mono
+    id: StandardFactionLongarm
+  - type: GunRequiresWield
+
+- type: entity
   name: TDF MR-8T DMR (8x65mm SKR)
   parent: [BaseFactionGearTDFT2, WeaponRifleMR8C, BaseShipContrabandPermittableTdf]
   id: WeaponRifleMR8T
