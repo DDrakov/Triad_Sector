@@ -20,7 +20,7 @@
   components:
   - type: StorageFill
     contents:
-    - id: WeaponRifleLecterTdf
+    - id: WeaponRifleVigil
     - id: Magazine68x52mmCaseless
       amount: 4
     - id: AmmoBox68x52mmCaseless

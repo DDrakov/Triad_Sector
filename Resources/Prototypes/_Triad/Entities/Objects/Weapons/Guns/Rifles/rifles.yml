@@ -58,25 +58,25 @@
  #  manufacturer: weapon-details-manufacturer-SESWC-consortium
 
 - type: entity
-  name: TDF M-7 Lecter (6.8x52mm Caseless)
+  name: TDF M-7 Vigil (6.8x52mm Caseless)
   parent: WeaponRifleLecter
-  id: WeaponRifleLecterTdf
-  description: Reverse-engineered variant of the Solarian Republic's Lecter, now used by the TDF as their standard issue rifle. Comes with a vertical grip to improve handling. Accurate, easy to use, and firing the 6.8x52mm STANAG round.
+  id: WeaponRifleVigil
+  description: The modern Triad Armaments battle rifle, made from modernizing older CDF schematics. Used as the standard rifle in the Triad Defense Force. Accurate, easy to use, and firing the 6.8x52mm STANAG round.
   components:
   - type: Item
     size: Huge
-    sprite: _Triad/Objects/Weapons/Guns/Rifles/tdf_lecter_inhands_32x.rsi
+    sprite: _Triad/Objects/Weapons/Guns/Rifles/vigil_inhands_32x.rsi
   - type: Sprite
-    sprite: _Triad/Objects/Weapons/Guns/Rifles/tdf_lecter.rsi
+    sprite: _Triad/Objects/Weapons/Guns/Rifles/vigil.rsi
   - type: Clothing
-    sprite: _Triad/Objects/Weapons/Guns/Rifles/tdf_lecter_inhands_32x.rsi
+    sprite: _Triad/Objects/Weapons/Guns/Rifles/vigil_inhands_32x.rsi
   - type: Gun
     cameraRecoilScalar: 0.5 # grip
     angleIncrease: 0.4
 
 - type: entity
-  parent: WeaponRifleLecterTdf
-  id: WeaponRifleLecterTdfRubber
+  parent: WeaponRifleVigil
+  id: WeaponRifleVigilRubber
   suffix: Non-Lethal
   components:
   - type: ItemSlots
@@ -105,7 +105,7 @@
   name: TDF M-5 Crosshair (7.62x51mm)
   parent: [WeaponRifleVulcan, BaseFactionGearTDFT2, BaseShipContrabandPermittableTdf]
   id: WeaponRifleCrosshair
-  description: A weapon developed from the blueprint of the "Vulcan" rifle to meet the TDF enforcer needs for close- to medium-range combat. Chambered in 7.62×51mm, it delivers considerable stopping power while retaining the versatility required for engagements across varying distances.
+  description: A modern TDF enforcer rifle based on the Vulcan's blueprint. Chambered in 7.62x51mm, it is designed for close to medium-range combat, delivering substantial stopping power while retaining versatility across varying engagements.
   components:
   - type: Clothing
     sprite: _Triad/Objects/Weapons/Guns/Rifles/crosshair_inhands_32.rsi
@@ -145,7 +145,7 @@
   name: TDF MR-8T Bishop (8x65mm SKR)
   parent: [BaseFactionGearTDFT2, WeaponRifleMR8C, BaseShipContrabandPermittableTdf]
   id: WeaponRifleBishop
-  description: An expensive TDF-modified version of the solarian republic's MR-8 DMR. It comes with a wooden grip, stock, a sleeker scope, and an improved barrel. Chambered in 8x65mm SKR. A label on the side reads "TRIAD DEFENSE FORCE".
+  description: A modern TDF marksman rifle based on older CDF schematics. Chambered in 8x65mm SKR, it is designed for medium to long-range combat, featuring improved ergonomics and a refined scope for greater accuracy and handling.
   components:
   - type: Sprite
     sprite: _Triad/Objects/Weapons/Guns/Rifles/bishop.rsi
@@ -153,8 +153,21 @@
     sprite: _Triad/Objects/Weapons/Guns/Rifles/bishop_inhands_32x.rsi
   - type: Clothing
     sprite: _Triad/Objects/Weapons/Guns/Rifles/bishop_inhands_32x.rsi
+  - type: GunWieldBonus
+    minAngle: -18
+    maxAngle: -39
   - type: Gun
-    projectileSpeed: 65 # Improved barrel
+    projectileSpeed: 50 # Improved barrel
+    availableModes:
+    - Burst
+    - SemiAuto
+    burstCooldown: 0.5
+    burstFireRate: 8
+    shotsPerBurst: 2
+    minAngle: 21
+    maxAngle: 48
+    angleIncrease: 3
+    angleDecay: 1
   - type: SpeedModifiedOnWield
     walkModifier: 0.65
     sprintModifier: 0.5

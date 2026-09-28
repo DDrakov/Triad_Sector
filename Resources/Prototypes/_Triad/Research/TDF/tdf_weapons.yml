@@ -1,7 +1,7 @@
 - type: technology
   id: TdfBasicGuns
   name: research-technology-tdf-guns
-  entityIcon: WeaponRifleLecterTdf
+  entityIcon: WeaponRifleVigil
   discipline: TdfWeaponry
   tier: 1
   cost: 25000
