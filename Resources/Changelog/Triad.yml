@@ -5099,3 +5099,64 @@ Entries:
   id: 2627
   time: '2026-09-26T23:57:21.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/670
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: Conveyor belts and lights can now be built on lattices.
+  id: 2628
+  time: '2026-09-27T16:45:50.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/673
+- author: Wuffindy
+  changes:
+    - type: Add
+      message: >-
+        Added card holders, a more sleek version of wallet, though they cannot
+        hold coins
+    - type: Add
+      message: >-
+        Added business cards & bundle (gives 6 card) - currently only available
+        in loadouts, comes in a pack
+  id: 2629
+  time: '2026-09-27T16:46:42.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/674
+- author: oxaxe9846-arch
+  changes:
+    - type: Add
+      message: Added The Winged Choir player faction. Always.
+  id: 2630
+  time: '2026-09-27T22:20:06.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/668
+- author: TheRealMasterChief117
+  changes:
+    - type: Add
+      message: >-
+        Added alternate job titles for Spacer and Service worker. Spacer has 38
+        different jobs titles relating to any sort of role or job you might see
+        yourself working as out in Triad, and Service Worker has 8.
+    - type: Tweak
+      message: >-
+        Renamed TDF junior enforcer to TDF cadet. The rank is the same, only the
+        role's name was changed.
+    - type: Tweak
+      message: Changed DoC's rank prefix from 'Dr.' to 'DoC'
+    - type: Tweak
+      message: >-
+        Sector Technicians and the DOI now have IC ranks that appear on your
+        name!
+  id: 2631
+  time: '2026-09-27T23:25:05.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/675
+- author: Wuffindy
+  changes:
+    - type: Fix
+      message: Card Holder should now spawn directly in your wallet instead
+  id: 2632
+  time: '2026-09-28T12:02:44.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/676
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed alternate titles not saving across rounds! Whoops
+  id: 2633
+  time: '2026-09-28T21:51:18.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/678

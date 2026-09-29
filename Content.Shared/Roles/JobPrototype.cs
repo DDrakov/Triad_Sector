@@ -36,6 +36,9 @@ namespace Content.Shared.Roles
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
 
+        [DataField]
+        public HashSet<ProtoId<JobAlternateTitlePrototype>> AlternateTitles { get; private set; } = new HashSet<ProtoId<JobAlternateTitlePrototype>>();
+
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
