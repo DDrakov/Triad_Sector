@@ -58,7 +58,7 @@
  #  manufacturer: weapon-details-manufacturer-SESWC-consortium
 
 - type: entity
-  name: TDF M-7 Vigil (6.8x52mm Caseless)
+  name: TDF MT-7 Vigil (6.8x52mm Caseless)
   parent: WeaponRifleLecter
   id: WeaponRifleVigil
   description: The modern Triad Armaments battle rifle, made from modernizing older CDF schematics. Used as the standard rifle in the Triad Defense Force. Accurate, easy to use, and firing the 6.8x52mm STANAG round.
