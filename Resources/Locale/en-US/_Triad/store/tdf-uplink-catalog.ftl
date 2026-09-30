@@ -179,5 +179,5 @@ uplink-security-gun-riot-desc = Case containing a high-capacity medium machine g
 uplink-security-gun-bombadier-name = HZD Bombadier Bundle
 uplink-security-gun-bombadier-desc = Case containing a grenade launcher/shotgun hybrid and reserve ammunition.
 
-uplink-security-gun-squire-name = HZD Squire  Bundle
+uplink-security-gun-squire-name = HZD Squire Bundle
 uplink-security-gun-squire-desc = Case containing a small-caliber submachine gun and reserve ammunition.
