@@ -102,7 +102,7 @@
             - Cartridge556x45mmFMJ
 
 - type: entity
-  name: TDF M-5 Crosshair (7.62x51mm)
+  name: TDF MT-5 Crosshair (7.62x51mm)
   parent: [WeaponRifleVulcan, BaseFactionGearTDFT2, BaseShipContrabandPermittableTdf]
   id: WeaponRifleCrosshair
   description: A modern TDF enforcer rifle based on the Vulcan's blueprint. Chambered in 7.62x51mm, it is designed for close to medium-range combat, delivering substantial stopping power while retaining versatility across varying engagements.
