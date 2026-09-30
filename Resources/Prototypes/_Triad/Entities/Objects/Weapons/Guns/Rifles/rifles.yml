@@ -142,7 +142,7 @@
   - type: GunRequiresWield
 
 - type: entity
-  name: TDF MR-8T Bishop (8x65mm SKR)
+  name: TDF MT-8 Bishop (8x65mm SKR)
   parent: [BaseFactionGearTDFT2, WeaponRifleMR8C, BaseShipContrabandPermittableTdf]
   id: WeaponRifleBishop
   description: A modern TDF marksman rifle based on older CDF schematics. Chambered in 8x65mm SKR, it is designed for medium to long-range combat, featuring improved ergonomics and a refined scope for greater accuracy and handling.
