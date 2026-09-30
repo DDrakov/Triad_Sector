@@ -157,7 +157,7 @@
     minAngle: -18
     maxAngle: -39
   - type: Gun
-    projectileSpeed: 50 # Improved barrel
+    projectileSpeed: 60 # Improved barrel
     availableModes:
     - Burst
     - SemiAuto
