@@ -37,6 +37,6 @@ Should the situation dictate, the [color=#FFD580]TDF[/color] have access to lase
     <GuideEntityEmbed Entity="WeaponLaserCarbine"/>
     <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>
     <GuideEntityEmbed Entity="WeaponPistolMk58"/>
-    <GuideEntityEmbed Entity="WeaponRifleLecterTdf"/>
+    <GuideEntityEmbed Entity="WeaponRifleVigil"/>
   </Box>
 </Document>
