@@ -158,6 +158,14 @@ public abstract partial class SharedFlashSystem : EntitySystem
         if (attempt.Cancelled)
             return;
 
+        // Increase the flash duration if the flashed entity has a multiplier (some species are more vulnerable to flashes)
+        if (TryComp<FlashModifierComponent>(target, out var flashMod)
+            && float.IsFinite(flashMod.Modifier)
+            && flashMod.Modifier > 0)
+        {
+            flashDuration *= flashMod.Modifier;
+        }
+
         // don't paralyze, slowdown or convert to rev if the target is immune to flashes
         if (!_statusEffectsSystem.TryAddStatusEffect<FlashedComponent>(target, FlashedKey, flashDuration, true))
             return;
