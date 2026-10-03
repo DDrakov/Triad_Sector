@@ -1,4 +1,5 @@
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Administration.Logs;
 //using Content.Server.Emp; // Frontier: Upstream - #28984
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat; // Einstein Engines - Languages
@@ -6,10 +7,7 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
-using Content.Shared.Silicons.StationAi;
-using Content.Shared.StationAi;
 using Content.Shared.SurveillanceCamera;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -57,6 +55,8 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<SurveillanceCameraComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<SurveillanceCameraComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<SurveillanceCameraComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
@@ -84,7 +84,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
             {
                 { DeviceNetworkConstants.Command, string.Empty },
                 { CameraAddressData, deviceNet.Address },
-                { CameraNameData, component.UseEntityNameAsCameraId ? MetaData(uid).EntityName : component.CameraId },
+                { CameraNameData, component.CameraId },
                 { CameraSubnetData, null }
             };
 
@@ -128,26 +128,6 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
                 payload);
         }
     }
-
-    private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<AlternativeVerb> verbs)
-    {
-        if (!_actionBlocker.CanInteract(verbs.User, uid))
-        {
-            return;
-        }
-
-        if (component.NameSet && component.NetworkSet)
-        {
-            return;
-        }
-
-        AlternativeVerb verb = new();
-        verb.Text = Loc.GetString("surveillance-camera-setup");
-        verb.Act = () => OpenSetupInterface(uid, verbs.User, component);
-        verbs.Verbs.Add(verb);
-    }
-
-
 
     private void OnPowerChanged(EntityUid camera, SurveillanceCameraComponent component, ref PowerChangedEvent args)
     {
@@ -254,12 +234,6 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         RemoveActiveViewers(camera, new(component.ActivePvsViewers), null, component);
         component.Active = false;
 
-        // Disable AI vision when camera is deactivated
-        if (TryComp<StationAiVisionComponent>(camera, out var visionComp))
-        {
-            _stationAi.SetVisionEnabled((camera, visionComp), false);
-        }
-
         // Send a targetted event to all monitors.
         foreach (var monitor in component.ActiveMonitors)
         {
@@ -293,7 +267,7 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         return ev.Viewed;
     }
 
-    public override void SetActive(EntityUid camera, bool setting, SurveillanceCameraComponent? component = null)
+    public void SetActive(EntityUid camera, bool setting, SurveillanceCameraComponent? component = null)
     {
         if (!Resolve(camera, ref component))
         {
@@ -307,12 +281,6 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
             if (attemptEv.Cancelled)
                 return;
             component.Active = setting;
-
-            // Enable AI vision when camera is activated
-            if (TryComp<StationAiVisionComponent>(camera, out var visionComp))
-            {
-                _stationAi.SetVisionEnabled((camera, visionComp), true);
-            }
         }
         else
         {
