@@ -22,16 +22,6 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
     [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
     [Dependency] private UserInterfaceSystem _userInterface = default!;
-    [Dependency] private SharedAppearanceSystem _appearance = default!;
-    [Dependency] private IAdminLogManager _adminLogger = default!;
-    [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
-=======
-public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraSystem
-{
-    [Dependency] private IPrototypeManager _prototypeManager = default!;
-    [Dependency] private ViewSubscriberSystem _viewSubscriberSystem = default!;
-    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private UserInterfaceSystem _userInterface = default!;
     [Dependency] private IAdminLogManager _adminLogger = default!;
     [Dependency] private SurveillanceCameraMapSystem _cameraMapSystem = default!;
     [Dependency] private SharedAppearanceSystem _appearance = default!;
