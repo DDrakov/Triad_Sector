@@ -3,6 +3,7 @@ using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Player;
+using Content.Shared.SurveillanceCamera.Components;
 using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.SurveillanceCamera;
