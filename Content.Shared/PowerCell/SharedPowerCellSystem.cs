@@ -1,5 +1,4 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Emp;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
@@ -23,8 +22,6 @@ public abstract partial class SharedPowerCellSystem : EntitySystem
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
-
-        SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
     }
 
     private void OnMapInit(Entity<PowerCellDrawComponent> ent, ref MapInitEvent args)
@@ -74,12 +71,13 @@ public abstract partial class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    private void OnCellEmpAttempt(EntityUid uid, PowerCellComponent component, EmpAttemptEvent args)
+    /// <summary>
+    /// Makes the draw logic update in the next tick.
+    /// </summary>
+    public void QueueUpdate(Entity<PowerCellDrawComponent?> ent)
     {
-        var parent = Transform(uid).ParentUid;
-        // relay the attempt event to the slot so it can cancel it
-        if (HasComp<PowerCellSlotComponent>(parent))
-            RaiseLocalEvent(parent, ref args);
+        if (Resolve(ent, ref ent.Comp))
+            ent.Comp.NextUpdateTime = Timing.CurTime;
     }
 
     public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)

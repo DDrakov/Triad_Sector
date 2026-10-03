@@ -1,3 +1,4 @@
+using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
@@ -6,7 +7,6 @@ using Content.Shared.APC;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Emp; // Frontier: Upstream - #28984
 using Content.Shared.Popups;
-using Content.Shared.Power;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

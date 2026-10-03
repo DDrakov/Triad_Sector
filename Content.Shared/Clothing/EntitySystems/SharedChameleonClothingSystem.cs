@@ -1,16 +1,12 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
-using Content.Shared.Emp;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -113,24 +109,6 @@ public abstract partial class SharedChameleonClothingSystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => UI.TryToggleUi(ent.Owner, ChameleonUiKey.Key, user)
         });
-    }
-
-    private void OnEmpPulse(EntityUid uid, ChameleonClothingComponent component, ref EmpPulseEvent args)
-    {
-        if (!component.AffectedByEmp)
-            return;
-
-        if (component.EmpContinuous)
-            component.NextEmpChange = Timing.CurTime + TimeSpan.FromSeconds(1f / component.EmpChangeIntensity);
-
-        if (_net.IsServer) // needs RandomPredicted
-        {
-            var pick = GetRandomValidPrototype(component.Slot, component.RequireTag);
-            SetSelectedPrototype(uid, pick, component: component);
-        }
-
-        args.Affected = true;
-        args.Disabled = true;
     }
 
     protected virtual void UpdateSprite(EntityUid uid, EntityPrototype proto) { }

@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Server.Advertise;
 using Content.Server.Advertise.Components;
 using Content.Server.Cargo.Systems;
+//using Content.Server.Emp; // Frontier: Upstream - #28984
 using Content.Server.Cargo.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -11,8 +12,6 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared._NF.Bank.Components; // Frontier
-using Content.Server.Vocalization.Systems;
-using Content.Shared.Cargo;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -77,7 +76,6 @@ namespace Content.Server.VendingMachines
             //SubscribeLocalEvent<VendingMachineComponent, EmpPulseEvent>(OnEmpPulse); // Frontier: Upstream - #28984
             SubscribeLocalEvent<VendingMachineComponent, EntInsertedIntoContainerMessage>(OnEntityInserted); // Frontier
             SubscribeLocalEvent<VendingMachineComponent, EntRemovedFromContainerMessage>(OnEntityRemoved); // Frontier
-            SubscribeLocalEvent<VendingMachineComponent, TryVocalizeEvent>(OnTryVocalize);
 
             SubscribeLocalEvent<VendingMachineComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttempt);
 
@@ -208,7 +206,6 @@ namespace Content.Server.VendingMachines
         private void OnBreak(EntityUid uid, VendingMachineComponent vendComponent, BreakageEventArgs eventArgs)
         {
             vendComponent.Broken = true;
-            Dirty(uid, vendComponent);
             TryUpdateVisualState(uid, vendComponent);
         }
 
@@ -217,7 +214,6 @@ namespace Content.Server.VendingMachines
             if (!args.DamageIncreased && component.Broken)
             {
                 component.Broken = false;
-                Dirty(uid, component);
                 TryUpdateVisualState(uid, component);
                 return;
             }
@@ -678,6 +674,16 @@ namespace Content.Server.VendingMachines
 
             args.Price += priceSets.Max();
         }
+
+        //private void OnEmpPulse(EntityUid uid, VendingMachineComponent component, ref EmpPulseEvent args) // Frontier: Upstream - #28984
+        //{
+        //    if (!component.Broken && this.IsPowered(uid, EntityManager))
+        //    {
+        //        args.Affected = true;
+        //        args.Disabled = true;
+        //        component.NextEmpEject = _timing.CurTime;
+        //    }
+        //}
 
         // Frontier: cash slot logic
         private void OnEntityInserted(Entity<VendingMachineComponent> ent, ref EntInsertedIntoContainerMessage args)

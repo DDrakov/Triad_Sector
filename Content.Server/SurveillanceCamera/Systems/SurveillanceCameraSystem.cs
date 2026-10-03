@@ -1,5 +1,6 @@
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Administration.Logs;
+//using Content.Server.Emp; // Frontier: Upstream - #28984
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat; // Einstein Engines - Languages
 using Content.Shared.DeviceNetwork;
@@ -7,7 +8,6 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
-using Content.Shared.SurveillanceCamera.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -151,7 +151,6 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         component.CameraId = args.Name;
         component.NameSet = true;
-        Dirty(uid, component);
         UpdateSetupInterface(uid, component);
     }
 
@@ -176,11 +175,10 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
 
         _deviceNetworkSystem.SetReceiveFrequency(uid, frequency.Frequency);
         component.NetworkSet = true;
-        Dirty(uid, component);
         UpdateSetupInterface(uid, component);
     }
 
-    protected override void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraComponent? camera = null)
+    private void OpenSetupInterface(EntityUid uid, EntityUid player, SurveillanceCameraComponent? camera = null)
     {
         if (!Resolve(uid, ref camera))
             return;
@@ -418,6 +416,21 @@ public sealed partial class SurveillanceCameraSystem : SharedSurveillanceCameraS
         }
 
         _appearance.SetData(uid, SurveillanceCameraVisualsKey.Key, key, appearance);
+
+        //private void OnEmpPulse(EntityUid uid, SurveillanceCameraComponent component, ref EmpPulseEvent args) // Frontier: Upstream - #28984
+        //{
+        //    if (component.Active)
+        //    {
+        //        args.Affected = true;
+        //        args.Disabled = true;
+        //        SetActive(uid, false);
+        //    }
+        //}
+
+        //private void OnEmpDisabledRemoved(EntityUid uid, SurveillanceCameraComponent component, ref EmpDisabledRemoved args)
+        //{
+        //    SetActive(uid, true);
+        //}
     }
 }
 

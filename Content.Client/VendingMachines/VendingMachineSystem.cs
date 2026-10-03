@@ -18,59 +18,16 @@ public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 
         SubscribeLocalEvent<VendingMachineComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<VendingMachineComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+        SubscribeLocalEvent<VendingMachineComponent, AfterAutoHandleStateEvent>(OnVendingAfterState);
         SubscribeLocalEvent<VendingMachineComponent, EntInsertedIntoContainerMessage>(OnEntityInserted); // Frontier
         SubscribeLocalEvent<VendingMachineComponent, EntRemovedFromContainerMessage>(OnEntityRemoved); // Frontier
-        SubscribeLocalEvent<VendingMachineComponent, ComponentHandleState>(OnVendingHandleState);
     }
 
-    private void OnVendingHandleState(Entity<VendingMachineComponent> entity, ref ComponentHandleState args)
+    private void OnVendingAfterState(EntityUid uid, VendingMachineComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (args.Current is not VendingMachineComponentState state)
-            return;
-
-        var uid = entity.Owner;
-        var component = entity.Comp;
-
-        component.Contraband = state.Contraband;
-        component.EjectEnd = state.EjectEnd;
-        component.DenyEnd = state.DenyEnd;
-        component.DispenseOnHitEnd = state.DispenseOnHitEnd;
-        component.Broken = state.Broken;
-
-        // If all we did was update amounts then we can leave BUI buttons in place.
-        var fullUiUpdate = !component.Inventory.Keys.SequenceEqual(state.Inventory.Keys) ||
-                           !component.EmaggedInventory.Keys.SequenceEqual(state.EmaggedInventory.Keys) ||
-                           !component.ContrabandInventory.Keys.SequenceEqual(state.ContrabandInventory.Keys);
-
-        component.Inventory.Clear();
-        component.EmaggedInventory.Clear();
-        component.ContrabandInventory.Clear();
-
-        foreach (var entry in state.Inventory)
-        {
-            component.Inventory.Add(entry.Key, new(entry.Value));
-        }
-
-        foreach (var entry in state.EmaggedInventory)
-        {
-            component.EmaggedInventory.Add(entry.Key, new(entry.Value));
-        }
-
-        foreach (var entry in state.ContrabandInventory)
-        {
-            component.ContrabandInventory.Add(entry.Key, new(entry.Value));
-        }
-
         if (_uiSystem.TryGetOpenUi<VendingMachineBoundUserInterface>(uid, VendingMachineUiKey.Key, out var bui))
         {
-            if (fullUiUpdate)
-            {
-                bui.Refresh();
-            }
-            else
-            {
-                bui.UpdateAmounts();
-            }
+            bui.Refresh();
         }
     }
 
