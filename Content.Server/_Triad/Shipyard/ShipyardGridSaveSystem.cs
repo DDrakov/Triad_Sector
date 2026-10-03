@@ -26,7 +26,7 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 using Content.Server.Lathe.Components;
-using Content.Server.Light.Components;
+using Content.Shared.Light.Components;
 using Content.Shared._Triad.Shipyard.Save;
 using Content.Shared.Lathe;
 using Content.Shared._Triad.Shipyard.Load;
@@ -682,11 +682,6 @@ public sealed partial class ShipyardGridSaveSystem : EntitySystem
             {
                 if (!TryComp<ContainerFillComponent>(owner, out var containerFill) || containerFill.Containers.Count == 0)
                     return true; // To ensure airlocks that aren't prefilled don't have their door electronics deleted
-            }
-            if (TryComp<PoweredLightComponent>(owner, out var light))
-            {
-                light.HasLampOnSpawn = null;
-                return true; // Preserve lights inside tubes and null their on spawn lamp
             }
             current = owner;
         }
