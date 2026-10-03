@@ -1,12 +1,9 @@
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Emp;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Audio;
-using Content.Shared.Damage;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
@@ -44,8 +41,6 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private SharedAppearanceSystem _appearance = default!;
         [Dependency] private DamageOnInteractSystem _damageOnInteractSystem = default!;
 
-        [Dependency] protected IRobustRandom RobustRandom = default!; // Frontier
-
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
 
@@ -66,7 +61,6 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
 
             SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
-            SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -437,15 +431,6 @@ namespace Content.Server.Light.EntitySystems
             EjectBulb(args.Args.Target.Value, args.Args.User, component);
 
             args.Handled = true;
-        }
-
-        private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
-        {
-            if (RobustRandom.Prob(component.LightBreakChance))
-            {
-                if (TryDestroyBulb(uid, component))
-                    args.Affected = true;
-            }
         }
     }
 }

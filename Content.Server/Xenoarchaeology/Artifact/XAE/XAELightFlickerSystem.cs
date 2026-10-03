@@ -1,6 +1,6 @@
 using Content.Server.Ghost;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
-using Content.Shared.Light.Components;
+using Content.Server.Light.Components; // Triad: PoweredLightComponent is still server-side here
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Robust.Shared.Random;
