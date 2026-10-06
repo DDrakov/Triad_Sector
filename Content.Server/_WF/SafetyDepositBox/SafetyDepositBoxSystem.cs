@@ -53,6 +53,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     [Dependency] private ContrabandPermitSystem _contrabandPermit = default!; // Triad
 
     [Dependency] private EntityQuery<StorageComponent> _storageQuery; // Triad
+    [Dependency] private EntityQuery<ContainerManagerComponent> _containerManagerQuery;
     [Dependency] private EntityQuery<ContrabandPermitItemComponent> _contrabandPermitItemQuery; // Triad
 
     public override void Initialize()
@@ -455,16 +456,32 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             if (_storageQuery.TryComp(item, out var nestedStorage))
                 ContrabandStorageCheck(player, nestedStorage, ref invalidItems);
 
-            var itemName = Identity.Name(item, EntityManager);
+            CheckItemContraband(player, item, ref invalidItems);
+        }
+    }
 
-            _contrabandPermitItemQuery.TryComp(item, out var permitComp);
+    private void CheckItemContraband(EntityUid player, EntityUid item, ref List<string> invalidItems)
+    {
+        var itemName = Identity.Name(item, EntityManager);
 
-            // Save contraband is invalid
-            // Save contraband that is permittable and has a valid active permit are valid
-            if (HasComp<SavingContrabandComponent>(item) && permitComp == null)
-                invalidItems.Add(itemName);
-            else if (permitComp != null && _contrabandPermit.IsInvalidPermit((item, permitComp), player))
-                invalidItems.Add(itemName);
+        _contrabandPermitItemQuery.TryComp(item, out var permitComp);
+
+        if (HasComp<SavingContrabandComponent>(item) && permitComp == null)
+            invalidItems.Add(itemName);
+        else if (permitComp != null && _contrabandPermit.IsInvalidPermit((item, permitComp), player))
+            invalidItems.Add(itemName);
+
+        if (_containerManagerQuery.TryComp(item, out var containerManager))
+        {
+            foreach (var container in containerManager.Containers.Values)
+            {
+                foreach (var containedItem in container.ContainedEntities)
+                {
+                    CheckItemContraband(player, containedItem, ref invalidItems);
+                    if (_storageQuery.TryComp(containedItem, out var nestedStorage))
+                        ContrabandStorageCheck(player, nestedStorage, ref invalidItems);
+                }
+            }
         }
     }
 
