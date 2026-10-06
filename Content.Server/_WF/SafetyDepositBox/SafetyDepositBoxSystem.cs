@@ -22,23 +22,18 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.EntitySerialization.Systems;
-using Robust.Shared.Timing;
 using Content.Shared.Timing;
 using Content.Shared.Item;
 using Content.Shared.IdentityManagement;
-// Triad start
 using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
 using Content.Shared._Triad.Storage;
 using Content.Server._Triad.ContrabandPermit;
-using Content.Shared.Storage.Components;
-// Triad end
 
 namespace Content.Server._WF.SafetyDepositBox;
 
 public sealed partial class SafetyDepositBoxSystem : EntitySystem
 {
-    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private PopupSystem _popup = default!;
@@ -50,16 +45,16 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     [Dependency] private IServerDbManager _dbManager = default!;
     [Dependency] private SharedStorageSystem _storage = default!;
     [Dependency] private ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private SharedLabelSystem _label = default!; // Wicce: LabelSystem -> SharedLabelSystem
+    [Dependency] private SharedLabelSystem _label = default!;
     [Dependency] private IServerPreferencesManager _prefsManager = default!;
     [Dependency] private GameTicker _gameTicker = default!;
     [Dependency] private MapLoaderSystem _loader = default!;
-    [Dependency] private UseDelaySystem _useDelay = default!; // Triad : _useDelay system
-    [Dependency] private ContrabandPermitSystem _contrabandPermit = default!; // Triad
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private ContrabandPermitSystem _contrabandPermit = default!;
 
-    [Dependency] private EntityQuery<StorageComponent> _storageQuery; // Triad
+    [Dependency] private EntityQuery<StorageComponent> _storageQuery;
     [Dependency] private EntityQuery<ContainerManagerComponent> _containerManagerQuery;
-    [Dependency] private EntityQuery<ContrabandPermitItemComponent> _contrabandPermitItemQuery; // Triad
+    [Dependency] private EntityQuery<ContrabandPermitItemComponent> _contrabandPermitItemQuery;
 
     public override void Initialize()
     {
@@ -363,7 +358,9 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         }
 
         // Check for contraband items that cannot be stored
-        var invalidItems = CheckContrabandValidity(player, storageComp);
+        var invalidItems = new List<string>();
+        ContrabandStorageCheck(player, storageComp, ref invalidItems);
+
         if (invalidItems.Count > 0)
         {
             var itemNames = string.Join(", ", invalidItems);
@@ -439,17 +436,6 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
         UpdateUI(consoleUid, component, player);
     }
 
-    // Triad : recursive checks for storage items and contraband permits
-    private List<string> CheckContrabandValidity(
-        EntityUid player,
-        StorageComponent storageComp
-    )
-    {
-        var invalidItems = new List<string>();
-        ContrabandStorageCheck(player, storageComp, ref invalidItems);
-        return invalidItems;
-    }
-
     private void ContrabandStorageCheck(
         EntityUid player,
         StorageComponent storageItemComp,
@@ -483,8 +469,6 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
                 foreach (var containedItem in container.ContainedEntities)
                 {
                     CheckItemContraband(player, containedItem, ref invalidItems);
-                    if (_storageQuery.TryComp(containedItem, out var nestedStorage))
-                        ContrabandStorageCheck(player, nestedStorage, ref invalidItems);
                 }
             }
         }
@@ -492,24 +476,21 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
     private void RecursiveItemInitialization(EntityUid player, EntityUid item)
     {
-        var currentTime = _timing.CurTime;
-
         if (TryComp<UseDelayComponent>(item, out var useDelayComp))
             _useDelay.ResetAllDelays((item, useDelayComp));
-
-        // Triad : Try to reset magnet pickup component
-        if (TryComp<MagnetPickupComponent>(item, out var magnetComp))
-            magnetComp.NextScan = currentTime;
 
         if (_contrabandPermitItemQuery.TryComp(item, out var permitItem))
             _contrabandPermit.InitializePermitItem((item, permitItem), player); // Set the permit item owner to the box owner's mind
 
-        if (!_storageQuery.TryComp(item, out var storageItemComp)) // Check nested storage
+        if (!_containerManagerQuery.TryComp(item, out var containerManager)) // Check nested storage
             return;
 
-        foreach (var (storedItem, _) in storageItemComp.StoredItems)
+        foreach (var container in containerManager.Containers.Values)
         {
-            RecursiveItemInitialization(player, storedItem);
+            foreach (var storedItem in container.ContainedEntities)
+            {
+                RecursiveItemInitialization(player, storedItem);
+            }
         }
     }
     // Triad end
