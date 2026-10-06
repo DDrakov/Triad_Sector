@@ -22,18 +22,23 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.Timing;
 using Content.Shared.Timing;
+using Content.Shared.Item;
+using Content.Shared.IdentityManagement;
+// Triad start
 using Content.Shared._Triad.ContrabandPermit;
 using Content.Shared._Triad.Shipyard.Save.Contraband;
 using Content.Shared._Triad.Storage;
-using Content.Shared.Item;
-using Content.Shared.IdentityManagement;
 using Content.Server._Triad.ContrabandPermit;
+using Content.Shared.Storage.Components;
+// Triad end
 
 namespace Content.Server._WF.SafetyDepositBox;
 
 public sealed partial class SafetyDepositBoxSystem : EntitySystem
 {
+    [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private SharedAudioSystem _audio = default!;
     [Dependency] private PopupSystem _popup = default!;
@@ -487,8 +492,14 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
 
     private void RecursiveItemInitialization(EntityUid player, EntityUid item)
     {
+        var currentTime = _timing.CurTime;
+
         if (TryComp<UseDelayComponent>(item, out var useDelayComp))
             _useDelay.ResetAllDelays((item, useDelayComp));
+
+        // Triad : Try to reset magnet pickup component
+        if (TryComp<MagnetPickupComponent>(item, out var magnetComp))
+            magnetComp.NextScan = currentTime;
 
         if (_contrabandPermitItemQuery.TryComp(item, out var permitItem))
             _contrabandPermit.InitializePermitItem((item, permitItem), player); // Set the permit item owner to the box owner's mind
