@@ -444,14 +444,11 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
     {
         foreach (var (item, location) in storageItemComp.StoredItems)
         {
-            if (_storageQuery.TryComp(item, out var nestedStorage))
-                ContrabandStorageCheck(player, nestedStorage, ref invalidItems);
-
-            CheckItemContraband(player, item, ref invalidItems);
+            CheckItemContrabandRecursive(player, item, ref invalidItems);
         }
     }
 
-    private void CheckItemContraband(EntityUid player, EntityUid item, ref List<string> invalidItems)
+    private void CheckItemContrabandRecursive(EntityUid player, EntityUid item, ref List<string> invalidItems)
     {
         var itemName = Identity.Name(item, EntityManager);
 
@@ -468,7 +465,7 @@ public sealed partial class SafetyDepositBoxSystem : EntitySystem
             {
                 foreach (var containedItem in container.ContainedEntities)
                 {
-                    CheckItemContraband(player, containedItem, ref invalidItems);
+                    CheckItemContrabandRecursive(player, containedItem, ref invalidItems);
                 }
             }
         }
