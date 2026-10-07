@@ -539,7 +539,7 @@
   productEntity: ClothingBackpackDuffelTdfHardsuitTA29
   icon: { sprite: _Triad/Clothing/OuterClothing/Hardsuits/tdf-ta29.rsi, state: icon }
   cost:
-    TriadCommerceCredit: 30
+    TriadCommerceCredit: 80
   categories:
     - UplinkSecurityHardsuits
   conditions:
