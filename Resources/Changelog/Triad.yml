@@ -5425,3 +5425,12 @@ Entries:
   id: 2656
   time: '2026-10-08T23:58:12.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/707
+- author: Nox38
+  changes:
+    - type: Add
+      message: >-
+        CuddlyCritterVends all across the Auric district are now offering a new
+        product: The protogen plushie!
+  id: 2657
+  time: '2026-10-09T23:08:21.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/709
