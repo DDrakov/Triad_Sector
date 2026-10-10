@@ -5434,3 +5434,10 @@ Entries:
   id: 2657
   time: '2026-10-09T23:08:21.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/709
+- author: SleepyCheesehead
+  changes:
+    - type: Add
+      message: TDF ship, Basilisk
+  id: 2658
+  time: '2026-10-10T07:07:05.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/585
