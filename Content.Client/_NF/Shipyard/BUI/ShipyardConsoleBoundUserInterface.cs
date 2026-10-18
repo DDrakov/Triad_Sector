@@ -1,7 +1,9 @@
 using Content.Client._NF.Shipyard.UI;
+using Content.Client._Triad.ShipPreview.UI;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared._NF.Shipyard.BUI;
 using Content.Shared._NF.Shipyard.Events;
+using Content.Shared._NF.Shipyard.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using Robust.Client.UserInterface;
 using Content.Client._Triad.Shipyard.Save; // Triad
@@ -24,6 +26,7 @@ public sealed partial class ShipyardConsoleBoundUserInterface : BoundUserInterfa
 
     private ShipyardConsoleMenu? _menu;
     private ShipyardRulesPopup? _rulesWindow;
+    private ShipPreviewWindow? _previewWindow;
 
     public int Balance { get; private set; }
 
@@ -71,6 +74,7 @@ public sealed partial class ShipyardConsoleBoundUserInterface : BoundUserInterfa
         _menu.OnUnassignDeed += UnassignDeed;
         _menu.OnRenameShip += RenameShip;
         _menu.OnSaveShip += SaveShip;
+        _menu.OnPreviewShip += PreviewShip;
         var targetIdButton = _menu.FindControl<Button>("TargetIdButton");
         if (targetIdButton != null)
             targetIdButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent("ShipyardConsole-targetId"));
@@ -306,6 +310,18 @@ public sealed partial class ShipyardConsoleBoundUserInterface : BoundUserInterfa
         SendMessage(new ShipyardConsoleSaveMessage());
     }
 
+    private void PreviewShip(VesselPrototype vessel)
+    {
+        if (_previewWindow is not { IsOpen: true })
+        {
+            _previewWindow = ShipPreviewWindow.Open(vessel);
+            return;
+        }
+
+        _previewWindow.SetVessel(vessel);
+        _previewWindow.MoveToFront();
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -315,6 +331,7 @@ public sealed partial class ShipyardConsoleBoundUserInterface : BoundUserInterfa
             // Unsubscribe from events to prevent memory leaks
             _shipFileManagementSystem.OnShipsUpdated -= RefreshSavedShipList;
             _shipFileManagementSystem.OnShipLoaded -= OnShipLoaded;
+            _previewWindow?.Close();
         }
     }
 }

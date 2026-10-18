@@ -52,7 +52,7 @@ public sealed class NFCCVars
 	/// Mono: Changed to _Mono busdart.yml
     /// </summary>
     public static readonly CVarDef<string> PublicTransitBusMap =
-        CVarDef.Create("nf14.publictransit.bus_map", "/Maps/_Mono/Shuttles/Bus/busdart.yml", CVar.SERVERONLY);
+        CVarDef.Create("nf14.publictransit.bus_map", "/Maps/SharedMaps/_Mono/Shuttles/Bus/busdart.yml", CVar.SERVERONLY);
 
     /// <summary>
     /// The amount of time the bus waits at a station.
@@ -255,3 +255,4 @@ public sealed class NFCCVars
     public static readonly CVarDef<float> CrateGenerationGridBoundsScale =
         CVarDef.Create("nf14.events.crate_generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 }
+
