@@ -5694,3 +5694,51 @@ Entries:
   id: 2681
   time: '2026-10-17T19:36:47.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/741
+- author: Minerva
+  changes:
+    - type: Tweak
+      message: Solar panels are now no longer damaged by thrusters.
+  id: 2682
+  time: '2026-10-19T13:27:23.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/743
+- author: DDrakov
+  changes:
+    - type: Tweak
+      message: >-
+        The anomalous rocks within the Terralith data center have hardened their
+        cracked structures, but sensors still indicate that they can be opened
+    - type: Tweak
+      message: >-
+        The autonomous guardian within the Terralith data center has modified
+        the vault's access controls and established a new recharging station.
+  id: 2683
+  time: '2026-10-20T15:42:01.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/746
+- author: nathan736
+  changes:
+    - type: Tweak
+      message: Allowed construciton bags to hold machine parts
+  id: 2684
+  time: '2026-10-20T19:55:18.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/749
+- author: Wizden
+  changes:
+    - type: Fix
+      message: Fix solutions/reagents flickering when transferring contents
+  id: 2685
+  time: '2026-10-21T23:34:33.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/748
+- author: TheRealMasterChief117
+  changes:
+    - type: Fix
+      message: Fixed robust harvest and EZ nutrient not working with hydroponic trays!
+  id: 2686
+  time: '2026-10-23T23:51:55.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/755
+- author: BoskiYourk
+  changes:
+    - type: Add
+      message: Added circuit boards for each unique large thruster!
+  id: 2687
+  time: '2026-10-24T00:00:37.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/750
