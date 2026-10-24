@@ -20,7 +20,7 @@ public sealed partial class ShuttleSystem
 
     // Triad
     public readonly float CruiseModeLinearAccelerationMultiplier = 4f;
-    public readonly float DriveModeThrusterMultiplier = 3.5f;
+    public readonly float DriveModeThrusterMultiplier = 2.5f;
     // Triad end
     private void NfInitialize()
     {
