@@ -43,7 +43,7 @@
     maxSpeed: 180
     trackDelay: 0.1
   - type: EmpOnTrigger
-    range: 5 #Triad Increase emp range to EMP grenade size
+    range: 5 #Triad 2->5. Increase emp range to EMP grenade size
     energyConsumption: 2700000
     disableDuration: 20
 
