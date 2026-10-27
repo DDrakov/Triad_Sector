@@ -272,7 +272,7 @@
   - type: StaticPrice
     price: 1500
   - type: EmpDescription
-    range: 5 #Make the range not smaller than a EMP nade, due to it being an ASM.
+    range: 5 # Triad: 2->5. Range shouldn't be smaller than a hand grenade, due to it being an anti ship missile
     energyConsumption: 2700000
     disableDuration: 20
 
