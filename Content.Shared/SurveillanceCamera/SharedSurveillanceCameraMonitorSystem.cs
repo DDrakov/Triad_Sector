@@ -31,6 +31,18 @@ public sealed class SurveillanceCameraMonitorUiState(NetEntity? activeCamera,
     public Dictionary<string, string> Cameras { get; } = cameras;
 }
 
+/// <summary>
+/// Sent when the camera markers on the monitor's grid change.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraMonitorMapUpdateMessage(Dictionary<NetEntity, CameraMarker> cameraMarkers) : BoundUserInterfaceMessage
+{
+    /// <summary>
+    /// Camera markers on the monitor's grid.
+    /// </summary>
+    public Dictionary<NetEntity, CameraMarker> CameraMarkers { get; } = cameraMarkers;
+}
+
 [Serializable, NetSerializable]
 public sealed class SurveillanceCameraMonitorSwitchMessage(
     string address,
