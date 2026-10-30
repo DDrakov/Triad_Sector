@@ -5864,3 +5864,10 @@ Entries:
   id: 2696
   time: '2026-10-30T22:27:52.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/776
+- author: storrm777s
+  changes:
+    - type: Fix
+      message: Fixed malfunctioning scrap unit name typo
+  id: 2697
+  time: '2026-10-30T22:41:05.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/770
