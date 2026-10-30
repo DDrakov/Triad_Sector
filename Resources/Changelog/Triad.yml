@@ -5855,3 +5855,12 @@ Entries:
   id: 2695
   time: '2026-10-30T20:46:02.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/768
+- author: PenglePongle
+  changes:
+    - type: Fix
+      message: Ammo Loaders no longer convert nuclear charon slugs to regular slugs.
+    - type: Fix
+      message: Ammo Loaders no longer send loaded ammo to the shadow realm.
+  id: 2696
+  time: '2026-10-30T22:27:52.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/776
