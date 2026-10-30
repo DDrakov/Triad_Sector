@@ -32,13 +32,18 @@ public sealed class SurveillanceCameraMonitorUiState(NetEntity? activeCamera,
 }
 
 /// <summary>
-/// Sent when the camera markers on the monitor's grid change.
+/// Provides the camera map and camera markers for a grid.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorMapUpdateMessage(Dictionary<NetEntity, CameraMarker> cameraMarkers) : BoundUserInterfaceMessage
+public sealed class SurveillanceCameraMonitorMapUpdateMessage(NetEntity map, Dictionary<NetEntity, CameraMarker> cameraMarkers) : BoundUserInterfaceMessage
 {
     /// <summary>
-    /// Camera markers on the monitor's grid.
+    /// The grid entity the camera markers belong to.
+    /// </summary>
+    public NetEntity Map { get; } = map;
+
+    /// <summary>
+    /// Camera markers on the grid.
     /// </summary>
     public Dictionary<NetEntity, CameraMarker> CameraMarkers { get; } = cameraMarkers;
 }
@@ -77,6 +82,12 @@ public enum SurveillanceCameraMonitorUiKey : byte
 {
     Key
 }
+
+/// <summary>
+/// Sent when the user requests the camera map and camera markers.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class SurveillanceCameraMonitorMapRequestMessage : BoundUserInterfaceMessage;
 
 // SETUP
 
