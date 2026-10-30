@@ -5871,3 +5871,10 @@ Entries:
   id: 2697
   time: '2026-10-30T22:41:05.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/770
+- author: nathan736
+  changes:
+    - type: Fix
+      message: hand labelers cant remove labels again
+  id: 2698
+  time: '2026-10-30T22:55:28.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/781
