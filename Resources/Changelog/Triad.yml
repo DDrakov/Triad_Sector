@@ -5827,3 +5827,13 @@ Entries:
   id: 2692
   time: '2026-10-28T18:47:20.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/693
+- author: HydeTime
+  changes:
+    - type: Tweak
+      message: >-
+        Changed the MPSSM ammo from 4x2 to 3x1, changed the 6 seconds time to
+        fire to 2 seconds, Changed the EMP radius on the MPSSM from 2 to 5
+        meters, and stopped them being blocked on shield
+  id: 2693
+  time: '2026-10-30T19:27:20.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/766
