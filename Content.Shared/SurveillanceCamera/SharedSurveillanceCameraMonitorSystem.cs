@@ -83,12 +83,6 @@ public enum SurveillanceCameraMonitorUiKey : byte
     Key
 }
 
-/// <summary>
-/// Sent when the user requests the camera map and camera markers.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class SurveillanceCameraMonitorMapRequestMessage : BoundUserInterfaceMessage;
-
 // SETUP
 
 [Serializable, NetSerializable]
