@@ -5848,3 +5848,10 @@ Entries:
   id: 2694
   time: '2026-10-30T20:10:45.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/777
+- author: Nox38
+  changes:
+    - type: Add
+      message: Added M.A.I.D.S. player faction!
+  id: 2695
+  time: '2026-10-30T20:46:02.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/768
