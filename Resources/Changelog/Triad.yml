@@ -5837,3 +5837,14 @@ Entries:
   id: 2693
   time: '2026-10-30T19:27:20.0000000+00:00'
   url: https://github.com/Triad-Sector/Triad_Sector/pull/766
+- author: BoiWab
+  changes:
+    - type: Tweak
+      message: Reworked Vox sprites
+    - type: Add
+      message: Added many new Vox markings to pair with the resprite
+    - type: Add
+      message: A new IPC head marking
+  id: 2694
+  time: '2026-10-30T20:10:45.0000000+00:00'
+  url: https://github.com/Triad-Sector/Triad_Sector/pull/777
